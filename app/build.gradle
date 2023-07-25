@@ -21,7 +21,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "GPT_KEY", CHATGPT_API_KEY
         }
+        debug {
+            buildConfigField "String", "GPT_KEY", CHATGPT_API_KEY
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

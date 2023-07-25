@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/android
 # Edit at https://www.toptal.com/developers/gitignore?templates=android
 
+.app/src/main/res/raw/credential_key.json
+
 ### Android ###
 # Gradle files
 .gradle/

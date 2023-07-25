@@ -1,6 +1,7 @@
 package com.soldevcode.assistant.data
 
 import com.google.gson.JsonObject
+import com.soldevcode.assistant.BuildConfig
 import com.soldevcode.assistant.data.dto.GptRequest
 import com.soldevcode.assistant.data.dto.GptResponse
 import com.soldevcode.assistant.data.dto.GptStream.GptApiStream
@@ -15,12 +16,12 @@ import retrofit2.http.POST
 import retrofit2.http.Streaming
 
 interface GptApi {
-    @Headers("Authorization: Bearer ")
+    @Headers("Authorization: Bearer ${BuildConfig.GPT_KEY}")
     @POST(turboEndPointChat)
     @Streaming
     suspend fun getChatGptCompletion(@Body body: JsonObject): ResponseBody
 
-    @Headers("Authorization: Bearer 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")
+    @Headers("Authorization: Bearer ${BuildConfig.GPT_KEY}")
     @POST(turboEndPointChat)
     @Streaming
     suspend fun getChatGptStream(@Body request: GptRequest): GptApiStream
