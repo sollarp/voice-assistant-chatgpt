@@ -7,6 +7,9 @@
 build/
 gradle.properties
 
+# Ignore the google_key.json file
+app/src/main/res/raw/google_key.json
+
 # Local configuration file (sdk path, etc)
 local.properties
 
