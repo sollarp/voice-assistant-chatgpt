@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="not_recording">Not Recording</string>
+    <string name="start_recording">Start Recording</string>
+    <string name="from_speech_text">from speech text</string>
+    <string name="from_chat_gpt">from chat gpt</string>
+</resources>

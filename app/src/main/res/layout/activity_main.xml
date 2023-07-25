@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!--creating a simple image view for mic-->
+
+    <!--creating text view on below line-->
+    <ImageView
+        android:id="@+id/idIVMic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_baseline_mic_24"
+        app:tint="@color/purple_200" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idIVMic"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Start record"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <!--creating a text view for displaying
+        output on below line-->
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idIVMic"
+        android:layout_marginStart="300sp"
+        android:layout_marginTop="23dp"
+        android:gravity="center"
+        android:text="Stop rec"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <ScrollView
+        android:id="@+id/from_speech"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_below="@id/btn_stop">
+
+        <TextView
+            android:id="@+id/txt_from_speech"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/from_speech_text"
+            android:textAlignment="center"
+            android:textColor="@color/teal_200"
+            android:textSize="20sp"
+            android:textIsSelectable="true"/>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/txt_from_gpt_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="208dp"
+        android:layout_below="@id/from_speech"
+        android:layout_marginTop="17dp">
+
+        <TextView
+            android:id="@+id/txt_from_gpt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/from_chat_gpt"
+            android:textAlignment="center"
+            android:textColor="@color/teal_200"
+            android:textSize="20sp" />
+
+    </ScrollView>
+
+
+</RelativeLayout>
