@@ -10,7 +10,7 @@ class SpeechCredentialsProvider() : GoogleCredentials() {
 
     fun createSpeechClient(context: Context): SpeechSettings? {
         // Load the service account key JSON file from the assets folder
-        val credentialsStream: InputStream = context.resources.openRawResource(R.raw.credential_key)
+        val credentialsStream: InputStream = context.resources.openRawResource(R.raw.google_key)
 
         // Create GoogleCredentials from the JSON key file
         val credentials = fromStream(credentialsStream)

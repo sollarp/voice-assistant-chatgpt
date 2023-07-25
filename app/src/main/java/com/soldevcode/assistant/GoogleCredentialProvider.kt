@@ -8,7 +8,7 @@ object GoogleCredentialProvider {
 
     @Throws(IOException::class)
     fun getCredentialsFromRawResource(context: Context): GoogleCredentials {
-        val inputStream = context.resources.openRawResource(R.raw.credential_key)
+        val inputStream = context.resources.openRawResource(R.raw.google_key)
         return GoogleCredentials.fromStream(inputStream)
     }
 }
