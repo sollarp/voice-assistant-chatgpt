@@ -21,7 +21,9 @@ fun ConversationList(chatOwner: String, listOfWords: String, chatId: String) {
 
     val listState = rememberLazyListState()
 
-
+    /*Tracing the listofword from openAI as string stream including the user input
+    * So user input always add number bot even also when stream stops created a
+    * new conversatoin object */
     if (listOfWords != "") {
         if (chatOwner == "user" && messages.size % 2 == 0) {
 
