@@ -2,7 +2,6 @@ package com.soldevcode.composechat.util
 
 
 /*
-
 object AudioPermission {
 
     fun checkAudioPermission(activity: AppCompatActivity) {
@@ -20,7 +19,6 @@ object AudioPermission {
                     activity,
                     arrayOf(Manifest.permission.RECORD_AUDIO),
                     RECORD_AUDIO_REQUEST_CODE
-
                 )
             }
         }
