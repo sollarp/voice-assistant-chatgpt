@@ -1,5 +1,5 @@
 
-# Ev MapBox 
+# Assistant 
 Compose Chat app using Kotlin. Very simple UI includes preview every component to easy to understand Compose not require additional fake data or other method.  
 Advantages:
 - Fast and Easy
@@ -30,7 +30,7 @@ https://github.com/sollarp/voice-assistant-chatgpt/assets/74240451/6289af15-c732
 
 ## License
 ```
-Ev Mapbox
+Assistant
 Copyright (C) 2022  Peter Szollar
 
 This program is free software: you can redistribute it and/or modify
