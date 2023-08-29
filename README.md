@@ -1,3 +1,5 @@
+# UNDER DEVELOPMENT
+
 
 # Assistant 
 Compose Chat app using Kotlin. Very simple UI includes preview every component to easy to understand Compose not require additional fake data or other method.  
