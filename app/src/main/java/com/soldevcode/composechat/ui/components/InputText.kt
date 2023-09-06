@@ -92,11 +92,10 @@ fun TextInput() {
                         .border(2.dp, Color.Black, shape = RoundedCornerShape(12.dp)),
                     onClick = {
                         scope.launch {
-                            val textClone = text.text
+                            val setText = text.text
                             text = TextFieldValue("")
-                            println("szoo meg = $textClone")
-                            mainViewModel.updateListOfWords("user", textClone, "0")
-                            mainViewModel.fetchApiResponse(textClone)
+                            mainViewModel.addQuestion(chatOwner = "user", question = setText)
+                            mainViewModel.fetchApiResponse(setText)
                         }
                     }) {
                     Icon(

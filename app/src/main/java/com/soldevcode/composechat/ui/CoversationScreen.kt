@@ -29,12 +29,7 @@ import com.soldevcode.composechat.ui.components.TextInput
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
-
-fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
-    val listOfWords = viewModel.listOfWords.observeAsState().value
-    val chatOwner = viewModel.chatOwner.observeAsState().value
-    val chatId = viewModel.chatId.observeAsState().value
-
+fun ConversationScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -58,15 +53,13 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                 modifier = Modifier.fillMaxHeight(),
                 verticalArrangement = Arrangement.SpaceBetween // Ensure items are spaced out, with `TextInput` at the bottom
             ) {
-                if (chatOwner != null && listOfWords != null && chatId != null) {
                     Box(
                         modifier = Modifier
                             .weight(1f), // Occupy all available space, pushing the TextInput to the bottom
                         contentAlignment = Alignment.TopCenter // Center the ConversationList within the Box
                     ) {
-                        ConversationList(chatOwner, listOfWords, chatId)
+                        ConversationList()
                     }
-                }
                 Spacer(modifier = Modifier.weight(.01f)) // Pushes TextInput to the bottom
                 TextInput() // This will be at the bottom because of the weight modifier applied to the Box above
             }
