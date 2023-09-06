@@ -11,14 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.soldevcode.composechat.R
-import com.soldevcode.composechat.models.ConversationObj
+import com.soldevcode.composechat.models.ConversationModel
 
 
 @Composable
-fun MessageBox(msg: ConversationObj) {
+fun MessageBox(msg: ConversationModel) {
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
@@ -36,12 +37,10 @@ fun MessageBox(msg: ConversationObj) {
         )
         {
             if (msg.chatOwner == "user"){
-                UserMessageCard( msg = msg.message.toString() )
+                UserMessageCard( msg = msg.question )
                 Spacer(modifier = Modifier.height(16.dp))
-
             }else {
-                BotMessageCard( msg = msg.message.toString() )
-
+                BotMessageCard( msg = msg.answer )
             }
         }
     }
@@ -56,16 +55,11 @@ fun UserMessageCard(msg: String) {
             painter = painterResource(id = R.drawable.icon_user),
             contentDescription = "Contact profile picture",
         )
-
-        Column{
-            Text(
-                text = msg,
-                style = TextStyle(fontSize = 16.sp)
-            )
-        }
-
+        Text(
+            text = msg,
+            style = TextStyle(fontSize = 16.sp)
+        )
     }
-
 }
 
 @Composable
@@ -77,31 +71,21 @@ fun BotMessageCard(msg: String) {
             painter = painterResource(id = R.drawable.icons_robot),
             contentDescription = "Contact profile picture",
         )
-
-        Column{
-            Text(
-                text = msg,
-                style = TextStyle(fontSize = 16.sp)
-            )
-            //Text(text = msg.body)
-        }
-
+        Text(
+            text = msg,
+            style = TextStyle(fontSize = 16.sp)
+        )
     }
 
 }
 
-/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageBox() {
     MessageBox(
-        chatOwner = "user", msg = ConversationObj("user text here")
-
-    )
-    MessageBox(
-        chatOwner = "bot", msg = ConversationObj("bot text here")
-
+        msg = ConversationModel(
+            question = "user request field",
+            chatOwner = "user")
     )
 }
 
-*/

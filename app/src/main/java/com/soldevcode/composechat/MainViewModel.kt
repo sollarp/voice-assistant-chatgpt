@@ -1,6 +1,5 @@
 package com.soldevcode.composechat
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,38 +10,35 @@ import com.google.gson.JsonSyntaxException
 import com.soldevcode.composechat.data.GptApi
 import com.soldevcode.composechat.data.RetrofitHelper
 import com.soldevcode.composechat.data.dto.GptResponse
-import com.soldevcode.composechat.util.Constants.streamingStopped
+import com.soldevcode.composechat.models.ConversationModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel: ViewModel() {
 
-    private val currentMessageLive = MutableLiveData<String>()
-    val currentMessageLiveData = MutableLiveData<String>()
-    val getListOfWords = mutableListOf<String>()
-    // Live data object to store API stream result.
-    private val _listOfWords = MutableLiveData<String>()
-    val listOfWords : LiveData<String>
-        get() = _listOfWords
+    private val listOfWords = mutableListOf<String>()
 
-    private val _chatOwner = MutableLiveData<String>()
-    val chatOwner : LiveData<String>
-        get() = _chatOwner
+    private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
+    val conversationsLiveData: MutableLiveData<MutableList<ConversationModel>>
+        get() = _conversationsLiveData
 
-    private val _chatId = MutableLiveData<String>()
-    val chatId : LiveData<String>
-        get() = _chatId
-
-    fun getWords(): LiveData<String> {
-        return listOfWords
+    fun addQuestion(chatOwner: String, question: String) {
+        val items = getConversations()
+        _conversationsLiveData.value = items.toMutableList().apply {
+            add(ConversationModel(chatOwner = chatOwner, question = question))
+        }
     }
 
-    fun updateListOfWords(user:String, newWords: String, chatId: String?) {
-        _listOfWords.value = newWords
-        _chatOwner.value = user
-        _chatId.value = chatId
+    private fun addAnswer(answer: String, chatOwner: String) {
+        val items = getConversations()
+        if (chatOwner == "bot" && items.lastOrNull()?.chatOwner == "bot") {
+            val updatedItem = items.last().copy(answer = answer)
+            _conversationsLiveData.value = (items.dropLast(1) + updatedItem).toMutableList()
+        } else {
+            _conversationsLiveData.value = (items +
+                    ConversationModel(chatOwner = chatOwner, answer = answer)).toMutableList()
+        }
     }
-
     fun fetchApiResponse(question: String) {
         viewModelScope.launch {
             val getApiResponse = RetrofitHelper.getInstance().create(GptApi::class.java)
@@ -66,20 +62,16 @@ class MainViewModel: ViewModel() {
                         val jsonString = line.substringAfter("data: ")
                         val chatCompletionData =
                             Gson().fromJson(jsonString, GptResponse::class.java)
-
                         if (chatCompletionData != null) {
                             val getFinishReason = chatCompletionData.choices.map { it.finish_reason }[0].toString()
                             if (getFinishReason != "stop") {
                                 val newWord = chatCompletionData.choices.map { it.delta.content }[0]
-                                val getChatId = chatCompletionData.id
-                                getListOfWords.add(newWord)
-                                val setChatOwner = "bot"
-                                updateListOfWords( setChatOwner, getListOfWords.joinToString(""), getChatId)
+                                listOfWords.add(newWord)
+                                addAnswer(answer = listOfWords.joinToString(""), chatOwner = "bot")
                                 delay(50) // Applied to resolve streaming conflict
                             }
                             else{
-                                streamingStopped = true
-                                getListOfWords.clear()
+                                listOfWords.clear()
                             }
                         }
                     } catch (e: JsonSyntaxException) {
@@ -89,4 +81,6 @@ class MainViewModel: ViewModel() {
             }
         }
     }
+    private fun getConversations(): MutableList<ConversationModel> =
+        conversationsLiveData.value ?: mutableListOf()
 }
