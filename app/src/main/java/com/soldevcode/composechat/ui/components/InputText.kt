@@ -83,7 +83,7 @@ fun TextInput() {
             }
             Box(
                 modifier = Modifier
-                    .padding(end = 10.dp, top = 10.dp, bottom = 10.dp)
+                    .padding(end = 30.dp, top = 10.dp, bottom = 10.dp)
                     .weight(.1f)
                     .sizeIn(minHeight = 48.dp), // Ensure IconButton maintains the desired height
             ) {
@@ -102,14 +102,12 @@ fun TextInput() {
                         Icons.Filled.Send,
                         "sendMessage",
                         modifier = Modifier,
-                        tint = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
