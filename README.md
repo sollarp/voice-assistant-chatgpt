@@ -56,7 +56,9 @@ There has been a lot of boiler plate code to make this working with LiveData so 
 ## Video:
 
 
-https://github.com/sollarp/voice-assistant-chatgpt/assets/74240451/6289af15-c732-4947-9f7c-08de7ffde158
+
+https://github.com/sollarp/voice-assistant-chatgpt/assets/74240451/72ab5dee-bb69-49d9-a246-f9b42fce8fc2
+
 
 
 
