@@ -14,13 +14,16 @@ import com.soldevcode.composechat.models.ConversationModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainViewModel: ViewModel() {
+class MainViewModel : ViewModel() {
 
     private val listOfWords = mutableListOf<String>()
 
     private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
     val conversationsLiveData: MutableLiveData<MutableList<ConversationModel>>
         get() = _conversationsLiveData
+
+    private fun getConversations(): MutableList<ConversationModel> =
+        conversationsLiveData.value ?: mutableListOf()
 
     fun addQuestion(chatOwner: String, question: String) {
         val items = getConversations()
@@ -39,6 +42,7 @@ class MainViewModel: ViewModel() {
                     ConversationModel(chatOwner = chatOwner, answer = answer)).toMutableList()
         }
     }
+
     fun fetchApiResponse(question: String) {
         viewModelScope.launch {
             val getApiResponse = RetrofitHelper.getInstance().create(GptApi::class.java)
@@ -63,14 +67,14 @@ class MainViewModel: ViewModel() {
                         val chatCompletionData =
                             Gson().fromJson(jsonString, GptResponse::class.java)
                         if (chatCompletionData != null) {
-                            val getFinishReason = chatCompletionData.choices.map { it.finish_reason }[0].toString()
+                            val getFinishReason =
+                                chatCompletionData.choices.map { it.finish_reason }[0].toString()
                             if (getFinishReason != "stop") {
                                 val newWord = chatCompletionData.choices.map { it.delta.content }[0]
                                 listOfWords.add(newWord)
                                 addAnswer(answer = listOfWords.joinToString(""), chatOwner = "bot")
                                 delay(50) // Applied to resolve streaming conflict
-                            }
-                            else{
+                            } else {
                                 listOfWords.clear()
                             }
                         }
@@ -81,6 +85,4 @@ class MainViewModel: ViewModel() {
             }
         }
     }
-    private fun getConversations(): MutableList<ConversationModel> =
-        conversationsLiveData.value ?: mutableListOf()
 }

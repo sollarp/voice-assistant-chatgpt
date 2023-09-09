@@ -1,6 +1,9 @@
 package com.soldevcode.composechat.ui
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,21 +20,58 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.soldevcode.composechat.R
+import com.soldevcode.composechat.ui.components.PermissionAlertDialog
 import com.soldevcode.composechat.ui.components.TextInput
+import com.soldevcode.composechat.ui.components.goToAppSetting
+import com.soldevcode.composechat.util.NeededPermission
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
 fun ConversationScreen() {
+    val activity = LocalContext.current as Activity
+
+    val permissionDialog = remember {
+        mutableStateListOf<NeededPermission>()
+    }
+
+    val microphonePermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { isGranted ->
+            if (!isGranted)
+                permissionDialog.add(NeededPermission.RECORD_AUDIO)
+        }
+    )
+
+    permissionDialog.forEach { permission ->
+        PermissionAlertDialog(
+            neededPermission = permission,
+            onDismiss = { permissionDialog.remove(permission) },
+            onOkClick = {
+                permissionDialog.remove(permission)
+                microphonePermissionLauncher.launch(NeededPermission.RECORD_AUDIO.permission)
+            },
+            onGoToAppSettingsClick = {
+                permissionDialog.remove(permission)
+                activity.goToAppSetting()
+            },
+            isPermissionDeclined = !activity.shouldShowRequestPermissionRationale(permission.permission)
+        )
+    }
+
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -68,7 +108,7 @@ fun ConversationScreen() {
                                     .align(alignment = Alignment.BottomEnd),
                                 containerColor = Color.LightGray,
                                 onClick = {
-                                    //mmmmm
+                                    microphonePermissionLauncher.launch(NeededPermission.RECORD_AUDIO.permission)
                                 }
                             ) {
                                 Icon(
@@ -84,7 +124,6 @@ fun ConversationScreen() {
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
