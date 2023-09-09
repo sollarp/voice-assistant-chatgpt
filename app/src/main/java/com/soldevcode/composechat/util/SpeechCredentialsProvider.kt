@@ -1,4 +1,4 @@
-package com.soldevcode.composechat.helpers
+package com.soldevcode.composechat.util
 
 import android.content.Context
 import com.google.api.gax.core.FixedCredentialsProvider
