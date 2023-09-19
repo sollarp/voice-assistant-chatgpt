@@ -3,29 +3,26 @@ package com.soldevcode.composechat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.ViewModelProvider
+import com.soldevcode.composechat.data.GoogleCredentialRepositoryImpl
+import com.soldevcode.composechat.presentation.ViewModelFactoryHelper
 import com.soldevcode.composechat.ui.ConversationScreen
-import com.soldevcode.composechat.ui.theme.ChatnewcomposeTheme
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //SpeechCredentialsProvider().createSpeechClient(this)
+        /*val jsonString = loadJSONFromResource()
+        println("$jsonString")*/
+        val repository = GoogleCredentialRepositoryImpl() // Create your dependency
+        val viewModelFactory = ViewModelFactoryHelper(repository)
 
         setContent {
-            ChatnewcomposeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.White
-                ) {
-                    setContent {
-                        ConversationScreen()
-                    }
-                }
-            }
+            mainViewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+
+            ConversationScreen()
         }
     }
 }

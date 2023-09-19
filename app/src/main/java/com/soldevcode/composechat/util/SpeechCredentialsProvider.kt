@@ -9,12 +9,23 @@ import java.io.InputStream
 
 class SpeechCredentialsProvider() : GoogleCredentials() {
 
-    fun createSpeechClient(context: Context): SpeechSettings? {
+    fun getSpeechClient(jsonLiveData: InputStream): SpeechSettings? {
+        val credentials = fromStream(jsonLiveData)
+        return SpeechSettings.newBuilder()
+            .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
+            .build()
+    }
+
+
+    fun setGoogleCredentialFromStream(context: Context): InputStream {
         // Load the service account key JSON file from the assets folder
-        val credentialsStream: InputStream = context.resources.openRawResource(R.raw.google_key)
+
 
         // Create GoogleCredentials from the JSON key file
-        val credentials = fromStream(credentialsStream)
+        return context.resources.openRawResource(R.raw.google_key)
+    }
+
+  /*  fun createSpeechClient(): SpeechSettings? {
 
         // Set up the SpeechSettings using the credentials
 
@@ -22,5 +33,5 @@ class SpeechCredentialsProvider() : GoogleCredentials() {
         return SpeechSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
             .build()
-    }
+    }*/
 }
