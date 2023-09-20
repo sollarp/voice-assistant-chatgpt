@@ -18,17 +18,20 @@ package com.soldevcode.composechat.data
 import android.content.Context
 
 
+// This is an AppModule
+
 /**
  * Dependency Injection container at the application level.
  */
 interface AppContainer {
-    val marsPhotosRepository: GoogleCredentialRepository
+    val googleCredentialRepository: GoogleCredentialRepository
 
 }
 
 class DefaultAppContainer(appContext: Context) : AppContainer {
-    override val marsPhotosRepository: GoogleCredentialRepository by lazy {
-        GoogleCredentialRepositoryImpl()
+    override val googleCredentialRepository: GoogleCredentialRepository by lazy {
+        val getInputStream = appContext.assets.open("google_key.json")
+        GoogleCredentialRepositoryImpl(getInputStream)
     }
 
     /**

@@ -1,29 +1,42 @@
-package com.soldevcode.composechat
+package com.soldevcode.composechat.presentation
 
+import android.annotation.SuppressLint
+import android.media.AudioFormat
 import android.media.AudioRecord
+import android.media.MediaRecorder
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.api.gax.rpc.ClientStream
 import com.google.api.gax.rpc.ResponseObserver
+import com.google.api.gax.rpc.StreamController
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.speech.v1.RecognitionConfig
+import com.google.cloud.speech.v1.SpeechClient
+import com.google.cloud.speech.v1.SpeechRecognitionAlternative
 import com.google.cloud.speech.v1.StreamingRecognitionConfig
+import com.google.cloud.speech.v1.StreamingRecognitionResult
 import com.google.cloud.speech.v1.StreamingRecognizeRequest
 import com.google.cloud.speech.v1.StreamingRecognizeResponse
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
+import com.google.protobuf.ByteString
 import com.soldevcode.composechat.data.GptApi
 import com.soldevcode.composechat.data.GoogleCredentialRepositoryImpl
 import com.soldevcode.composechat.data.RetrofitHelper
 import com.soldevcode.composechat.data.dto.GptResponse
 import com.soldevcode.composechat.data.dto.MessagesRequest
 import com.soldevcode.composechat.models.ConversationModel
+import com.soldevcode.composechat.util.SpeechCredentialsProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val networkMarsPhotosRepository: GoogleCredentialRepositoryImpl) : ViewModel() {
+class MainViewModel(private val googleCredential: GoogleCredentialRepositoryImpl) : ViewModel() {
 
     private val listOfWords = mutableListOf<String>()
     private var responseObserver: ResponseObserver<StreamingRecognizeResponse?>? = null
@@ -32,7 +45,7 @@ class MainViewModel(private val networkMarsPhotosRepository: GoogleCredentialRep
     private var prompt: ArrayList<MessagesRequest>? = arrayListOf()
     private var isRecording = false
     private var request: StreamingRecognizeRequest? = null
-
+    val textFieldValue = mutableStateOf(String())
 
 
     private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
@@ -42,16 +55,8 @@ class MainViewModel(private val networkMarsPhotosRepository: GoogleCredentialRep
     private fun getConversations(): MutableList<ConversationModel> =
         conversationsLiveData.value ?: mutableListOf()
 
-    var jsonLiveData: GoogleCredentials? = null
-
-    fun updateJsonValue(value: GoogleCredentials) {
-        jsonLiveData = value
-    }
-
-    private fun getGoogleCredentials() = jsonLiveData
 
     suspend fun addQuestion(chatOwner: String, question: String) {
-        println("ez most biztos jo = ${networkMarsPhotosRepository.getMarsPhotos().map { it }.toString()}")
         val items = getConversations()
         _conversationsLiveData.value = items.toMutableList().apply {
             add(ConversationModel(chatOwner = chatOwner, question = question))
@@ -73,12 +78,12 @@ class MainViewModel(private val networkMarsPhotosRepository: GoogleCredentialRep
             .build()
     }
 
-   /* @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission")
     fun startRecording() {
-        val credentialsProvider =
-            jsonLiveData?.let { speechCredentialsProvider.getSpeechClient(it) }
-
-        val credentialsProvider = SpeechCredentialsProvider().getSpeechClient(streamProvider)
+        println("google credential = ${googleCredential.getInputStream()}")
+        val credentialsProvider = SpeechCredentialsProvider().getSpeechClient(
+            googleCredential.getInputStream()
+        )
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 SpeechClient.create(credentialsProvider).use { client ->
@@ -100,8 +105,9 @@ class MainViewModel(private val networkMarsPhotosRepository: GoogleCredentialRep
                                 prompt?.add(MessagesRequest("user", newTranscriptions.toString()))
                                 isRecording = false
                                 stopRecording()
+                                textFieldValue.value = newTranscriptions[0].toString()
 
-                                fetchApiResponse(newTranscriptions[0].toString())
+                                //fetchApiResponse(newTranscriptions[0].toString())
                             }
                         }
 
@@ -158,13 +164,13 @@ class MainViewModel(private val networkMarsPhotosRepository: GoogleCredentialRep
             } catch (e: Exception) {
                 println("try catch error in main activity: $e")
             }
-            responseObserver?.onComplete()
+            //responseObserver?.onComplete()
         }
     }
-*/
+
     private fun stopRecording() {
         audioRecord.stop()  // Stop recording
-        responseObserver?.onComplete()
+       // responseObserver?.onComplete()
     }
 
     private fun addAnswer(answer: String, chatOwner: String) {

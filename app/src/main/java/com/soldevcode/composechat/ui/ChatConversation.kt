@@ -10,7 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.soldevcode.composechat.MainViewModel
+import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.ui.components.MessageBox
 
 @Composable

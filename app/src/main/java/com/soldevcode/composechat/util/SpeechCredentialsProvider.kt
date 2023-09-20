@@ -4,7 +4,6 @@ import android.content.Context
 import com.google.api.gax.core.FixedCredentialsProvider
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.speech.v1.SpeechSettings
-import com.soldevcode.composechat.R
 import java.io.InputStream
 
 class SpeechCredentialsProvider() : GoogleCredentials() {
@@ -22,7 +21,9 @@ class SpeechCredentialsProvider() : GoogleCredentials() {
 
 
         // Create GoogleCredentials from the JSON key file
-        return context.resources.openRawResource(R.raw.google_key)
+        return context.assets.open("google_key.json")
+
+        //return context.resources.openRawResource(R.raw.google_key)
     }
 
   /*  fun createSpeechClient(): SpeechSettings? {
