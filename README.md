@@ -5,8 +5,8 @@
 Compose Chat app using Kotlin. Very simple UI includes preview every component to easy to understand Compose not require additional fake data or other method.  
 Advantages:
 - Fast and Easy
-- multi language
-- simple but elegant UI.
+- Multi language
+- Simple but elegant UI.
 
 ## About
 
@@ -17,27 +17,34 @@ This app uses the latest libraries and tools:
 - LiveData.
 - MVVM architecture;
 - Clean Architecture;
-- Google Text-Speech;
+- Google Speech-Text streaming (grpc);
+- OpenAi Gpt3.5 streaming;
+- Manual Dependency Injection
   
 ## Development require:
-- implement voice control
 - add GPT4
 
 ## Conclusion:
+THIS PROJECT SHOULD NOT BE USED IN PRODUCTION.
+- The Google credential json is stored in "assests" folder for the simplicity. To use this in production would require an authentication server to store json credential.
+
+Dependency Injection used.
+- Demonstrates how to pass Context safely to Viemodel.
+
 This is an experimental project using Compose LazyColum. 
 - Store conversation in LiveData
 
 Conversations stored in ViewModel as MutableList<ConversationModel> .
 However there is a problem with adding or changing item value in exiting conversationModel.
 Adding to the liveData like this: https://developer.android.com/topic/libraries/architecture/livedata#update_livedata_objects
-does not trigger the observer when recompensation happens but add a new ConversationModel object to a list of ConversationModel objects or the other solution to use HashMap.
+does not trigger the observer when recompensation happens but add a new ConversationModel object to a list of Conversations or the other solution to use HashMap.
 
 - By Remember
 
 Following this https://developer.android.com/jetpack/compose/performance/bestpractices#avoid-backwards
-We can use “var count by remember { mutableStateOf(0) }” to store our list items what nice if data does not come from streaming API otherwise does not work.
+We can use “var count by remember { mutableStateOf(0) }” to store our list items would be nice if data does not come from streaming API otherwise does not work.
 
-- AutoScrolling in LazyColumn when streamin.
+- AutoScrolling in LazyColumn when streaming.
   
 Referring to this article https://developer.android.com/jetpack/compose/lists#react-to-scroll-position
 this require addition code to add lazyColumn
@@ -50,7 +57,7 @@ LaunchedEffect(favourites.size) {
 
 - Take away
   
-There has been a lot of boiler plate code to make this working with LiveData so in this usecase to use Flow would much better option.
+There has been a lot of boiler plate code to make this working with LiveData and manual dependecy injection so in this usecase to use Flow and Dagger would be much better option.
 
 
 ## Video:
