@@ -1,6 +1,7 @@
 package com.soldevcode.composechat.presentation
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
@@ -11,7 +12,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.api.gax.rpc.ClientStream
 import com.google.api.gax.rpc.ResponseObserver
 import com.google.api.gax.rpc.StreamController
-import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.speech.v1.RecognitionConfig
 import com.google.cloud.speech.v1.SpeechClient
 import com.google.cloud.speech.v1.SpeechRecognitionAlternative
@@ -24,8 +24,9 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
 import com.google.protobuf.ByteString
-import com.soldevcode.composechat.data.GptApi
+import com.soldevcode.composechat.data.GoogleCredentialRepository
 import com.soldevcode.composechat.data.GoogleCredentialRepositoryImpl
+import com.soldevcode.composechat.data.GptApi
 import com.soldevcode.composechat.data.RetrofitHelper
 import com.soldevcode.composechat.data.dto.GptResponse
 import com.soldevcode.composechat.data.dto.MessagesRequest
@@ -35,8 +36,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.InputStream
 
-class MainViewModel(private val googleCredential: GoogleCredentialRepositoryImpl) : ViewModel() {
+class MainViewModel(private val googleCredential: GoogleCredentialRepository) : ViewModel() {
 
     private val listOfWords = mutableListOf<String>()
     private var responseObserver: ResponseObserver<StreamingRecognizeResponse?>? = null
@@ -55,7 +57,6 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepositoryImpl
     private fun getConversations(): MutableList<ConversationModel> =
         conversationsLiveData.value ?: mutableListOf()
 
-
     suspend fun addQuestion(chatOwner: String, question: String) {
         val items = getConversations()
         _conversationsLiveData.value = items.toMutableList().apply {
@@ -65,7 +66,7 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepositoryImpl
 
     fun setRecording() {
         isRecording = true
-        //API service set up
+        //API service set up for Hungarian language
         val recognitionConfig: RecognitionConfig = RecognitionConfig.newBuilder()
             .setEncoding(RecognitionConfig.AudioEncoding.LINEAR16)
             .setLanguageCode("hu-HU")
@@ -78,11 +79,15 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepositoryImpl
             .build()
     }
 
+    /** Referring to Google documentation
+    https://cloud.google.com/speech-to-text
+    /docs/transcribe-streaming-audio#perform_streaming_speech_recognition_on_an_audio_stream
+     */
     @SuppressLint("MissingPermission")
     fun startRecording() {
         println("google credential = ${googleCredential.getInputStream()}")
         val credentialsProvider = SpeechCredentialsProvider().getSpeechClient(
-            googleCredential.getInputStream()
+            googleCredential.getInputStream().assets.open("google_key.json")
         )
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -164,7 +169,7 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepositoryImpl
             } catch (e: Exception) {
                 println("try catch error in main activity: $e")
             }
-            //responseObserver?.onComplete()
+            responseObserver?.onComplete()
         }
     }
 

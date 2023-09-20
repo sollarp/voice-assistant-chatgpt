@@ -23,7 +23,27 @@ import android.content.Context
 /**
  * Dependency Injection container at the application level.
  */
+
 interface AppContainer {
+    val googleCredentialRepository: GoogleCredentialRepository
+    val getInputStream: Context
+
+}
+class DefaultAppContainer(appContext: Context) : AppContainer {
+    override val googleCredentialRepository: GoogleCredentialRepository by lazy {
+        GoogleCredentialRepositoryImpl(getInputStream)
+    }
+
+    override val getInputStream: Context by lazy {
+        //appContext.assets.open("google_key.json")
+        appContext
+    }
+}
+
+
+
+
+/*interface AppContainer {
     val googleCredentialRepository: GoogleCredentialRepository
 
 }
@@ -34,8 +54,8 @@ class DefaultAppContainer(appContext: Context) : AppContainer {
         GoogleCredentialRepositoryImpl(getInputStream)
     }
 
-    /**
+    *//**
      * DI implementation for Mars photos repository
-     */
+     *//*
 
-}
+}*/

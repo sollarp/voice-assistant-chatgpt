@@ -2,8 +2,16 @@ package com.soldevcode.composechat.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.soldevcode.composechat.data.GoogleCredentialRepositoryImpl
 
+fun <VM: ViewModel> viewModelFactory(initializer: () -> VM): ViewModelProvider.Factory {
+    return object : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return initializer() as T
+        }
+    }
+}
+
+/*
 class ViewModelFactoryHelper(private val repository: GoogleCredentialRepositoryImpl) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
@@ -12,3 +20,4 @@ class ViewModelFactoryHelper(private val repository: GoogleCredentialRepositoryI
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
+*/
