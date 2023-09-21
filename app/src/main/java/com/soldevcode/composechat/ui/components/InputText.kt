@@ -42,7 +42,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun TextInput() {
     val scope = rememberCoroutineScope()
-    var text by remember { mutableStateOf(TextFieldValue("")) }
     val mainViewModel: MainViewModel = viewModel()
 
     Box(
@@ -65,7 +64,7 @@ fun TextInput() {
                 TextField(
                     value = mainViewModel.textFieldValue.value,
                     onValueChange = {
-                        mainViewModel.textFieldValue.value = text.text
+                        mainViewModel.textFieldValue.value = it
                     },
                     label = null,
                     placeholder = { Text("Ask me anything", fontSize = 16.sp) },
@@ -92,7 +91,7 @@ fun TextInput() {
                     onClick = {
                         scope.launch {
                             val setText = mainViewModel.textFieldValue.value
-                            text = TextFieldValue("")
+                            mainViewModel.textFieldValue.value = ""
                             mainViewModel.addQuestion(chatOwner = "user", question = setText)
                             mainViewModel.fetchApiResponse(setText)
                         }
