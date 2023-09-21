@@ -2,8 +2,14 @@ package com.soldevcode.composechat.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,9 +25,11 @@ import com.soldevcode.composechat.models.ConversationModel
 
 
 @Composable
-fun MessageBox(msg: ConversationModel) {
-    Column(
-        horizontalAlignment = Alignment.Start,
+fun MessageBox(
+    msg: ConversationModel,
+    onDeleteClicked: () -> Unit
+) {
+    Row(
         modifier = Modifier
             .fillMaxSize()
             .padding(vertical = 5.dp, horizontal = 10.dp)
@@ -36,21 +44,41 @@ fun MessageBox(msg: ConversationModel) {
                 )
         )
         {
-            if (msg.chatOwner == "user"){
-                UserMessageCard( msg = msg.question )
+            if (msg.chatOwner == "user") {
+                UserMessageCard(msg = msg.question)
                 Spacer(modifier = Modifier.height(16.dp))
-            }else {
-                BotMessageCard( msg = msg.answer )
+            } else {
+                BotMessageCard(msg = msg.answer, onDeleteClicked)
+            }
+        }
+
+        //Add a 5dp spacer between the two boxes
+        Spacer(modifier = Modifier.width(10.dp))
+
+        //Add a box to center the speaker icon
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterVertically)
+        ) {
+            if (msg.chatOwner == "bot") {
+                Image(
+                    painter = painterResource(id = R.drawable.icon_speaker),
+                    contentDescription = "Contact profile picture",
+                    modifier = Modifier
+                        .clickable { onDeleteClicked() }
+                )
             }
         }
     }
 }
 
+
 @Composable
 fun UserMessageCard(msg: String) {
     Row(
         modifier = Modifier.padding(start = 5.dp, top = 5.dp, bottom = 5.dp, end = 5.dp)
-    ){
+    ) {
         Image(
             painter = painterResource(id = R.drawable.icon_user),
             contentDescription = "Contact profile picture",
@@ -63,10 +91,14 @@ fun UserMessageCard(msg: String) {
 }
 
 @Composable
-fun BotMessageCard(msg: String) {
+fun BotMessageCard(
+    msg: String,
+    onDeleteClicked: () -> Unit
+) {
+
     Row(
         modifier = Modifier.padding(start = 5.dp, top = 5.dp, bottom = 5.dp, end = 5.dp)
-    ){
+    ) {
         Image(
             painter = painterResource(id = R.drawable.icons_robot),
             contentDescription = "Contact profile picture",
@@ -75,17 +107,20 @@ fun BotMessageCard(msg: String) {
             text = msg,
             style = TextStyle(fontSize = 16.sp)
         )
+
     }
 
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageBox() {
     MessageBox(
         msg = ConversationModel(
-            question = "user request field",
-            chatOwner = "user")
+            answer = "user request field",
+            chatOwner = "bot")
     )
 }
+*/
 
