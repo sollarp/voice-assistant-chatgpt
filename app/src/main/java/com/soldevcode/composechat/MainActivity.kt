@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             viewModel<MainViewModel>(
                 factory = viewModelFactory {
-                    MainViewModel(MyApp.container.googleCredentialRepository, application)
+                    MainViewModel(MyApp.container.applicationContextRepository)
                 }
             )
             ConversationScreen()

@@ -25,17 +25,17 @@ import android.content.Context
  */
 
 interface AppContainer {
-    val googleCredentialRepository: GoogleCredentialRepository
+    val applicationContextRepository: ApplicationContextRepo
     val getInputStream: Context
 
 }
-class DefaultAppContainer(appContext: Context) : AppContainer {
-    override val googleCredentialRepository: GoogleCredentialRepository by lazy {
-        GoogleCredentialRepositoryImpl(getInputStream)
+class DefaultAppContainer(appContext: Context ) : AppContainer {
+
+    override val applicationContextRepository: ApplicationContextRepo by lazy {
+        ApplicationContextRepoImpl(getInputStream)
     }
 
     override val getInputStream: Context by lazy {
-        //appContext.assets.open("google_key.json")
         appContext
     }
 }
