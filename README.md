@@ -20,6 +20,7 @@ This app uses the latest libraries and tools:
 - Google Speech-Text streaming (grpc);
 - OpenAi Gpt3.5 streaming;
 - Manual Dependency Injection
+- Text to Speech in Hungarian
   
 ## Development require:
 - add GPT4
