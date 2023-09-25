@@ -1,10 +1,14 @@
 package com.soldevcode.composechat.presentation
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
+import android.os.Bundle
+import android.speech.RecognitionListener
+import android.speech.tts.SynthesisRequest
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,9 +40,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.InputStream
+import android.speech.tts.TextToSpeech
+import androidx.lifecycle.AndroidViewModel
+import java.util.Locale
 
-class MainViewModel(private val googleCredential: GoogleCredentialRepository) : ViewModel() {
+class MainViewModel(private val googleCredential: GoogleCredentialRepository,
+                    application: Application
+) : AndroidViewModel(application) {
 
     private val listOfWords = mutableListOf<String>()
     private var responseObserver: ResponseObserver<StreamingRecognizeResponse?>? = null
@@ -48,6 +56,8 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepository) : 
     private var isRecording = false
     private var request: StreamingRecognizeRequest? = null
     val textFieldValue = mutableStateOf(String())
+    val context: Context = application.applicationContext
+
 
 
     private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
@@ -62,6 +72,28 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepository) : 
         _conversationsLiveData.value = items.toMutableList().apply {
             add(ConversationModel(chatOwner = chatOwner, question = question))
         }
+    }
+    private var textToSpeech: TextToSpeech? = null
+
+    init {
+        textToSpeech = TextToSpeech(context
+        ) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val locale = Locale("hu", "HU")
+                textToSpeech!!.language = locale
+            } else {
+                // Handle error
+            }
+        }
+    }
+
+    fun speak(text: String) {
+        textToSpeech!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        textToSpeech?.shutdown()
     }
 
     fun setRecording() {
@@ -175,7 +207,7 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepository) : 
 
     private fun stopRecording() {
         audioRecord.stop()  // Stop recording
-       // responseObserver?.onComplete()
+        // responseObserver?.onComplete()
     }
 
     private fun addAnswer(answer: String, chatOwner: String) {
