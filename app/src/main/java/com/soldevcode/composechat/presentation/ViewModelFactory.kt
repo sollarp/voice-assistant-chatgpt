@@ -10,14 +10,3 @@ fun <VM: ViewModel> viewModelFactory(initializer: () -> VM): ViewModelProvider.F
         }
     }
 }
-
-/*
-class ViewModelFactoryHelper(private val repository: GoogleCredentialRepositoryImpl) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
-*/

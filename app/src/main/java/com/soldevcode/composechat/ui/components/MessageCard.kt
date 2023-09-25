@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Star
@@ -48,7 +49,7 @@ fun MessageBox(
                 UserMessageCard(msg = msg.question)
                 Spacer(modifier = Modifier.height(16.dp))
             } else {
-                BotMessageCard(msg = msg.answer, onDeleteClicked)
+                BotMessageCard(msg = msg.answer)
             }
         }
 
@@ -65,8 +66,7 @@ fun MessageBox(
                 Image(
                     painter = painterResource(id = R.drawable.icon_speaker),
                     contentDescription = "Contact profile picture",
-                    modifier = Modifier
-                        .clickable { onDeleteClicked() }
+                    modifier = Modifier.clickable { onDeleteClicked() }
                 )
             }
         }
@@ -93,7 +93,6 @@ fun UserMessageCard(msg: String) {
 @Composable
 fun BotMessageCard(
     msg: String,
-    onDeleteClicked: () -> Unit
 ) {
 
     Row(
@@ -103,10 +102,14 @@ fun BotMessageCard(
             painter = painterResource(id = R.drawable.icons_robot),
             contentDescription = "Contact profile picture",
         )
-        Text(
-            text = msg,
-            style = TextStyle(fontSize = 16.sp)
-        )
+        SelectionContainer(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(
+                text = msg,
+                style = TextStyle(fontSize = 16.sp)
+            )
+        }
 
     }
 

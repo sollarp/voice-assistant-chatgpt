@@ -1,7 +1,6 @@
 package com.soldevcode.composechat.presentation
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
@@ -24,8 +23,6 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
 import com.google.protobuf.ByteString
-import com.soldevcode.composechat.data.GoogleCredentialRepository
-import com.soldevcode.composechat.data.GoogleCredentialRepositoryImpl
 import com.soldevcode.composechat.data.GptApi
 import com.soldevcode.composechat.data.RetrofitHelper
 import com.soldevcode.composechat.data.dto.GptResponse
@@ -36,9 +33,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.InputStream
+import android.speech.tts.TextToSpeech
+import com.soldevcode.composechat.data.ApplicationContextRepo
+import java.util.Locale
 
-class MainViewModel(private val googleCredential: GoogleCredentialRepository) : ViewModel() {
+class MainViewModel(
+    private val applicationContext: ApplicationContextRepo
+) : ViewModel() {
 
     private val listOfWords = mutableListOf<String>()
     private var responseObserver: ResponseObserver<StreamingRecognizeResponse?>? = null
@@ -48,6 +49,7 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepository) : 
     private var isRecording = false
     private var request: StreamingRecognizeRequest? = null
     val textFieldValue = mutableStateOf(String())
+    //val context: Context = application.applicationContext
 
 
     private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
@@ -62,6 +64,30 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepository) : 
         _conversationsLiveData.value = items.toMutableList().apply {
             add(ConversationModel(chatOwner = chatOwner, question = question))
         }
+    }
+
+    private var textToSpeech: TextToSpeech? = null
+
+    init {
+        textToSpeech = TextToSpeech(
+            applicationContext.getContext()
+        ) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val locale = Locale("hu", "HU")
+                textToSpeech!!.language = locale
+            } else {
+                // Handle error
+            }
+        }
+    }
+
+    fun speak(text: String) {
+        textToSpeech!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        textToSpeech?.shutdown()
     }
 
     fun setRecording() {
@@ -85,9 +111,8 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepository) : 
      */
     @SuppressLint("MissingPermission")
     fun startRecording() {
-        println("google credential = ${googleCredential.getInputStream()}")
         val credentialsProvider = SpeechCredentialsProvider().getSpeechClient(
-            googleCredential.getInputStream().assets.open("google_key.json")
+            applicationContext.getContext().assets.open("google_key.json")
         )
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -175,7 +200,7 @@ class MainViewModel(private val googleCredential: GoogleCredentialRepository) : 
 
     private fun stopRecording() {
         audioRecord.stop()  // Stop recording
-       // responseObserver?.onComplete()
+        // responseObserver?.onComplete()
     }
 
     private fun addAnswer(answer: String, chatOwner: String) {

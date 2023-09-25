@@ -9,16 +9,18 @@ import com.soldevcode.composechat.presentation.viewModelFactory
 import com.soldevcode.composechat.ui.ConversationScreen
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             viewModel<MainViewModel>(
                 factory = viewModelFactory {
-                    MainViewModel(MyApp.container.googleCredentialRepository)
+                    MainViewModel(MyApp.container.applicationContextRepository)
                 }
             )
             ConversationScreen()
         }
     }
+
 }

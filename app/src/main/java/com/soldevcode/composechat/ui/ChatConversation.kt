@@ -43,6 +43,7 @@ fun ConversationList(viewModel: MainViewModel = viewModel()) {
                         msg = conversations[conversation],
                         onDeleteClicked = {
                             println("clicked = ${conversations[conversation].answer}")
+                            viewModel.speak(conversations[conversation].answer)
                         }
                     )
 
