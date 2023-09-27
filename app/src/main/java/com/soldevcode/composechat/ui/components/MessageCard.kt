@@ -6,11 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,7 +23,7 @@ import com.soldevcode.composechat.models.ConversationModel
 @Composable
 fun MessageBox(
     msg: ConversationModel,
-    onDeleteClicked: () -> Unit
+    onSpeakerClicked: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -66,7 +61,7 @@ fun MessageBox(
                 Image(
                     painter = painterResource(id = R.drawable.icon_speaker),
                     contentDescription = "Contact profile picture",
-                    modifier = Modifier.clickable { onDeleteClicked() }
+                    modifier = Modifier.clickable { onSpeakerClicked() }
                 )
             }
         }
@@ -115,15 +110,23 @@ fun BotMessageCard(
 
 }
 
-/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewMessageBox() {
     MessageBox(
         msg = ConversationModel(
+            answer = "bot request field",
+            chatOwner = "bot"),
+        onSpeakerClicked = {}
+
+    )
+
+    MessageBox(
+        msg = ConversationModel(
             answer = "user request field",
-            chatOwner = "bot")
+            chatOwner = "user"),
+        onSpeakerClicked = {}
+
     )
 }
-*/
 

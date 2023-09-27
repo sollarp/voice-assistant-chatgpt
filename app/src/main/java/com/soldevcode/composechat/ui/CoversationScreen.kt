@@ -124,7 +124,7 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                         }
                     }
                 Spacer(modifier = Modifier.weight(.01f)) // Pushes TextInput to the bottom
-                TextInput() // This will be at the bottom because of the weight modifier applied to the Box above
+                TextInput(viewModel) // This will be at the bottom because of the weight modifier applied to the Box above
             }
         }
     }

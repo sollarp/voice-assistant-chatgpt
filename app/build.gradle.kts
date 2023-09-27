@@ -85,7 +85,6 @@ android {
 
 dependencies {
 
-    //implementation("com.google.android.gms:play-services-tts:19.0.2")
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0-beta01")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
@@ -93,7 +92,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.4.3")
 
     //delete this
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation ("com.squareup.retrofit2:converter-scalars:2.1.0")
 
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")

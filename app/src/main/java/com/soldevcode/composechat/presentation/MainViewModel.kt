@@ -48,9 +48,7 @@ class MainViewModel(
     private var prompt: ArrayList<MessagesRequest>? = arrayListOf()
     private var isRecording = false
     private var request: StreamingRecognizeRequest? = null
-    val textFieldValue = mutableStateOf(String())
-    //val context: Context = application.applicationContext
-
+    val speechToTextValue = mutableStateOf(String())
 
     private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
     val conversationsLiveData: MutableLiveData<MutableList<ConversationModel>>
@@ -59,7 +57,7 @@ class MainViewModel(
     private fun getConversations(): MutableList<ConversationModel> =
         conversationsLiveData.value ?: mutableListOf()
 
-    suspend fun addQuestion(chatOwner: String, question: String) {
+    fun addQuestion(chatOwner: String, question: String) {
         val items = getConversations()
         _conversationsLiveData.value = items.toMutableList().apply {
             add(ConversationModel(chatOwner = chatOwner, question = question))
@@ -131,11 +129,10 @@ class MainViewModel(
                                     .flatMap { it.alternativesList }
                                     .map { it.transcript }
                                 transcriptions.addAll(newTranscriptions)
-                                // resultTextView.text = newTranscriptions[0].toString()
-                                prompt?.add(MessagesRequest("user", newTranscriptions.toString()))
+                                //prompt?.add(MessagesRequest("user", newTranscriptions.toString()))
                                 isRecording = false
                                 stopRecording()
-                                textFieldValue.value = newTranscriptions[0].toString()
+                                speechToTextValue.value = newTranscriptions[0].toString()
 
                                 //fetchApiResponse(newTranscriptions[0].toString())
                             }
@@ -208,14 +205,25 @@ class MainViewModel(
         if (chatOwner == "bot" && items.lastOrNull()?.chatOwner == "bot") {
             val updatedItem = items.last().copy(answer = answer)
             _conversationsLiveData.value = (items.dropLast(1) + updatedItem).toMutableList()
+            //botAddToPrompt(content = getConversations().last().answer)
         } else {
             _conversationsLiveData.value = (items +
                     ConversationModel(chatOwner = chatOwner, answer = answer)).toMutableList()
         }
     }
+    fun userAddToPrompt(content: String) {
+        prompt?.add(MessagesRequest("user", content))
+    }
+
+    fun botAddToPrompt() {
+        prompt?.add(MessagesRequest("system", getConversations().last().answer ))
+    }
 
     fun fetchApiResponse(question: String) {
         viewModelScope.launch {
+
+            ////////////////////////////////////////
+            println("ez kell nekem sending to =  ${prompt.toString()}")
             val getApiResponse = RetrofitHelper.getInstance().create(GptApi::class.java)
             val requestBody = JsonObject().apply {
                 addProperty("model", "gpt-3.5-turbo")
