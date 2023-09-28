@@ -21,6 +21,7 @@ This app uses the latest libraries and tools:
 - OpenAi Gpt3.5 streaming;
 - Manual Dependency Injection
 - Text to Speech in Hungarian
+- Advanced Preview where ViewModel used.
   
 ## Development require:
 - add GPT4
