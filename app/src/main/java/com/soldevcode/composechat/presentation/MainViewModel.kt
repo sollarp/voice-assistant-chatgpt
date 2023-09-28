@@ -50,6 +50,10 @@ class MainViewModel(
     private var request: StreamingRecognizeRequest? = null
     val speechToTextValue = mutableStateOf(String())
 
+    private fun resetSpeechToText() {
+        speechToTextValue.value = ""
+    }
+
     private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
     val conversationsLiveData: MutableLiveData<MutableList<ConversationModel>>
         get() = _conversationsLiveData
@@ -62,6 +66,7 @@ class MainViewModel(
         _conversationsLiveData.value = items.toMutableList().apply {
             add(ConversationModel(chatOwner = chatOwner, question = question))
         }
+        resetSpeechToText()
     }
 
     private var textToSpeech: TextToSpeech? = null
@@ -221,9 +226,6 @@ class MainViewModel(
 
     fun fetchApiResponse(question: String) {
         viewModelScope.launch {
-
-            ////////////////////////////////////////
-            println("ez kell nekem sending to =  ${prompt.toString()}")
             val getApiResponse = RetrofitHelper.getInstance().create(GptApi::class.java)
             val requestBody = JsonObject().apply {
                 addProperty("model", "gpt-3.5-turbo")

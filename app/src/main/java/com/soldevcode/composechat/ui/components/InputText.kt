@@ -27,18 +27,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpaper
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.soldevcode.composechat.presentation.MainViewModel
 
 @Composable
 fun TextInput(mainViewModel: MainViewModel) {
-    TextInput(onSendMessage = { text ->
-        mainViewModel.addQuestion(chatOwner = "user", question = text)
-        mainViewModel.fetchApiResponse(text)
-        mainViewModel.botAddToPrompt()
-        mainViewModel.userAddToPrompt(text)
-    },
+    TextInput(
+        onSendMessage = { text ->
+            mainViewModel.addQuestion(chatOwner = "user", question = text)
+            mainViewModel.fetchApiResponse(text)
+            mainViewModel.botAddToPrompt()
+            mainViewModel.userAddToPrompt(text)
+        },
         speechToText = mainViewModel.speechToTextValue.value
     )
 }
@@ -48,7 +50,7 @@ fun TextInput(mainViewModel: MainViewModel) {
 @Composable
 private fun TextInput(
     onSendMessage: (String) -> Unit,
-    speechToText: String
+    speechToText: String,
 ) {
 
     val (textFieldValue, setTextFieldValue) = rememberSaveable {
@@ -124,8 +126,9 @@ private fun TextInput(
 fun PreviewInputText(
 ) {
     MaterialTheme {
-        TextInput(onSendMessage = {},
+        TextInput(
+            onSendMessage = {},
             speechToText = ""
-            )
+        )
     }
 }
