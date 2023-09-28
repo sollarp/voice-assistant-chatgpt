@@ -57,7 +57,7 @@ fun MessageBox(
                 .fillMaxWidth()
                 .align(Alignment.CenterVertically)
         ) {
-            if (msg.chatOwner == "bot") {
+            if (msg.chatOwner == "system") {
                 Image(
                     painter = painterResource(id = R.drawable.icon_speaker),
                     contentDescription = "Contact profile picture",
@@ -116,7 +116,7 @@ fun PreviewMessageBox() {
     MessageBox(
         msg = ConversationModel(
             answer = "bot request field",
-            chatOwner = "bot"),
+            chatOwner = "system"),
         onSpeakerClicked = {}
 
     )

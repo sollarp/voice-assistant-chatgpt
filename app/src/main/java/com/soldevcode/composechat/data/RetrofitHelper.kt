@@ -8,7 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitHelper {
-
     fun getInstance(): Retrofit {
         val timeoutDuration = 30L // Timeout duration in seconds
         val gson = GsonBuilder()

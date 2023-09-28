@@ -74,7 +74,6 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
         )
     }
 
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -123,8 +122,10 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                             }
                         }
                     }
-                Spacer(modifier = Modifier.weight(.01f)) // Pushes TextInput to the bottom
-                TextInput(viewModel) // This will be at the bottom because of the weight modifier applied to the Box above
+                // Pushes TextInput to the bottom
+                Spacer(modifier = Modifier.weight(.01f))
+                // This will be at the bottom because of the weight modifier applied to the Box above
+                TextInput(viewModel)
             }
         }
     }
