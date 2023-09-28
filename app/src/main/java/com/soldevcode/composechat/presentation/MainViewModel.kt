@@ -19,14 +19,11 @@ import com.google.cloud.speech.v1.StreamingRecognitionResult
 import com.google.cloud.speech.v1.StreamingRecognizeRequest
 import com.google.cloud.speech.v1.StreamingRecognizeResponse
 import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
 import com.google.protobuf.ByteString
 import com.soldevcode.composechat.data.GptApi
 import com.soldevcode.composechat.data.RetrofitHelper
 import com.soldevcode.composechat.data.dto.GptResponse
-import com.soldevcode.composechat.data.dto.MessagesRequest
 import com.soldevcode.composechat.models.ConversationModel
 import com.soldevcode.composechat.util.SpeechCredentialsProvider
 import kotlinx.coroutines.CoroutineScope
@@ -34,7 +31,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import android.speech.tts.TextToSpeech
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.soldevcode.composechat.data.ApplicationContextRepo
+import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
+import com.soldevcode.composechat.data.dto.gptRequest.Message
 import java.util.Locale
 
 class MainViewModel(
@@ -45,14 +46,11 @@ class MainViewModel(
     private var responseObserver: ResponseObserver<StreamingRecognizeResponse?>? = null
     val transcriptions = mutableListOf<String>()
     private lateinit var audioRecord: AudioRecord
-    private var prompt: ArrayList<MessagesRequest>? = arrayListOf()
+    private var messages: ArrayList<Message> = arrayListOf()
     private var isRecording = false
     private var request: StreamingRecognizeRequest? = null
     val speechToTextValue = mutableStateOf(String())
-
-    private fun resetSpeechToText() {
-        speechToTextValue.value = ""
-    }
+    private var textToSpeech: TextToSpeech? = null
 
     private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
     val conversationsLiveData: MutableLiveData<MutableList<ConversationModel>>
@@ -61,15 +59,12 @@ class MainViewModel(
     private fun getConversations(): MutableList<ConversationModel> =
         conversationsLiveData.value ?: mutableListOf()
 
-    fun addQuestion(chatOwner: String, question: String) {
+    fun addQuestionToLiveData(chatOwner: String, question: String) {
         val items = getConversations()
         _conversationsLiveData.value = items.toMutableList().apply {
             add(ConversationModel(chatOwner = chatOwner, question = question))
         }
-        resetSpeechToText()
     }
-
-    private var textToSpeech: TextToSpeech? = null
 
     init {
         textToSpeech = TextToSpeech(
@@ -124,7 +119,6 @@ class MainViewModel(
                         val responses = mutableListOf<StreamingRecognizeResponse>()
 
                         override fun onStart(controller: StreamController) {
-
                         }
 
                         override fun onResponse(response: StreamingRecognizeResponse?) {
@@ -138,8 +132,6 @@ class MainViewModel(
                                 isRecording = false
                                 stopRecording()
                                 speechToTextValue.value = newTranscriptions[0].toString()
-
-                                //fetchApiResponse(newTranscriptions[0].toString())
                             }
                         }
 
@@ -175,7 +167,6 @@ class MainViewModel(
                         )
                         .setBufferSizeInBytes(3200)
                         .build()
-
                     // Start recording
                     audioRecord.startRecording()
 
@@ -207,39 +198,42 @@ class MainViewModel(
 
     private fun addAnswer(answer: String, chatOwner: String) {
         val items = getConversations()
-        if (chatOwner == "bot" && items.lastOrNull()?.chatOwner == "bot") {
+        if (chatOwner == "system" && items.lastOrNull()?.chatOwner == "system") {
             val updatedItem = items.last().copy(answer = answer)
             _conversationsLiveData.value = (items.dropLast(1) + updatedItem).toMutableList()
-            //botAddToPrompt(content = getConversations().last().answer)
         } else {
             _conversationsLiveData.value = (items +
                     ConversationModel(chatOwner = chatOwner, answer = answer)).toMutableList()
         }
     }
-    fun userAddToPrompt(content: String) {
-        prompt?.add(MessagesRequest("user", content))
+
+    fun jsonRequestBody() {
+        val chatOwner = getConversations().last().chatOwner
+        val chatQuestion = getConversations().last().question
+        val chatAnswer = getConversations().last().answer
+
+        if (chatOwner == "user") {
+            messages.add(Message(role = chatOwner, content = chatQuestion))
+
+        } else {
+            messages.add(Message(role = chatOwner, content = chatAnswer))
+        }
+        val request = GptRequestStream(
+            model = "gpt-3.5-turbo",
+            messages = messages,
+            stream = true
+        )
+        val gson = Gson()
+        // Convert the chat object to a JSON string
+        val jsonString = gson.toJson(request)
+        val jsonObject = JsonParser.parseString(jsonString).asJsonObject
+        fetchApiResponse(jsonObject)
     }
 
-    fun botAddToPrompt() {
-        prompt?.add(MessagesRequest("system", getConversations().last().answer ))
-    }
-
-    fun fetchApiResponse(question: String) {
+    private fun fetchApiResponse(question: JsonObject) {
         viewModelScope.launch {
             val getApiResponse = RetrofitHelper.getInstance().create(GptApi::class.java)
-            val requestBody = JsonObject().apply {
-                addProperty("model", "gpt-3.5-turbo")
-                add("messages", JsonArray().apply {
-                    val message = JsonObject().apply {
-                        addProperty("content", question)
-                        addProperty("role", "user")
-                    }
-                    add(message)
-                })
-                addProperty("stream", true)
-            }
-
-            val response = getApiResponse.getChatGptCompletion(requestBody)
+            val response = getApiResponse.getChatGptCompletion(question)
             val reader = response.charStream().buffered()
             reader.useLines { lines ->
                 lines.forEach { line ->
@@ -253,8 +247,11 @@ class MainViewModel(
                             if (getFinishReason != "stop") {
                                 val newWord = chatCompletionData.choices.map { it.delta.content }[0]
                                 listOfWords.add(newWord)
-                                addAnswer(answer = listOfWords.joinToString(""), chatOwner = "bot")
-                                delay(50) // Applied to resolve streaming conflict
+                                addAnswer(
+                                    answer = listOfWords.joinToString(""),
+                                    chatOwner = "system"
+                                )
+                                delay(20) // Applied to resolve streaming conflict
                             } else {
                                 listOfWords.clear()
                             }

@@ -11,12 +11,13 @@ data class GptResponse(
     val choices: List<ChoiceResponse>
 )
 
+@Serializable
 data class ChoiceResponse(
     val delta: Delta,
     val index: Int,
     val finish_reason: String?
 )
-
+@Serializable
 data class Delta(
     val role: String,
     val content: String

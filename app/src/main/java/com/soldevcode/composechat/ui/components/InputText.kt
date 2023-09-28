@@ -27,7 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.Wallpaper
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.soldevcode.composechat.presentation.MainViewModel
@@ -36,10 +35,8 @@ import com.soldevcode.composechat.presentation.MainViewModel
 fun TextInput(mainViewModel: MainViewModel) {
     TextInput(
         onSendMessage = { text ->
-            mainViewModel.addQuestion(chatOwner = "user", question = text)
-            mainViewModel.fetchApiResponse(text)
-            mainViewModel.botAddToPrompt()
-            mainViewModel.userAddToPrompt(text)
+            mainViewModel.addQuestionToLiveData(chatOwner = "user", question = text)
+            mainViewModel.jsonRequestBody()
         },
         speechToText = mainViewModel.speechToTextValue.value
     )

@@ -1,8 +1,8 @@
 package com.soldevcode.composechat
 
 import android.app.Application
-import com.soldevcode.composechat.data.AppContainer
-import com.soldevcode.composechat.data.DefaultAppContainer
+import com.soldevcode.composechat.di.AppContainer
+import com.soldevcode.composechat.di.DefaultAppContainer
 
 class MyApp : Application() {
     /** AppContainer instance used by the rest of classes to obtain dependencies

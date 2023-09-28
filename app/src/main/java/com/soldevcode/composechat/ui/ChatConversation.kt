@@ -34,7 +34,6 @@ fun ConversationList(viewModel: MainViewModel = viewModel()) {
         viewModel.conversationsLiveData.observeAsState().value,
         onSpeak = viewModel::speak
     )
-
 }
 
 @Composable
@@ -59,7 +58,6 @@ private fun ConversationList(
                     MessageBox(
                         msg = conversations[conversation],
                         onSpeakerClicked = {
-                            //println("clicked = ${observeConversations[conversation].answer}")
                             onSpeak(conversations[conversation].answer)
                         }
                     )
@@ -82,12 +80,10 @@ fun PreviewConversationList(
         onSpeak = {}
     )
 }
-
 /** Referring to Google documentation
  * where you must pass a large dataset to your composable preview.
 https://developer.android.com/jetpack/compose/tooling/previews#preview-data
  */
-
 class ConversationPreviewParameterProvider :
     PreviewParameterProvider<MutableList<ConversationModel>> {
     override val values: Sequence<MutableList<ConversationModel>> = sequenceOf(
@@ -97,7 +93,7 @@ class ConversationPreviewParameterProvider :
                 question = "user question in here"
             ),
             ConversationModel(
-                chatOwner = "bot",
+                chatOwner = "system",
                 answer = "bot response in here"
             )
         )
