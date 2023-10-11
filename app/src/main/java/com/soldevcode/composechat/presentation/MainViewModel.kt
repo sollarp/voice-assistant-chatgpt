@@ -19,10 +19,7 @@ import com.google.cloud.speech.v1.StreamingRecognitionResult
 import com.google.cloud.speech.v1.StreamingRecognizeRequest
 import com.google.cloud.speech.v1.StreamingRecognizeResponse
 import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
 import com.google.protobuf.ByteString
-import com.soldevcode.composechat.data.GptApi
-import com.soldevcode.composechat.data.RetrofitHelper
 import com.soldevcode.composechat.data.dto.GptResponse
 import com.soldevcode.composechat.models.ConversationModel
 import com.soldevcode.composechat.util.SpeechCredentialsProvider
@@ -34,12 +31,15 @@ import android.speech.tts.TextToSpeech
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.soldevcode.composechat.data.ApplicationContextRepo
+import com.soldevcode.composechat.data.GptApiRepo
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
 import com.soldevcode.composechat.data.dto.gptRequest.Message
 import java.util.Locale
 
+
 class MainViewModel(
-    private val applicationContext: ApplicationContextRepo
+    private val applicationContext: ApplicationContextRepo,
+    private val gptApiRepo: GptApiRepo
 ) : ViewModel() {
 
     private val listOfWords = mutableListOf<String>()
@@ -60,6 +60,7 @@ class MainViewModel(
         conversationsLiveData.value ?: mutableListOf()
 
     fun addQuestionToLiveData(chatOwner: String, question: String) {
+        listOfWords.clear()
         val items = getConversations()
         _conversationsLiveData.value = items.toMutableList().apply {
             add(ConversationModel(chatOwner = chatOwner, question = question))
@@ -232,34 +233,9 @@ class MainViewModel(
 
     private fun fetchApiResponse(question: JsonObject) {
         viewModelScope.launch {
-            val getApiResponse = RetrofitHelper.getInstance().create(GptApi::class.java)
-            val response = getApiResponse.getChatGptCompletion(question)
-            val reader = response.charStream().buffered()
-            reader.useLines { lines ->
-                lines.forEach { line ->
-                    try {
-                        val jsonString = line.substringAfter("data: ")
-                        val chatCompletionData =
-                            Gson().fromJson(jsonString, GptResponse::class.java)
-                        if (chatCompletionData != null) {
-                            val getFinishReason =
-                                chatCompletionData.choices.map { it.finish_reason }[0].toString()
-                            if (getFinishReason != "stop") {
-                                val newWord = chatCompletionData.choices.map { it.delta.content }[0]
-                                listOfWords.add(newWord)
-                                addAnswer(
-                                    answer = listOfWords.joinToString(""),
-                                    chatOwner = "system"
-                                )
-                                delay(20) // Applied to resolve streaming conflict
-                            } else {
-                                listOfWords.clear()
-                            }
-                        }
-                    } catch (e: JsonSyntaxException) {
-                        println("JSON syntax error occurred: ${e.message}")
-                    }
-                }
+            gptApiRepo.callGptApi(question) { newWord ->
+                listOfWords.add(newWord)
+                addAnswer(answer = listOfWords.joinToString(""), chatOwner = "system")
             }
         }
     }
