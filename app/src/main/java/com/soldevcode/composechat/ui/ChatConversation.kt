@@ -14,17 +14,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.common.collect.ImmutableList
 import com.soldevcode.composechat.models.ConversationModel
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.ui.components.MessageBox
+import okhttp3.internal.immutableListOf
 
 
 /** Referring to Google documentation
 https://developer.android.com/jetpack/compose/tooling/previews#best-practices
- *if you want to preview a composable that uses a ViewModel,
-you should create another composable with the parameters
-from ViewModel passed as arguments of the composable.
-This way, you don't need to preview the composable that uses the ViewModel.
+ * if you want to preview a composable that uses a ViewModel,
+ * you should create another composable with the parameters
+ * from ViewModel passed as arguments of the composable.
+ * This way, you don't need to preview the composable that uses the ViewModel.
  */
 
 @Composable
@@ -76,18 +78,20 @@ fun PreviewConversationList(
     )
     conversations: MutableList<ConversationModel>
 ) {
-    ConversationList(conversations = conversations,
-        onSpeak = {}
-    )
+    ConversationList(
+        conversations = conversations
+    ) {}
 }
 /** Referring to Google documentation
  * where you must pass a large dataset to your composable preview.
-https://developer.android.com/jetpack/compose/tooling/previews#preview-data
+ * https://developer.android.com/jetpack/compose/tooling/previews#preview-data
+ * This is a demonstration how to use ParameterProvider, can be just hardcode
+ * the parameters in the preview.
  */
-class ConversationPreviewParameterProvider :
-    PreviewParameterProvider<MutableList<ConversationModel>> {
-    override val values: Sequence<MutableList<ConversationModel>> = sequenceOf(
-        mutableListOf(
+private class ConversationPreviewParameterProvider :
+    PreviewParameterProvider<List<ConversationModel>> {
+    override val values: Sequence<List<ConversationModel>> = sequenceOf(
+        immutableListOf(
             ConversationModel(
                 chatOwner = "user",
                 question = "user question in here"

@@ -16,7 +16,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             viewModel<MainViewModel>(
                 factory = viewModelFactory {
-                    MainViewModel(MyApp.container.applicationContextRepository)
+                    MainViewModel(
+                        MyApp.container.applicationContextRepository,
+                        MyApp.container.gptApiRepository)
                 }
             )
             ConversationScreen()

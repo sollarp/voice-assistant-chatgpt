@@ -18,17 +18,22 @@ package com.soldevcode.composechat.di
 import android.content.Context
 import com.soldevcode.composechat.data.ApplicationContextRepo
 import com.soldevcode.composechat.data.ApplicationContextRepoImpl
-
-
-// This is an AppModule
+import com.soldevcode.composechat.data.GptApiRepo
+import com.soldevcode.composechat.data.GptRepositoryImpl
 
 /**
  * Dependency Injection container at the application level.
+ * Passing the Context from here to the ApplicationContextRepoImpl and inject it to ViewModel.
+ * In production environment Google Json credential not stored in app it does not need context for
+ * the inputStream to create.
+ * This is usually happens using server side authentication so this could be implemented using
+ * ApplicationContextRepo from remote resource. This is why the Context has been passed to repo.
  */
 
 interface AppContainer {
     val applicationContextRepository: ApplicationContextRepo
     val getInputStream: Context
+    val gptApiRepository: GptApiRepo
 
 }
 class DefaultAppContainer(appContext: Context ) : AppContainer {
@@ -40,24 +45,8 @@ class DefaultAppContainer(appContext: Context ) : AppContainer {
     override val getInputStream: Context by lazy {
         appContext
     }
-}
-
-
-
-
-/*interface AppContainer {
-    val googleCredentialRepository: GoogleCredentialRepository
-
-}
-
-class DefaultAppContainer(appContext: Context) : AppContainer {
-    override val googleCredentialRepository: GoogleCredentialRepository by lazy {
-        val getInputStream = appContext.assets.open("google_key.json")
-        GoogleCredentialRepositoryImpl(getInputStream)
+    override val gptApiRepository: GptApiRepo by lazy {
+        GptRepositoryImpl()
     }
 
-    *//**
-     * DI implementation for Mars photos repository
-     *//*
-
-}*/
+}
