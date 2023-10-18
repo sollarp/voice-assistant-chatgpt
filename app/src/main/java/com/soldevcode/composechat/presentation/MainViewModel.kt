@@ -113,7 +113,7 @@ class MainViewModel(
         val credentialsProvider = SpeechCredentialsProvider().getSpeechClient(
             applicationContext.getContext().assets.open("google_key.json")
         )
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             try {
                 SpeechClient.create(credentialsProvider).use { client ->
                     responseObserver = object : ResponseObserver<StreamingRecognizeResponse?> {
@@ -209,16 +209,14 @@ class MainViewModel(
     }
 
     fun jsonRequestBody() {
-        val chatOwner = getConversations().last().chatOwner
-        val chatQuestion = getConversations().last().question
-        val chatAnswer = getConversations().last().answer
+        val lastConversation = getConversations().lastOrNull()
+        val chatOwner = lastConversation?.chatOwner ?: ""
+        val content =
+            if (chatOwner == "user") lastConversation?.question ?: ""
+            else lastConversation?.answer ?: ""
 
-        if (chatOwner == "user") {
-            messages.add(Message(role = chatOwner, content = chatQuestion))
+        messages.add(Message(role = chatOwner, content = content))
 
-        } else {
-            messages.add(Message(role = chatOwner, content = chatAnswer))
-        }
         val request = GptRequestStream(
             model = "gpt-3.5-turbo",
             messages = messages,
