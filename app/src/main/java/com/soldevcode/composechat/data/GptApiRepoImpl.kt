@@ -1,102 +1,47 @@
 package com.soldevcode.composechat.data
 
 import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonSyntaxException
 import com.soldevcode.composechat.data.dto.GptResponse
+import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 interface GptApiRepo {
-    suspend fun callGptApi(question: JsonObject, callback: (String) -> Unit)
+    fun callGptApi(requestStream: GptRequestStream): Flow<String>
 }
 
 class GptRepositoryImpl : GptApiRepo {
-    override suspend fun callGptApi(question: JsonObject, callback: (String) -> Unit) {
-        val getApiResponse = RetrofitHelper.getInstance().create(GptApi::class.java)
-        val response = getApiResponse.getChatGptCompletion(question)
-        val reader = response.charStream().buffered()
+    private val client = RetrofitHelper.getInstance().create(GptApi::class.java)
 
-        reader.useLines { lines ->
-            lines.forEach { line ->
-                try {
-                    val jsonString = line.substringAfter("data: ")
-                    val chatCompletionData = Gson().fromJson(jsonString, GptResponse::class.java)
-                    chatCompletionData?.let {
-                        val getFinishReason = it.choices.map { choice -> choice.finish_reason }[0].toString()
-                        if (getFinishReason != "stop") {
-                            val newWord = it.choices.map { choice -> choice.delta.content }[0]
-                            callback(newWord)  // Invoking the callback
-                            delay(20) // Applied to resolve streaming conflict
-                        }
-                    }
-                } catch (e: JsonSyntaxException) {
-                    println("JSON syntax error occurred: ${e.message}")
-                }
-            }
-        }
+    companion object {
+        private const val FINISHED_SENTENCE_GPT = "[DONE]"
     }
-}
-
-
-
-/*
-class GptApiRepoImpl : GptApiRepo {
-    override suspend fun callGptApi(question: JsonObject): String {
-        val getApiResponse = RetrofitHelper.getInstance().create(GptApi::class.java)
-        val response = getApiResponse.getChatGptCompletion(question)
-        val reader = response.charStream().buffered()
-        reader.useLines { lines ->
-            lines.forEach { line ->
-                val jsonString = line.substringAfter("data: ")
-                val chatCompletionData =
-                    Gson().fromJson(jsonString, GptResponse::class.java)
-                if (chatCompletionData != null) {
-                    val getFinishReason =
-                        chatCompletionData.choices.map { it.finish_reason }[0].toString()
-                    if (getFinishReason != "stop") {
-                        newWord = chatCompletionData.choices.map { it.delta.content }[0]
-                        println("gyere most new word = $newWord ")
-
-                    }
-                }
-            }
-        }
-        return newWord
-    }
-}
-*/
-
-/*
-class GptApiRepoImpl : GptApiRepo {
-    override suspend fun callGptApi(question: JsonObject): String {
-
-        var newWord = ""
-
-        withContext(Dispatchers.IO) {
-            val getApiResponse = RetrofitHelper.getInstance().create(GptApi::class.java)
-            val response = getApiResponse.getChatGptCompletion(question)
+    override fun callGptApi(requestStream: GptRequestStream) =
+        flow {
+            val response = client.getChatGptCompletion(requestStream)
             val reader = response.charStream().buffered()
+
             reader.useLines { lines ->
                 lines.forEach { line ->
-                    try {
-                        val jsonString = line.substringAfter("data: ")
+                    val jsonString = line.substringAfter("data: ")
+
+                    if(jsonString != FINISHED_SENTENCE_GPT) {
                         val chatCompletionData =
                             Gson().fromJson(jsonString, GptResponse::class.java)
-                        if (chatCompletionData != null) {
+                        chatCompletionData?.let {
                             val getFinishReason =
-                                chatCompletionData.choices.map { it.finish_reason }[0].toString()
+                                it.choices.map { choice -> choice.finish_reason }[0].toString()
                             if (getFinishReason != "stop") {
-                                newWord = chatCompletionData.choices.map { it.delta.content }[0]
+                                val newWord = it.choices.map { choice -> choice.delta.content }[0]
+                                delay(20)
+                                emit(newWord)  // Invoking the callback
                             }
                         }
-                    } catch (e: JsonSyntaxException) {
-                        println("JSON syntax error occurred: ${e.message}")
                     }
                 }
             }
-        }
-        return newWord
-    }
+        }.flowOn(Dispatchers.IO)
 }
-
-*/

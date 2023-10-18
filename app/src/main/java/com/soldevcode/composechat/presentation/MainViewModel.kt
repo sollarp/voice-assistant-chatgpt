@@ -224,17 +224,13 @@ class MainViewModel(
             messages = messages,
             stream = true
         )
-        val gson = Gson()
-        // Convert the chat object to a JSON string
-        val jsonString = gson.toJson(request)
-        val jsonObject = JsonParser.parseString(jsonString).asJsonObject
-        fetchApiResponse(jsonObject)
+        fetchApiResponse(request)
     }
 
-    private fun fetchApiResponse(question: JsonObject) {
+    private fun fetchApiResponse(request: GptRequestStream) {
         viewModelScope.launch {
-            gptApiRepo.callGptApi(question) { newWord ->
-                listOfWords.add(newWord)
+            gptApiRepo.callGptApi(request).collect { word ->
+                listOfWords.add(word)
                 addAnswer(answer = listOfWords.joinToString(""), chatOwner = "system")
             }
         }
