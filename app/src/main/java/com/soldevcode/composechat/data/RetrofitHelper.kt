@@ -22,7 +22,6 @@ object RetrofitHelper {
         return Retrofit.Builder()
             .baseUrl(baseUrlOpenAI)
             .client(httpClient)
-            //.addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
