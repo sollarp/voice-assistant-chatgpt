@@ -27,6 +27,7 @@ import com.soldevcode.composechat.data.ApplicationContextRepo
 import com.soldevcode.composechat.data.GptApiRepo
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
 import com.soldevcode.composechat.data.dto.gptRequest.Message
+import com.soldevcode.composechat.util.Resource
 import java.util.Locale
 
 
@@ -188,12 +189,13 @@ class MainViewModel(
         audioRecord.stop()  // Stop recording
         // responseObserver?.onComplete()
     }
+
     /**
      * It starts with a list of chat items (items) retrieved from getConversations().
      * It checks if the last chat item in the list is owned by "system."
      * If the last item is owned by "system," it updates the answer for that item.
      * If not or if there are no items, it adds a new chat item owned by
-     "system" with the provided answer.
+    "system" with the provided answer.
      * Finally, it updates the live data containing the chat items.
      */
     private fun addAnswer(answer: String) {
@@ -225,9 +227,25 @@ class MainViewModel(
 
     private fun fetchApiResponse(request: GptRequestStream) {
         viewModelScope.launch {
-            gptApiRepo.callGptApi(request).collect { word ->
-                listOfWords.add(word)
-                addAnswer(answer = listOfWords.joinToString(""))
+            gptApiRepo.callGptApi(request)
+                .collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        // Use a separate variable for the cast to help the compiler smart cast
+                        println("hozza addva = ${result.data}")
+                        val data = result.data
+                        // Now the compiler knows that 'data' is a String
+                        if (data != null) {
+                            listOfWords.add(data)
+                        }
+                        addAnswer(answer = listOfWords.joinToString(""))
+                    }
+                    is Resource.Error -> {
+                        // Handle the error here.
+                        // For example, you could show a toast message to the user.
+                        println("hozza addva error ")
+                    }
+                }
             }
         }
     }
