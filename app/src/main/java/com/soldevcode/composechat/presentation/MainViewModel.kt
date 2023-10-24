@@ -18,22 +18,18 @@ import com.google.cloud.speech.v1.StreamingRecognitionConfig
 import com.google.cloud.speech.v1.StreamingRecognitionResult
 import com.google.cloud.speech.v1.StreamingRecognizeRequest
 import com.google.cloud.speech.v1.StreamingRecognizeResponse
-import com.google.gson.Gson
 import com.google.protobuf.ByteString
-import com.soldevcode.composechat.data.dto.GptResponse
 import com.soldevcode.composechat.models.ConversationModel
 import com.soldevcode.composechat.util.SpeechCredentialsProvider
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import android.speech.tts.TextToSpeech
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.soldevcode.composechat.data.ApplicationContextRepo
 import com.soldevcode.composechat.data.GptApiRepo
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
 import com.soldevcode.composechat.data.dto.gptRequest.Message
+import com.soldevcode.composechat.util.Resource
+import okhttp3.ResponseBody
+import retrofit2.Response
 import java.util.Locale
 
 
@@ -129,7 +125,6 @@ class MainViewModel(
                                     .flatMap { it.alternativesList }
                                     .map { it.transcript }
                                 transcriptions.addAll(newTranscriptions)
-                                //prompt?.add(MessagesRequest("user", newTranscriptions.toString()))
                                 isRecording = false
                                 stopRecording()
                                 speechToTextValue.value = newTranscriptions[0].toString()
@@ -197,15 +192,22 @@ class MainViewModel(
         // responseObserver?.onComplete()
     }
 
-    private fun addAnswer(answer: String, chatOwner: String) {
-        val items = getConversations()
-        if (chatOwner == "system" && items.lastOrNull()?.chatOwner == "system") {
-            val updatedItem = items.last().copy(answer = answer)
-            _conversationsLiveData.value = (items.dropLast(1) + updatedItem).toMutableList()
-        } else {
-            _conversationsLiveData.value = (items +
-                    ConversationModel(chatOwner = chatOwner, answer = answer)).toMutableList()
+    /**
+     * It starts with a list of chat items (items) retrieved from getConversations().
+     * It checks if the last chat item in the list is owned by "system."
+     * If the last item is owned by "system," it updates the answer for that item.
+     * If not or if there are no items, it adds a new chat item owned by
+    "system" with the provided answer.
+     * Finally, it updates the live data containing the chat items.
+     */
+    private fun addAnswer(answer: String) {
+        val items = getConversations().toMutableList()
+        items.lastOrNull()?.takeIf { it.chatOwner == "system" }?.apply {
+            items[items.size - 1] = copy(answer = answer)
+        } ?: run {
+            items.add(ConversationModel(chatOwner = "system", answer = answer))
         }
+        _conversationsLiveData.value = items
     }
 
     fun jsonRequestBody() {
@@ -227,9 +229,16 @@ class MainViewModel(
 
     private fun fetchApiResponse(request: GptRequestStream) {
         viewModelScope.launch {
-            gptApiRepo.callGptApi(request).collect { word ->
-                listOfWords.add(word)
-                addAnswer(answer = listOfWords.joinToString(""), chatOwner = "system")
+            gptApiRepo.callGptApi(request).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        listOfWords.add(resource.data.toString())
+                        addAnswer(answer = listOfWords.joinToString(""))
+                    }
+                    is Resource.Error -> {
+                        addAnswer(answer = resource.message.toString())
+                    }
+                }
             }
         }
     }
