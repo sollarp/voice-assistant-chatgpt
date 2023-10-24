@@ -12,7 +12,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.ResponseBody
 import retrofit2.HttpException
+import retrofit2.Response
 
 /**
  * Response starts with data: {"id":"chatcmpl-123",..."finish_reason":null...... }
@@ -21,52 +23,44 @@ import retrofit2.HttpException
  * Closing stream when data: {DONE} received.
  */
 interface GptApiRepo {
-    suspend fun callGptApi(requestStream: GptRequestStream): Flow<Resource<String>>
+    fun callGptApi(requestStream: GptRequestStream): Flow<Resource<out String>>
 }
 
 class GptRepositoryImpl : GptApiRepo {
     private val client = RetrofitHelper.getInstance().create(GptApi::class.java)
 
-    override suspend fun callGptApi(requestStream: GptRequestStream) = flow {
-        val response = client.getChatGptCompletion(requestStream)
-        val responseText = response.body()?.string()
-        println("hozza addva request stream = $responseText ")
-        //val response = safeApiCall(response2)
-        val result: Resource<String> =
+    override fun callGptApi(requestStream: GptRequestStream) =
+        flow {
+            val response = client.getChatGptCompletion(requestStream)
             if (response.isSuccessful) {
-                Resource.Success(
-                    parseContentFromResponse(responseText)
-                    //"hogy vagy"
-                )
-            } else {
-                Resource.Error(HttpException(response))
-            }
-
-        emit(result)
-        delay(20)
-    }.flowOn(Dispatchers.IO)
-}
-
-    fun parseContentFromResponse(response: String?): String {
-    var content = ""
-    response.let { text ->
-        text!!.lines().forEach { line ->
-            val responseWithoutPrefix = removeDataPrefix(line)
-            if (responseWithoutPrefix != END_OF_STREAM) {
-                val chatCompletionData = Gson().fromJson(
-                    responseWithoutPrefix, GptResponse::class.java
-                )
-                chatCompletionData?.choices?.firstOrNull()?.let { choice ->
-                    if (choice.finish_reason != STOP) {
-                        content = choice.delta.content
+                val reader = response.body()!!.charStream().buffered()
+                reader.useLines { lines ->
+                    lines.forEach { line ->
+                        delay(20)
+                        emit(parseContentFromResponse(line))  // Invoking the callback
                     }
                 }
+            } else {
+                emit(Resource.Error(HttpException(response)))
+            }
+        }.flowOn(Dispatchers.IO)
+}
+
+fun parseContentFromResponse(line: String): Resource.Success<String> {
+    var content = ""
+    val responseWithoutPrefix = removeDataPrefix(line)
+    if (responseWithoutPrefix != END_OF_STREAM) {
+        val chatCompletionData = Gson().fromJson(
+            responseWithoutPrefix, GptResponse::class.java
+        )
+        chatCompletionData?.choices?.firstOrNull()?.let { choice ->
+            if (choice.finish_reason != STOP) {
+                content = choice.delta.content
             }
         }
     }
-    return content
+    return Resource.Success(content)
 }
-
 
 fun removeDataPrefix(response: String): String {
     return response.substringAfter(DATA)

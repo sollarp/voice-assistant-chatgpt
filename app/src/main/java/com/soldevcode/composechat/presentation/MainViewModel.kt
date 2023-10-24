@@ -28,6 +28,8 @@ import com.soldevcode.composechat.data.GptApiRepo
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
 import com.soldevcode.composechat.data.dto.gptRequest.Message
 import com.soldevcode.composechat.util.Resource
+import okhttp3.ResponseBody
+import retrofit2.Response
 import java.util.Locale
 
 
@@ -227,23 +229,14 @@ class MainViewModel(
 
     private fun fetchApiResponse(request: GptRequestStream) {
         viewModelScope.launch {
-            gptApiRepo.callGptApi(request)
-                .collect { result ->
-                when (result) {
+            gptApiRepo.callGptApi(request).collect { resource ->
+                when (resource) {
                     is Resource.Success -> {
-                        // Use a separate variable for the cast to help the compiler smart cast
-                        println("hozza addva = ${result.data}")
-                        val data = result.data
-                        // Now the compiler knows that 'data' is a String
-                        if (data != null) {
-                            listOfWords.add(data)
-                        }
+                        listOfWords.add(resource.data.toString())
                         addAnswer(answer = listOfWords.joinToString(""))
                     }
                     is Resource.Error -> {
-                        // Handle the error here.
-                        // For example, you could show a toast message to the user.
-                        println("hozza addva error ")
+                        addAnswer(answer = resource.message.toString())
                     }
                 }
             }
