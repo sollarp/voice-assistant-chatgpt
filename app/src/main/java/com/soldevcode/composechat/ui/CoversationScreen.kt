@@ -20,8 +20,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.R
+import com.soldevcode.composechat.ui.components.ErrorDialog
 import com.soldevcode.composechat.ui.components.PermissionAlertDialog
 import com.soldevcode.composechat.ui.components.TextInput
 import com.soldevcode.composechat.ui.components.goToAppSetting
@@ -48,6 +52,18 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
 
     val permissionDialog = remember {
         mutableStateListOf<NeededPermission>()
+    }
+
+    var showDialog by viewModel.isErrorDialog
+
+    when {
+        showDialog -> {
+            ErrorDialog(
+                onDismissRequest = { showDialog = false },
+                dialogTitle = "ERROR",
+                dialogText = viewModel.errorMessageHolder.value
+            )
+        }
     }
 
     val microphonePermissionLauncher = rememberLauncherForActivityResult(
@@ -81,10 +97,10 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                 modifier = Modifier
                     .padding(start = 2.dp, end = 2.dp)
                     .border(
-                    width = 2.dp,
-                    color = Color.Black,
-                    shape = RoundedCornerShape(4.dp)
-                ),
+                        width = 2.dp,
+                        color = Color.Black,
+                        shape = RoundedCornerShape(4.dp)
+                    ),
             )
         }
     ) { innerPadding ->
@@ -97,31 +113,31 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                 modifier = Modifier.fillMaxHeight(),
                 verticalArrangement = Arrangement.SpaceBetween // Ensure items are spaced out, with `TextInput` at the bottom
             ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f), // Occupy all available space, pushing the TextInput to the bottom
-                        contentAlignment = Alignment.TopCenter // Center the ConversationList within the Box
-                    ) {
-                        ConversationList()
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            FloatingActionButton(
-                                modifier = Modifier
-                                    .padding(bottom = 10.dp, end = 10.dp)
-                                    .align(alignment = Alignment.BottomEnd),
-                                containerColor = Color.LightGray,
-                                onClick = {
-                                    microphonePermissionLauncher.launch(NeededPermission.RECORD_AUDIO.permission)
-                                    viewModel.setRecording()
-                                    viewModel.startRecording()
-                                }
-                            ) {
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_mic),
-                                    contentDescription = stringResource(id = R.string.bus_content_description)
-                                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f), // Occupy all available space, pushing the TextInput to the bottom
+                    contentAlignment = Alignment.TopCenter // Center the ConversationList within the Box
+                ) {
+                    ConversationList()
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        FloatingActionButton(
+                            modifier = Modifier
+                                .padding(bottom = 10.dp, end = 10.dp)
+                                .align(alignment = Alignment.BottomEnd),
+                            containerColor = Color.LightGray,
+                            onClick = {
+                                microphonePermissionLauncher.launch(NeededPermission.RECORD_AUDIO.permission)
+                                viewModel.setRecording()
+                                viewModel.startRecording()
                             }
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_mic),
+                                contentDescription = stringResource(id = R.string.bus_content_description)
+                            )
                         }
                     }
+                }
                 // Pushes TextInput to the bottom
                 Spacer(modifier = Modifier.weight(.01f))
                 // This will be at the bottom because of the weight modifier applied to the Box above

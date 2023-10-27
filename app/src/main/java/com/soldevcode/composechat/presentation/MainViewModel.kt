@@ -27,9 +27,9 @@ import com.soldevcode.composechat.data.ApplicationContextRepo
 import com.soldevcode.composechat.data.GptApiRepo
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
 import com.soldevcode.composechat.data.dto.gptRequest.Message
+import com.soldevcode.composechat.util.Constants.CONNECTION_ERROR
 import com.soldevcode.composechat.util.Resource
-import okhttp3.ResponseBody
-import retrofit2.Response
+import com.soldevcode.composechat.util.handleApiExceptions
 import java.util.Locale
 
 
@@ -47,6 +47,8 @@ class MainViewModel(
     private var request: StreamingRecognizeRequest? = null
     val speechToTextValue = mutableStateOf(String())
     private var textToSpeech: TextToSpeech? = null
+    val errorMessageHolder = mutableStateOf(String())
+    var isErrorDialog = mutableStateOf(false)
 
     private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
     val conversationsLiveData: MutableLiveData<MutableList<ConversationModel>>
@@ -74,6 +76,10 @@ class MainViewModel(
                 // Handle error
             }
         }
+    }
+
+    fun setErrorDialog(errorMessage: String) {
+        errorMessageHolder.value = errorMessage
     }
 
     fun speak(text: String) {
@@ -235,11 +241,22 @@ class MainViewModel(
                         listOfWords.add(resource.data.toString())
                         addAnswer(answer = listOfWords.joinToString(""))
                     }
-                    is Resource.Error -> {
-                        addAnswer(answer = resource.message.toString())
+                    is Resource.HttpError -> {
+                        val errorMessageForUser = handleApiExceptions(resource.httpException.code())
+                        setMessageForDialog(errorMessageForUser)
+                    }
+                    is Resource.IoError -> {
+                        setMessageForDialog(CONNECTION_ERROR)
                     }
                 }
             }
         }
+    }
+
+    private fun setMessageForDialog(errorMessageForUser: String) {
+        addAnswer(answer = "ERROR")
+        setErrorDialog(errorMessageForUser)
+        isErrorDialog.value = true
+
     }
 }

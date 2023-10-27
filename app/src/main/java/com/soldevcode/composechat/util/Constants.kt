@@ -9,5 +9,7 @@ object Constants {
     const val END_OF_STREAM = "[DONE]"
     const val STOP = "stop"
     const val DATA = "data: "
-    //var streamingStopped: Boolean = false
+    const val API_KEY_ERROR = "GPT API key is missing, incorrect or invalid"
+    const val UNKNOWN_ERROR = "Unrecognized error API request"
+    const val CONNECTION_ERROR = "Internet connection error can’t connect to the server"
 }

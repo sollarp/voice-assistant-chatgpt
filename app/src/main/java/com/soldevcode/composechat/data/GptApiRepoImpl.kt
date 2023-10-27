@@ -1,5 +1,6 @@
 package com.soldevcode.composechat.data
 
+import android.util.Log
 import com.google.gson.Gson
 import com.soldevcode.composechat.data.dto.GptResponse
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
@@ -12,9 +13,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import okhttp3.ResponseBody
 import retrofit2.HttpException
-import retrofit2.Response
+import java.io.IOException
 
 /**
  * Response starts with data: {"id":"chatcmpl-123",..."finish_reason":null...... }
@@ -23,7 +23,7 @@ import retrofit2.Response
  * Closing stream when data: {DONE} received.
  */
 interface GptApiRepo {
-    fun callGptApi(requestStream: GptRequestStream): Flow<Resource<out String>>
+    fun callGptApi(requestStream: GptRequestStream): Flow<Resource<String>>
 }
 
 class GptRepositoryImpl : GptApiRepo {
@@ -31,22 +31,27 @@ class GptRepositoryImpl : GptApiRepo {
 
     override fun callGptApi(requestStream: GptRequestStream) =
         flow {
-            val response = client.getChatGptCompletion(requestStream)
-            if (response.isSuccessful) {
-                val reader = response.body()!!.charStream().buffered()
+            try {
+                val response = client.getChatGptCompletion(requestStream)
+                val reader = response.charStream().buffered()
                 reader.useLines { lines ->
                     lines.forEach { line ->
+                        Log.i("log info", line)
                         delay(20)
                         emit(parseContentFromResponse(line))  // Invoking the callback
                     }
                 }
-            } else {
-                emit(Resource.Error(HttpException(response)))
+            } catch (e: HttpException ) {
+                emit(Resource.HttpError(e))
+                //Log.i("log response", e.code().toString())
+            }
+            catch (e: IOException) {
+                emit(Resource.IoError(e))
             }
         }.flowOn(Dispatchers.IO)
 }
 
-fun parseContentFromResponse(line: String): Resource.Success<String> {
+private fun parseContentFromResponse(line: String): Resource.Success<String> {
     var content = ""
     val responseWithoutPrefix = removeDataPrefix(line)
     if (responseWithoutPrefix != END_OF_STREAM) {
