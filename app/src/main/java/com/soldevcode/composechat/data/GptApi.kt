@@ -14,5 +14,5 @@ interface GptApi {
     @Headers("Authorization: Bearer ${BuildConfig.GPT_KEY}")
     @POST(turboEndPointChat)
     @Streaming
-    suspend fun getChatGptCompletion(@Body requestStream: GptRequestStream): Response<ResponseBody>
+    suspend fun getChatGptCompletion(@Body requestStream: GptRequestStream): ResponseBody
 }

@@ -42,7 +42,6 @@ fun TextInput(mainViewModel: MainViewModel) {
     )
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TextInput(
