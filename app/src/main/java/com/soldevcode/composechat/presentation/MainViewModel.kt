@@ -23,6 +23,7 @@ import com.soldevcode.composechat.models.ConversationModel
 import com.soldevcode.composechat.util.SpeechCredentialsProvider
 import kotlinx.coroutines.launch
 import android.speech.tts.TextToSpeech
+import androidx.compose.runtime.rememberCompositionContext
 import com.soldevcode.composechat.data.ApplicationContextRepo
 import com.soldevcode.composechat.data.GptApiRepo
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
@@ -30,6 +31,7 @@ import com.soldevcode.composechat.data.dto.gptRequest.Message
 import com.soldevcode.composechat.util.Constants.CONNECTION_ERROR
 import com.soldevcode.composechat.util.Resource
 import com.soldevcode.composechat.util.handleApiExceptions
+import kotlinx.coroutines.delay
 import java.util.Locale
 
 
@@ -44,6 +46,7 @@ class MainViewModel(
     private lateinit var audioRecord: AudioRecord
     private var messages: ArrayList<Message> = arrayListOf()
     private var isRecording = false
+    var showRecording = mutableStateOf(false)
     private var request: StreamingRecognizeRequest? = null
     val speechToTextValue = mutableStateOf(String())
     private var textToSpeech: TextToSpeech? = null
@@ -91,8 +94,7 @@ class MainViewModel(
         textToSpeech?.shutdown()
     }
 
-    fun setRecording() {
-        isRecording = true
+    private fun setRecording() {
         //API service set up for Hungarian language
         val recognitionConfig: RecognitionConfig = RecognitionConfig.newBuilder()
             .setEncoding(RecognitionConfig.AudioEncoding.LINEAR16)
@@ -104,11 +106,18 @@ class MainViewModel(
         request = StreamingRecognizeRequest.newBuilder()
             .setStreamingConfig(streamingRecognitionConfig)
             .build()
+        // Delay require otherwise showRecording not been updated
+        isRecording = true
     }
 
     /** Referring to Google documentation
     https://cloud.google.com/speech-to-text
     /docs/transcribe-streaming-audio#perform_streaming_speech_recognition_on_an_audio_stream
+     */
+
+    /** There is an not showingRecording icon in UI
+     * running the while block when trying to change
+     * showRecording.vale = true without delay()
      */
     @SuppressLint("MissingPermission")
     fun startRecording() {
@@ -117,11 +126,13 @@ class MainViewModel(
         )
         viewModelScope.launch {
             try {
+                setRecording()
                 SpeechClient.create(credentialsProvider).use { client ->
                     responseObserver = object : ResponseObserver<StreamingRecognizeResponse?> {
                         val responses = mutableListOf<StreamingRecognizeResponse>()
 
                         override fun onStart(controller: StreamController) {
+                            showRecording.value = true
                         }
 
                         override fun onResponse(response: StreamingRecognizeResponse?) {
@@ -146,6 +157,7 @@ class MainViewModel(
                                     "Transcript : %s\n",
                                     alternative.transcript
                                 )
+                                showRecording.value = false
                             }
                         }
 
@@ -171,7 +183,6 @@ class MainViewModel(
                         .build()
                     // Start recording
                     audioRecord.startRecording()
-
                     while (isRecording) {
                         val audioBuffer = ByteArray(6400)
                         val bytesRead = audioRecord.read(audioBuffer, 0, audioBuffer.size)
@@ -184,6 +195,8 @@ class MainViewModel(
                                 .build()
                             clientStream.send(request)
                         }
+                        delay(5)
+                        showRecording.value = true
                     }
                 }
             } catch (e: Exception) {
@@ -257,6 +270,5 @@ class MainViewModel(
         addAnswer(answer = "ERROR")
         setErrorDialog(errorMessageForUser)
         isErrorDialog.value = true
-
     }
 }

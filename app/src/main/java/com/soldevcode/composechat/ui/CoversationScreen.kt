@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -22,7 +23,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -38,9 +38,12 @@ import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.R
 import com.soldevcode.composechat.ui.components.ErrorDialog
 import com.soldevcode.composechat.ui.components.PermissionAlertDialog
+import com.soldevcode.composechat.ui.components.RecordingIndicator
 import com.soldevcode.composechat.ui.components.TextInput
 import com.soldevcode.composechat.ui.components.goToAppSetting
 import com.soldevcode.composechat.util.NeededPermission
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +58,11 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     }
 
     var showDialog by viewModel.isErrorDialog
+    val recording by viewModel.showRecording
+    println("na most megy recording= ${recording}")
+
+    //val recordIndicator: Boolean by viewModel.testBoolean
+    //Log.i("recordIndicator", recordIndicator.toString())
 
     when {
         showDialog -> {
@@ -126,9 +134,14 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                                 .align(alignment = Alignment.BottomEnd),
                             containerColor = Color.LightGray,
                             onClick = {
+                                viewModel.showRecording.value = true
                                 microphonePermissionLauncher.launch(NeededPermission.RECORD_AUDIO.permission)
-                                viewModel.setRecording()
                                 viewModel.startRecording()
+
+
+                                /*microphonePermissionLauncher.launch(NeededPermission.RECORD_AUDIO.permission)
+                                viewModel.setRecording()
+                                viewModel.startRecording()*/
                             }
                         ) {
                             Icon(
@@ -142,6 +155,18 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                 Spacer(modifier = Modifier.weight(.01f))
                 // This will be at the bottom because of the weight modifier applied to the Box above
                 TextInput(viewModel)
+            }
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 10.dp, end = 10.dp)
+                    .size(50.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                //val isRecording = viewModel.showRecording.value
+                if (recording) {
+                    RecordingIndicator()
+                }
             }
         }
     }

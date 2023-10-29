@@ -80,7 +80,7 @@ fun PreviewConversationList(
 ) {
     ConversationList(
         conversations = conversations
-    ) {}
+    ) { }
 }
 /** Referring to Google documentation
  * where you must pass a large dataset to your composable preview.
