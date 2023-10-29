@@ -31,7 +31,7 @@ THIS PROJECT SHOULD NOT BE USED IN PRODUCTION.
 - The Google credential json is stored in "assests" folder for the simplicity. To use this in production would require an authentication server to store json credential.
 
 Dependency Injection used.
-- Demonstrates how to pass Context safely to Viemodel.
+- Demonstrates how to pass Context safely to Viewmodel.
 
 This is an experimental project using Compose LazyColum. 
 - Store conversation in LiveData
