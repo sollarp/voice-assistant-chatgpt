@@ -23,6 +23,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -58,11 +59,8 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     }
 
     var showDialog by viewModel.isErrorDialog
-    val recording by viewModel.showRecording
-    println("na most megy recording= ${recording}")
+    var recording by viewModel.showRecording
 
-    //val recordIndicator: Boolean by viewModel.testBoolean
-    //Log.i("recordIndicator", recordIndicator.toString())
 
     when {
         showDialog -> {
@@ -94,7 +92,9 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                 permissionDialog.remove(permission)
                 activity.goToAppSetting()
             },
-            isPermissionDeclined = !activity.shouldShowRequestPermissionRationale(permission.permission)
+            isPermissionDeclined = !activity.shouldShowRequestPermissionRationale(
+                permission.permission
+            )
         )
     }
 
@@ -119,12 +119,12 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
         ) {
             Column(
                 modifier = Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceBetween // Ensure items are spaced out, with `TextInput` at the bottom
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Box(
                     modifier = Modifier
-                        .weight(1f), // Occupy all available space, pushing the TextInput to the bottom
-                    contentAlignment = Alignment.TopCenter // Center the ConversationList within the Box
+                        .weight(1f),
+                    contentAlignment = Alignment.TopCenter
                 ) {
                     ConversationList()
                     Box(modifier = Modifier.fillMaxSize()) {
@@ -134,20 +134,29 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                                 .align(alignment = Alignment.BottomEnd),
                             containerColor = Color.LightGray,
                             onClick = {
-                                viewModel.showRecording.value = true
-                                microphonePermissionLauncher.launch(NeededPermission.RECORD_AUDIO.permission)
-                                viewModel.startRecording()
-
-
-                                /*microphonePermissionLauncher.launch(NeededPermission.RECORD_AUDIO.permission)
-                                viewModel.setRecording()
-                                viewModel.startRecording()*/
+                                recording = if (recording) {
+                                    viewModel.stopRecording()
+                                    false
+                                } else {
+                                    microphonePermissionLauncher.launch(
+                                        NeededPermission.RECORD_AUDIO.permission
+                                    )
+                                    viewModel.startRecording()
+                                    true
+                                }
                             }
                         ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_mic),
-                                contentDescription = stringResource(id = R.string.bus_content_description)
-                            )
+                            if (recording) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_stop),
+                                    contentDescription = ""
+                                )
+                            } else {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_mic),
+                                    contentDescription = ""
+                                )
+                            }
                         }
                     }
                 }
@@ -163,7 +172,6 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                     .size(50.dp),
                 contentAlignment = Alignment.Center
             ) {
-                //val isRecording = viewModel.showRecording.value
                 if (recording) {
                     RecordingIndicator()
                 }

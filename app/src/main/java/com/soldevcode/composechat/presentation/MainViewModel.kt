@@ -81,7 +81,7 @@ class MainViewModel(
         }
     }
 
-    fun setErrorDialog(errorMessage: String) {
+    private fun setErrorDialog(errorMessage: String) {
         errorMessageHolder.value = errorMessage
     }
 
@@ -132,7 +132,6 @@ class MainViewModel(
                         val responses = mutableListOf<StreamingRecognizeResponse>()
 
                         override fun onStart(controller: StreamController) {
-                            showRecording.value = true
                         }
 
                         override fun onResponse(response: StreamingRecognizeResponse?) {
@@ -195,7 +194,7 @@ class MainViewModel(
                                 .build()
                             clientStream.send(request)
                         }
-                        delay(5)
+                        delay(1)
                         showRecording.value = true
                     }
                 }
@@ -206,9 +205,11 @@ class MainViewModel(
         }
     }
 
-    private fun stopRecording() {
-        audioRecord.stop()  // Stop recording
-        // responseObserver?.onComplete()
+    fun stopRecording() {
+        audioRecord.stop()
+        isRecording = false
+        showRecording.value = false
+        //responseObserver?.onComplete()
     }
 
     /**
