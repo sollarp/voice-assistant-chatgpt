@@ -32,13 +32,13 @@ import androidx.compose.ui.unit.sp
 import com.soldevcode.composechat.presentation.MainViewModel
 
 @Composable
-fun TextInput(mainViewModel: MainViewModel) {
+fun TextInput(mainViewModel: MainViewModel, speechText: String) {
     TextInput(
         onSendMessage = { text ->
             mainViewModel.addQuestionToLiveData(chatOwner = "user", question = text)
             mainViewModel.jsonRequestBody()
         },
-        speechToText = mainViewModel.speechToTextValue.value
+        speechToText = speechText
     )
 }
 

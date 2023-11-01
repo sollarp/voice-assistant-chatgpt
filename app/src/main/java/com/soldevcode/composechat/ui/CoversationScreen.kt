@@ -23,7 +23,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -44,8 +42,6 @@ import com.soldevcode.composechat.ui.components.RecordingIndicator
 import com.soldevcode.composechat.ui.components.TextInput
 import com.soldevcode.composechat.ui.components.goToAppSetting
 import com.soldevcode.composechat.util.NeededPermission
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,6 +58,7 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     var showDialog by viewModel.isErrorDialog
     val recordingManager = rememberRecordingManager()
     var recording by recordingManager.showRecording
+    val speechText = recordingManager.textSpeech
 
     when {
         showDialog -> {
@@ -164,7 +161,7 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                 // Pushes TextInput to the bottom
                 Spacer(modifier = Modifier.weight(.01f))
                 // This will be at the bottom because of the weight modifier applied to the Box above
-                TextInput(viewModel)
+                TextInput(viewModel, speechText.value)
             }
             Box(
                 modifier = Modifier
