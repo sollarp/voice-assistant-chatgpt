@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.R
+import com.soldevcode.composechat.models.platform.audio.rememberRecordingManager
 import com.soldevcode.composechat.ui.components.ErrorDialog
 import com.soldevcode.composechat.ui.components.PermissionAlertDialog
 import com.soldevcode.composechat.ui.components.RecordingIndicator
@@ -59,8 +60,8 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     }
 
     var showDialog by viewModel.isErrorDialog
-    var recording by viewModel.showRecording
-
+    val recordingManager = rememberRecordingManager()
+    var recording by recordingManager.showRecording
 
     when {
         showDialog -> {
@@ -135,13 +136,13 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                             containerColor = Color.LightGray,
                             onClick = {
                                 recording = if (recording) {
-                                    viewModel.stopRecording()
+                                    recordingManager.stopRecording()
                                     false
                                 } else {
                                     microphonePermissionLauncher.launch(
                                         NeededPermission.RECORD_AUDIO.permission
                                     )
-                                    viewModel.startRecording()
+                                    recordingManager.startRecording()
                                     true
                                 }
                             }

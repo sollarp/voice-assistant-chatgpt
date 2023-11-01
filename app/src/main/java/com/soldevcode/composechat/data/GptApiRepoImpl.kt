@@ -37,7 +37,6 @@ class GptRepositoryImpl : GptApiRepo {
                 reader.useLines { lines ->
                     lines.forEach { line ->
                         Log.i("log info", line)
-                        delay(20)
                         emit(parseContentFromResponse(line))  // Invoking the callback
                     }
                 }
