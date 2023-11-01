@@ -12,7 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.api.gax.rpc.ClientStream
 import com.google.api.gax.rpc.ResponseObserver
 import com.google.api.gax.rpc.StreamController
@@ -24,7 +23,6 @@ import com.google.cloud.speech.v1.StreamingRecognitionResult
 import com.google.cloud.speech.v1.StreamingRecognizeRequest
 import com.google.cloud.speech.v1.StreamingRecognizeResponse
 import com.google.protobuf.ByteString
-import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.util.SpeechCredentialsProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +35,7 @@ https://cloud.google.com/speech-to-text
 
 @SuppressLint("MissingPermission")
 @Composable
-fun rememberRecordingManager(viewModel: MainViewModel = viewModel()): RecordingManager {
+fun rememberRecordingManager(): RecordingManager {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val showRecording = rememberSaveable { mutableStateOf(false) }
@@ -54,12 +52,13 @@ fun rememberRecordingManager(viewModel: MainViewModel = viewModel()): RecordingM
             44100, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT
         )
     )
+    val textSpeech = rememberSaveable { mutableStateOf("") }
 
     return remember {
         RecordingManager(
             context, showRecording, scope,
             responseObserver, transcriptions,
-            isRecording, request, audioRecord, viewModel
+            isRecording, request, audioRecord, textSpeech
         )
     }
 }
@@ -73,8 +72,9 @@ class RecordingManager(
     var isRecording: MutableState<Boolean>,
     private var request: StreamingRecognizeRequest?,
     private var audioRecord: AudioRecord,
-    var viewModel: MainViewModel,
-) {
+    var textSpeech: MutableState<String>,
+
+    ) {
 
     @SuppressLint("MissingPermission")
     fun startRecording() {
@@ -102,7 +102,7 @@ class RecordingManager(
                                 transcriptions.addAll(newTranscriptions)
                                 isRecording.value = false
                                 stopRecording()
-                                viewModel.speechToTextValue.value = newTranscriptions[0].toString()
+                                 textSpeech.value = newTranscriptions[0].toString() // Here to do the code
                             }
                         }
 
@@ -185,5 +185,4 @@ class RecordingManager(
         showRecording.value = false
         //responseObserver?.onComplete()
     }
-
 }
