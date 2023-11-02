@@ -52,13 +52,13 @@ fun rememberRecordingManager(): RecordingManager {
             44100, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT
         )
     )
-    val textSpeech = rememberSaveable { mutableStateOf("") }
+    val onTextSpeech = rememberSaveable { mutableStateOf("") }
 
     return remember {
         RecordingManager(
             context, showRecording, scope,
             responseObserver, transcriptions,
-            isRecording, request, audioRecord, textSpeech
+            isRecording, request, audioRecord, onTextSpeech
         )
     }
 }
@@ -72,8 +72,7 @@ class RecordingManager(
     var isRecording: MutableState<Boolean>,
     private var request: StreamingRecognizeRequest?,
     private var audioRecord: AudioRecord,
-    var textSpeech: MutableState<String>,
-
+    var onTextSpeech: MutableState<String>,
     ) {
 
     @SuppressLint("MissingPermission")
@@ -102,7 +101,8 @@ class RecordingManager(
                                 transcriptions.addAll(newTranscriptions)
                                 isRecording.value = false
                                 stopRecording()
-                                 textSpeech.value = newTranscriptions[0].toString() // Here to do the code
+                                 onTextSpeech.value = newTranscriptions[0].toString()
+                            // Here to do the code
                             }
                         }
 
