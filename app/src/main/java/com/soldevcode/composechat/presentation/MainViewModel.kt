@@ -24,7 +24,7 @@ class MainViewModel(
 
     private val listOfWords = mutableListOf<String>()
     private var messages: ArrayList<Message> = arrayListOf()
-    val speechToTextValue = mutableStateOf("")
+    var speechToTextValue = mutableStateOf("")
     private var textToSpeech: TextToSpeech? = null
     val errorMessageHolder = mutableStateOf(String())
     var isErrorDialog = mutableStateOf(false)
@@ -57,7 +57,7 @@ class MainViewModel(
         }
     }
 
-    fun setTextSpeech(newText: String) {
+    fun setSpeechToTextValue(newText: String) {
         speechToTextValue.value = newText
     }
 

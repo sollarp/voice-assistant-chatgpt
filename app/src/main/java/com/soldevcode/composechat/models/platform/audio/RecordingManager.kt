@@ -175,7 +175,6 @@ class RecordingManager(
         request = StreamingRecognizeRequest.newBuilder()
             .setStreamingConfig(streamingRecognitionConfig)
             .build()
-        // Delay require otherwise showRecording not been updated
         isRecording.value = true
     }
 
