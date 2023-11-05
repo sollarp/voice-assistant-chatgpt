@@ -58,7 +58,8 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     var showDialog by viewModel.isErrorDialog
     val recordingManager = rememberRecordingManager()
     var recording by recordingManager.showRecording
-    val speechText = recordingManager.textSpeech
+    val getTextFromSpeech = recordingManager.onTextSpeech
+    viewModel.setSpeechToTextValue(getTextFromSpeech.value)
 
     when {
         showDialog -> {
@@ -161,7 +162,7 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                 // Pushes TextInput to the bottom
                 Spacer(modifier = Modifier.weight(.01f))
                 // This will be at the bottom because of the weight modifier applied to the Box above
-                TextInput(viewModel, speechText.value)
+                TextInput(viewModel, recordingManager)
             }
             Box(
                 modifier = Modifier

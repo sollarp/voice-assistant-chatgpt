@@ -18,13 +18,13 @@ import java.util.Locale
 
 
 class MainViewModel(
-    private val applicationContext: ApplicationContextRepo,
+    applicationContext: ApplicationContextRepo,
     private val gptApiRepo: GptApiRepo
 ) : ViewModel() {
 
     private val listOfWords = mutableListOf<String>()
     private var messages: ArrayList<Message> = arrayListOf()
-    val speechToTextValue = mutableStateOf(String())
+    var speechToTextValue = mutableStateOf("")
     private var textToSpeech: TextToSpeech? = null
     val errorMessageHolder = mutableStateOf(String())
     var isErrorDialog = mutableStateOf(false)
@@ -55,6 +55,10 @@ class MainViewModel(
                 // Handle error
             }
         }
+    }
+
+    fun setSpeechToTextValue(newText: String) {
+        speechToTextValue.value = newText
     }
 
     private fun setErrorDialog(errorMessage: String) {
