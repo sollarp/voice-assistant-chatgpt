@@ -21,9 +21,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,27 +49,24 @@ import com.soldevcode.composechat.util.NeededPermission
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-
 fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
-
-    val activity = LocalContext.current as Activity
+    val context = LocalContext.current
 
     val permissionDialog = remember {
         mutableStateListOf<NeededPermission>()
     }
 
-    var showDialog by viewModel.isErrorDialog
-    val recordingManager = rememberRecordingManager()
+    val uiState = viewModel.uiState.collectAsState()
+    val textFieldText = rememberSaveable { mutableStateOf("") }
+    val recordingManager = rememberRecordingManager(speechToTextState = textFieldText)
     var recording by recordingManager.showRecording
-    val getTextFromSpeech = recordingManager.onTextSpeech
-    viewModel.setSpeechToTextValue(getTextFromSpeech.value)
 
     when {
-        showDialog -> {
+        uiState.value.isErrorDialog -> {
             ErrorDialog(
-                onDismissRequest = { showDialog = false },
+                onDismissRequest = { viewModel.clearErrorDialog() },
                 dialogTitle = "ERROR",
-                dialogText = viewModel.errorMessageHolder.value
+                dialogText = uiState.value.errorMessage
             )
         }
     }
@@ -80,6 +80,11 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     )
 
     permissionDialog.forEach { permission ->
+        val shouldShowRequestPermission =
+            (context as? Activity)?.shouldShowRequestPermissionRationale(
+                permission.permission
+            ) ?: false
+
         PermissionAlertDialog(
             neededPermission = permission,
             onDismiss = { permissionDialog.remove(permission) },
@@ -89,11 +94,9 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
             },
             onGoToAppSettingsClick = {
                 permissionDialog.remove(permission)
-                activity.goToAppSetting()
+                context.goToAppSetting()
             },
-            isPermissionDeclined = !activity.shouldShowRequestPermissionRationale(
-                permission.permission
-            )
+            isPermissionDeclined = shouldShowRequestPermission,
         )
     }
 
@@ -162,7 +165,16 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                 // Pushes TextInput to the bottom
                 Spacer(modifier = Modifier.weight(.01f))
                 // This will be at the bottom because of the weight modifier applied to the Box above
-                TextInput(viewModel, recordingManager)
+                TextInput(
+                    textFieldText = textFieldText,
+                    onSendMessage = {
+                        viewModel.addQuestionToLiveData(
+                            chatOwner = "user",
+                            question = textFieldText.value
+                        )
+                        viewModel.jsonRequestBody()
+                    }
+                )
             }
             Box(
                 modifier = Modifier
