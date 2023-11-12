@@ -35,7 +35,9 @@ https://cloud.google.com/speech-to-text
 
 @SuppressLint("MissingPermission")
 @Composable
-fun rememberRecordingManager(): RecordingManager {
+fun rememberRecordingManager(
+    speechToTextState: MutableState<String> = rememberSaveable { mutableStateOf("") }
+): RecordingManager {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val showRecording = rememberSaveable { mutableStateOf(false) }
@@ -52,13 +54,11 @@ fun rememberRecordingManager(): RecordingManager {
             44100, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT
         )
     )
-    val onTextSpeech = rememberSaveable { mutableStateOf("") }
-
     return remember {
         RecordingManager(
             context, showRecording, scope,
             responseObserver, transcriptions,
-            isRecording, request, audioRecord, onTextSpeech
+            isRecording, request, audioRecord, speechToTextState
         )
     }
 }

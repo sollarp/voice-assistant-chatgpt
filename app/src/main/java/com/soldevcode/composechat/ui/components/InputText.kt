@@ -18,8 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -27,33 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.soldevcode.composechat.models.platform.audio.RecordingManager
-import com.soldevcode.composechat.presentation.MainViewModel
-
-@Composable
-fun TextInput(mainViewModel: MainViewModel, recordingManager: RecordingManager) {
-    TextInput(
-        onSendMessage = { text ->
-            mainViewModel.addQuestionToLiveData(chatOwner = "user", question = text)
-            mainViewModel.jsonRequestBody()
-        },
-        speechToTextValue = mainViewModel.speechToTextValue,
-        recordedText = recordingManager.onTextSpeech
-    )
-}
+import com.soldevcode.composechat.util.UiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TextInput(
+fun TextInput(
+    textFieldText: MutableState<String> = rememberSaveable { mutableStateOf("") },
     onSendMessage: (String) -> Unit,
-    speechToTextValue: MutableState<String>,
-    recordedText: MutableState<String>,
 ) {
-    val textFieldText = rememberSaveable { mutableStateOf("") }
-
-    LaunchedEffect(speechToTextValue.value) {
-        textFieldText.value = speechToTextValue.value
-    }
 
     Box(
         // Use navigationBarsPadding() imePadding() and , to move the input panel above both the
@@ -100,7 +81,6 @@ private fun TextInput(
                     onClick = {
                         onSendMessage(textFieldText.value)
                         textFieldText.value = ""
-                        recordedText.value = ""
                     }
                 ) {
                     Icon(

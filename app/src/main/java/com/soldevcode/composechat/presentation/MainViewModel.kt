@@ -1,7 +1,6 @@
 package com.soldevcode.composechat.presentation
 
 import android.speech.tts.TextToSpeech
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +11,11 @@ import com.soldevcode.composechat.data.dto.gptRequest.Message
 import com.soldevcode.composechat.models.ConversationModel
 import com.soldevcode.composechat.util.Constants.CONNECTION_ERROR
 import com.soldevcode.composechat.util.Resource
+import com.soldevcode.composechat.util.UiState
 import com.soldevcode.composechat.util.handleApiExceptions
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -24,10 +27,9 @@ class MainViewModel(
 
     private val listOfWords = mutableListOf<String>()
     private var messages: ArrayList<Message> = arrayListOf()
-    var speechToTextValue = mutableStateOf("")
     private var textToSpeech: TextToSpeech? = null
-    val errorMessageHolder = mutableStateOf(String())
-    var isErrorDialog = mutableStateOf(false)
+    private val _uiState = MutableStateFlow(UiState())
+    val uiState: StateFlow<UiState> = _uiState
 
     private val _conversationsLiveData = MutableLiveData<MutableList<ConversationModel>>()
     val conversationsLiveData: MutableLiveData<MutableList<ConversationModel>>
@@ -44,6 +46,7 @@ class MainViewModel(
         }
     }
 
+    // Initialize with a default value
     init {
         textToSpeech = TextToSpeech(
             applicationContext.getContext()
@@ -56,13 +59,8 @@ class MainViewModel(
             }
         }
     }
-
-    fun setSpeechToTextValue(newText: String) {
-        speechToTextValue.value = newText
-    }
-
-    private fun setErrorDialog(errorMessage: String) {
-        errorMessageHolder.value = errorMessage
+    fun clearErrorDialog() {
+        _uiState.update { it.copy(isErrorDialog = false) }
     }
 
     fun speak(text: String) {
@@ -112,26 +110,33 @@ class MainViewModel(
     private fun fetchApiResponse(request: GptRequestStream) {
         viewModelScope.launch {
             gptApiRepo.callGptApi(request).collect { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        listOfWords.add(resource.data.toString())
-                        addAnswer(answer = listOfWords.joinToString(""))
-                    }
-                    is Resource.HttpError -> {
-                        val errorMessageForUser = handleApiExceptions(resource.httpException.code())
-                        setMessageForDialog(errorMessageForUser)
-                    }
-                    is Resource.IoError -> {
-                        setMessageForDialog(CONNECTION_ERROR)
+                _uiState.update { currentState ->
+                    when (resource) {
+                        is Resource.Success -> {
+                            listOfWords.add(resource.data.toString())
+                            addAnswer(answer = listOfWords.joinToString(""))
+                            currentState.copy(
+                                isErrorDialog = false,
+                            )
+                        }
+                        is Resource.HttpError -> {
+                            val errorMessageForUser =
+                                handleApiExceptions(resource.httpException.code())
+                            currentState.copy(
+                                isErrorDialog = true,
+                                errorMessage = errorMessageForUser
+                            )
+                        }
+                        is Resource.IoError -> {
+                            currentState.copy(
+                                isErrorDialog = true,
+                                errorMessage = CONNECTION_ERROR
+                            )
+                        }
                     }
                 }
             }
         }
     }
-
-    private fun setMessageForDialog(errorMessageForUser: String) {
-        addAnswer(answer = "ERROR")
-        setErrorDialog(errorMessageForUser)
-        isErrorDialog.value = true
-    }
 }
+
