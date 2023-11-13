@@ -16,6 +16,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.common.collect.ImmutableList
 import com.soldevcode.composechat.models.ConversationModel
+import com.soldevcode.composechat.models.platform.audio.rememberRecordingManager
+import com.soldevcode.composechat.models.platform.audio.rememberTextToSpeechManager
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.ui.components.MessageBox
 import okhttp3.internal.immutableListOf
@@ -34,17 +36,17 @@ fun ConversationList(viewModel: MainViewModel = viewModel()) {
     ConversationList(
         conversations =
         viewModel.conversationsLiveData.observeAsState().value,
-        onSpeak = viewModel::speak
     )
 }
 
 @Composable
 private fun ConversationList(
     conversations: MutableList<ConversationModel>?,
-    onSpeak: (String) -> Unit
 
 ) {
     val listState = rememberLazyListState()
+    val textToSpeechManager = rememberTextToSpeechManager()
+
 
     if (conversations != null) {
         LaunchedEffect(conversations) {
@@ -60,7 +62,10 @@ private fun ConversationList(
                     MessageBox(
                         msg = conversations[conversation],
                         onSpeakerClicked = {
-                            onSpeak(conversations[conversation].answer)
+                            textToSpeechManager.speak(conversations[conversation].answer)
+                        },
+                        onStopClicked = {
+                            textToSpeechManager.onCleared()
                         }
                     )
 
@@ -80,7 +85,7 @@ fun PreviewConversationList(
 ) {
     ConversationList(
         conversations = conversations
-    ) { }
+    )
 }
 /** Referring to Google documentation
  * where you must pass a large dataset to your composable preview.
@@ -88,6 +93,7 @@ fun PreviewConversationList(
  * This is a demonstration how to use ParameterProvider, can be just hardcode
  * the parameters in the preview.
  */
+
 private class ConversationPreviewParameterProvider :
     PreviewParameterProvider<List<ConversationModel>> {
     override val values: Sequence<List<ConversationModel>> = sequenceOf(
