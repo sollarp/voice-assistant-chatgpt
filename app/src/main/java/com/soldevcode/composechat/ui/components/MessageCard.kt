@@ -8,6 +8,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,8 +25,10 @@ import com.soldevcode.composechat.models.ConversationModel
 @Composable
 fun MessageBox(
     msg: ConversationModel,
-    onSpeakerClicked: () -> Unit
+    onSpeakerClicked: () -> Unit,
+    onStopClicked: () -> Unit
 ) {
+    val isPlaying = remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
             .fillMaxSize()
@@ -59,9 +63,16 @@ fun MessageBox(
         ) {
             if (msg.chatOwner == "system") {
                 Image(
-                    painter = painterResource(id = R.drawable.icon_speaker),
-                    contentDescription = "Contact profile picture",
-                    modifier = Modifier.clickable { onSpeakerClicked() }
+                    painter = painterResource(
+                        id = if (isPlaying.value) R.drawable.ic_stop else R.drawable.icon_speaker),                    contentDescription = "Contact profile picture",
+                    modifier = Modifier.clickable {
+                        if (isPlaying.value) {
+                            onStopClicked() // Function called when the stop icon is clicked
+                        } else {
+                            onSpeakerClicked() // Function called when the speaker icon is clicked
+                        }
+                        isPlaying.value = !isPlaying.value // Toggle the playing state
+                    }
                 )
             }
         }
@@ -117,7 +128,8 @@ fun PreviewMessageBox() {
         msg = ConversationModel(
             answer = "bot request field",
             chatOwner = "system"),
-        onSpeakerClicked = {}
+        onSpeakerClicked = {},
+        onStopClicked = {}
 
     )
 
@@ -125,7 +137,8 @@ fun PreviewMessageBox() {
         msg = ConversationModel(
             answer = "user request field",
             chatOwner = "user"),
-        onSpeakerClicked = {}
+        onSpeakerClicked = {},
+        onStopClicked = {}
 
     )
 }

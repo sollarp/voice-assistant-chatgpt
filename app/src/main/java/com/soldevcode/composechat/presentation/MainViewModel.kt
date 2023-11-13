@@ -1,6 +1,5 @@
 package com.soldevcode.composechat.presentation
 
-import android.speech.tts.TextToSpeech
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,17 +16,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 
 class MainViewModel(
-    applicationContext: ApplicationContextRepo,
+    gptApiRepo1: ApplicationContextRepo,
     private val gptApiRepo: GptApiRepo
 ) : ViewModel() {
 
     private val listOfWords = mutableListOf<String>()
     private var messages: ArrayList<Message> = arrayListOf()
-    private var textToSpeech: TextToSpeech? = null
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
 
@@ -45,33 +42,9 @@ class MainViewModel(
             add(ConversationModel(chatOwner = chatOwner, question = question))
         }
     }
-
-    // Initialize with a default value
-    init {
-        textToSpeech = TextToSpeech(
-            applicationContext.getContext()
-        ) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                val locale = Locale("hu", "HU")
-                textToSpeech!!.language = locale
-            } else {
-                // Handle error
-            }
-        }
-    }
     fun clearErrorDialog() {
         _uiState.update { it.copy(isErrorDialog = false) }
     }
-
-    fun speak(text: String) {
-        textToSpeech!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        textToSpeech?.shutdown()
-    }
-
     /**
      * It starts with a list of chat items (items) retrieved from getConversations().
      * It checks if the last chat item in the list is owned by "system."
