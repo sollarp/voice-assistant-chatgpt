@@ -1,5 +1,6 @@
 package com.soldevcode.composechat.util
 
+import com.soldevcode.composechat.models.Message
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -12,5 +13,6 @@ sealed class Resource<T>{
 data class UiState(
     var isErrorDialog: Boolean = false,
     val errorMessage: String = "",
-    val postsFeed: String = ""
+    val postsFeed: String = "",
+    val conversation: List<Message> = emptyList(),
 )

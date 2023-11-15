@@ -7,21 +7,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.common.collect.ImmutableList
 import com.soldevcode.composechat.models.ConversationModel
-import com.soldevcode.composechat.models.platform.audio.rememberRecordingManager
+import com.soldevcode.composechat.models.Message
 import com.soldevcode.composechat.models.platform.audio.rememberTextToSpeechManager
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.ui.components.MessageBox
 import okhttp3.internal.immutableListOf
-
 
 /** Referring to Google documentation
 https://developer.android.com/jetpack/compose/tooling/previews#best-practices
@@ -33,43 +32,42 @@ https://developer.android.com/jetpack/compose/tooling/previews#best-practices
 
 @Composable
 fun ConversationList(viewModel: MainViewModel = viewModel()) {
-    ConversationList(
-        conversations =
-        viewModel.conversationsLiveData.observeAsState().value,
-    )
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val conversation = uiState.conversation
+
+    ConversationList(conversation = conversation)
 }
 
 @Composable
 private fun ConversationList(
-    conversations: MutableList<ConversationModel>?,
+    conversation: List<Message>,
 
-) {
+    ) {
     val listState = rememberLazyListState()
     val textToSpeechManager = rememberTextToSpeechManager()
 
 
-    if (conversations != null) {
-        LaunchedEffect(conversations) {
-            listState.animateScrollToItem(conversations.size)
-        }
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            state = listState,
-        )
-        {
-            items(conversations.size) { conversation ->
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    MessageBox(
-                        msg = conversations[conversation],
-                        onSpeakerClicked = {
-                            textToSpeechManager.speak(conversations[conversation].answer)
-                        },
-                        onStopClicked = {
-                            textToSpeechManager.onCleared()
-                        }
-                    )
+    LaunchedEffect(conversation) {
+        listState.animateScrollToItem(conversation.size)
+    }
 
-                }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        state = listState,
+    ) {
+        items(conversation.size) { index ->
+            val item = conversation[index]
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                MessageBox(
+                    msg = item,
+                    onSpeakerClicked = {
+                        textToSpeechManager.speak(item.text)
+                    },
+                    onStopClicked = {
+                        textToSpeechManager.onCleared()
+                    }
+                )
+
             }
         }
     }
@@ -81,12 +79,13 @@ fun PreviewConversationList(
     @PreviewParameter(
         ConversationPreviewParameterProvider::class
     )
-    conversations: MutableList<ConversationModel>
+    conversations: List<Message>
 ) {
     ConversationList(
-        conversations = conversations
+        conversation = conversations
     )
 }
+
 /** Referring to Google documentation
  * where you must pass a large dataset to your composable preview.
  * https://developer.android.com/jetpack/compose/tooling/previews#preview-data

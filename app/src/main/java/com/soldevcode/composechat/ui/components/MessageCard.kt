@@ -20,11 +20,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.soldevcode.composechat.R
 import com.soldevcode.composechat.models.ConversationModel
+import com.soldevcode.composechat.models.Message
+import com.soldevcode.composechat.models.Message.Answer
+import com.soldevcode.composechat.models.Message.Question
 
 
 @Composable
 fun MessageBox(
-    msg: ConversationModel,
+    msg: Message,
     onSpeakerClicked: () -> Unit,
     onStopClicked: () -> Unit
 ) {
@@ -44,11 +47,15 @@ fun MessageBox(
                 )
         )
         {
-            if (msg.chatOwner == "user") {
-                UserMessageCard(msg = msg.question)
-                Spacer(modifier = Modifier.height(16.dp))
-            } else {
-                BotMessageCard(msg = msg.answer)
+            when (msg) {
+                is Question -> {
+                    UserMessageCard(msg = msg.text)
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+                is Answer -> {
+                    BotMessageCard(msg = msg.text)
+                }
             }
         }
 
@@ -61,10 +68,11 @@ fun MessageBox(
                 .fillMaxWidth()
                 .align(Alignment.CenterVertically)
         ) {
-            if (msg.chatOwner == "system") {
+            if (msg is Answer) {
                 Image(
                     painter = painterResource(
-                        id = if (isPlaying.value) R.drawable.ic_stop else R.drawable.icon_speaker),                    contentDescription = "Contact profile picture",
+                        id = if (isPlaying.value) R.drawable.ic_stop else R.drawable.icon_speaker
+                    ), contentDescription = "Contact profile picture",
                     modifier = Modifier.clickable {
                         if (isPlaying.value) {
                             onStopClicked() // Function called when the stop icon is clicked
@@ -125,18 +133,18 @@ fun BotMessageCard(
 @Composable
 fun PreviewMessageBox() {
     MessageBox(
-        msg = ConversationModel(
-            answer = "bot request field",
-            chatOwner = "system"),
+        msg = Answer(
+            text = "bot request field",
+        ),
         onSpeakerClicked = {},
         onStopClicked = {}
 
     )
 
     MessageBox(
-        msg = ConversationModel(
-            answer = "user request field",
-            chatOwner = "user"),
+        msg = Question(
+            text = "user request field",
+        ),
         onSpeakerClicked = {},
         onStopClicked = {}
 

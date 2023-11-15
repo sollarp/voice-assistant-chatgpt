@@ -38,6 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.R
+import com.soldevcode.composechat.models.Message
+import com.soldevcode.composechat.models.Message.Question
 import com.soldevcode.composechat.models.platform.audio.rememberRecordingManager
 import com.soldevcode.composechat.ui.components.ErrorDialog
 import com.soldevcode.composechat.ui.components.PermissionAlertDialog
@@ -167,12 +169,8 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                 // This will be at the bottom because of the weight modifier applied to the Box above
                 TextInput(
                     textFieldText = textFieldText,
-                    onSendMessage = {
-                        viewModel.addQuestionToLiveData(
-                            chatOwner = "user",
-                            question = textFieldText.value
-                        )
-                        viewModel.jsonRequestBody()
+                    onSendMessage = { text ->
+                        viewModel.jsonRequestBody(Question(text))
                     }
                 )
             }

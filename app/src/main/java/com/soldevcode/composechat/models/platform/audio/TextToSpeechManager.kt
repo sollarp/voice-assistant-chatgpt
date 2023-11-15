@@ -10,32 +10,22 @@ import java.util.Locale
 
 @SuppressLint("MissingPermission")
 @Composable
-fun rememberTextToSpeechManager(
-
-) : TextToSpeechManager {
+fun rememberTextToSpeechManager() : TextToSpeechManager {
     val context = LocalContext.current
-    val textToSpeech: TextToSpeech? = null
-
 
     return remember {
-        TextToSpeechManager(
-            context,textToSpeech
-        )
+        TextToSpeechManager(context)
     }
 }
 
 class TextToSpeechManager(
     context: Context,
-    private var textToSpeech: TextToSpeech?,
 ) {
-
-    init {
-        textToSpeech = TextToSpeech(
-            context.applicationContext
-        ) { status ->
+    private val textToSpeech: TextToSpeech by lazy {
+        TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
                 val locale = Locale("hu", "HU")
-                textToSpeech!!.language = locale
+                textToSpeech.setLanguage(locale)
             } else {
                 // Handle error
             }
@@ -43,11 +33,11 @@ class TextToSpeechManager(
     }
 
     fun speak(text: String) {
-        textToSpeech!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+        textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
     }
 
     fun onCleared() {
-        textToSpeech?.stop()
+        textToSpeech.stop()
     }
 
 }
