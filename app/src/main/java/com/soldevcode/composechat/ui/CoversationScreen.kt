@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
@@ -30,7 +31,6 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
@@ -55,6 +55,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.R
 import com.soldevcode.composechat.models.platform.audio.rememberRecordingManager
+import com.soldevcode.composechat.ui.components.AppDrawer
 import com.soldevcode.composechat.ui.components.ErrorDialog
 import com.soldevcode.composechat.ui.components.PermissionAlertDialog
 import com.soldevcode.composechat.ui.components.RecordingIndicator
@@ -125,22 +126,8 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
-                Text("Drawer title", modifier = Modifier.padding(16.dp))
-                Divider()
-                NavigationDrawerItem(
-                    label = { Text(text = "Drawer Item") },
-                    selected = false,
-                    onClick = { /*TODO*/ }
-                )
-                // ...other drawer items
+                AppDrawer()
 
-                /*AppDrawer(
-                    onChatClicked = onChatClicked,
-                    onNewChatClicked = onNewChatClicked,
-                    onIconClicked = onIconClicked,
-                )*/
-            }
         },
     ) {
         Scaffold(
@@ -165,7 +152,7 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                         }
                         }) {
                             Icon(
-                                imageVector = Icons.Filled.ArrowBack,
+                                imageVector = Icons.Filled.Menu,
                                 contentDescription = "Localized description"
                             )
                         }
@@ -173,7 +160,7 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                     actions = {
                         IconButton(onClick = { /* do something */ }) {
                             Icon(
-                                imageVector = Icons.Filled.Menu,
+                                imageVector = Icons.Filled.Settings,
                                 contentDescription = "Localized description"
                             )
                         }
