@@ -17,7 +17,6 @@ class MainActivity : ComponentActivity() {
             viewModel<MainViewModel>(
                 factory = viewModelFactory {
                     MainViewModel(
-                        MyApp.container.applicationContextRepository,
                         MyApp.container.gptApiRepository)
                 }
             )

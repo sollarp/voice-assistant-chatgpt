@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 
 
 class MainViewModel(
-    gptApiRepo1: ApplicationContextRepo,
     private val gptApiRepo: GptApiRepo
 ) : ViewModel() {
 
@@ -112,4 +111,3 @@ class MainViewModel(
         }
     }
 }
-
