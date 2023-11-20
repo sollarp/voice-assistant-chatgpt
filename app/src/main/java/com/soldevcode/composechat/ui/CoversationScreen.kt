@@ -63,6 +63,7 @@ import com.soldevcode.composechat.ui.components.TextInput
 import com.soldevcode.composechat.ui.components.goToAppSetting
 import com.soldevcode.composechat.util.NeededPermission
 import kotlinx.coroutines.launch
+import com.soldevcode.composechat.models.Message.Question
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -222,12 +223,9 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                     // This will be at the bottom because of the weight modifier applied to the Box above
                     TextInput(
                         textFieldText = textFieldText,
-                        onSendMessage = {
-                            viewModel.addQuestionToLiveData(
-                                chatOwner = "user",
-                                question = textFieldText.value
-                            )
-                            viewModel.jsonRequestBody()
+                        onSendMessage = { text ->
+                            viewModel.jsonRequestBody(Question(text))
+                            viewModel.updateMessageUiState(Question(text))
                         }
                     )
                 }

@@ -14,5 +14,5 @@ data class UiState(
     var isErrorDialog: Boolean = false,
     val errorMessage: String = "",
     val postsFeed: String = "",
-    val answers: List<Message.Answer> = emptyList(),
+    val conversation: List<Message> = emptyList(),
 )

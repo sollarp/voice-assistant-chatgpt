@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GptRequestStream(
-    val messages: ArrayList<Message>,
+    val messages: List<ApiMessage>,
     val model: String,
     val stream: Boolean = true
 )
