@@ -81,6 +81,7 @@ fun TextInput(
                     onClick = {
                         onSendMessage(textFieldText.value)
                         textFieldText.value = ""
+
                     }
                 ) {
                     Icon(

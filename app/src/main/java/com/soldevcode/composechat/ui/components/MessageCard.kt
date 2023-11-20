@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.soldevcode.composechat.R
-import com.soldevcode.composechat.models.ConversationModel
 import com.soldevcode.composechat.models.Message
 import com.soldevcode.composechat.models.Message.Answer
 import com.soldevcode.composechat.models.Message.Question

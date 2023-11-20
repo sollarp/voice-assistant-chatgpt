@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.R
-import com.soldevcode.composechat.models.Message
 import com.soldevcode.composechat.models.Message.Question
 import com.soldevcode.composechat.models.platform.audio.rememberRecordingManager
 import com.soldevcode.composechat.ui.components.ErrorDialog
@@ -171,6 +170,7 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                     textFieldText = textFieldText,
                     onSendMessage = { text ->
                         viewModel.jsonRequestBody(Question(text))
+                        viewModel.updateMessageUiState(Question(text))
                     }
                 )
             }

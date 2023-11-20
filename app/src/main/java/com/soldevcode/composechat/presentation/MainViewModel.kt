@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.soldevcode.composechat.data.GptApiRepo
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
+import com.soldevcode.composechat.models.Message
 import com.soldevcode.composechat.models.Message.Answer
 import com.soldevcode.composechat.models.Message.Question
 import com.soldevcode.composechat.models.toApiMessage
@@ -25,22 +26,35 @@ class MainViewModel(
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
 
-    fun clearErrorDialog() {
+    fun clearErrorDialog() =
         _uiState.update { it.copy(isErrorDialog = false) }
+
+
+    private fun handleApiStream(text: String, currentState: UiState): List<Message> {
+        val listOfAllMessages = currentState.conversation.toMutableList()
+        when (listOfAllMessages.last()) {
+            is Answer -> {
+                listOfAllMessages[listOfAllMessages.size - 1] = Answer(text)
+            }
+            else -> {
+                updateMessageUiState(Answer(text))
+            }
+        }
+        return listOfAllMessages
     }
 
-    fun jsonRequestBody(message: Question) {
-        val messages = uiState.value.conversation + message
-
-        val request = GptRequestStream(
-            model = "gpt-3.5-turbo",
-            messages = messages.map { it.toApiMessage() },
-            stream = true
-        )
-        fetchApiResponse(request)
+    fun updateMessageUiState(newState: Message) {
+        _uiState.update { currentState ->
+            val updatedConversation = currentState.conversation.toMutableList().apply {
+                add(newState)
+            }
+            currentState.copy(conversation = updatedConversation)
+        }
+        listOfWords.clear()
     }
 
     private fun fetchApiResponse(request: GptRequestStream) {
+
         viewModelScope.launch {
             gptApiRepo.callGptApi(request).collect { resource ->
                 _uiState.update { currentState ->
@@ -50,15 +64,10 @@ class MainViewModel(
 
                             currentState.copy(
                                 isErrorDialog = false,
-                                conversation = buildList {
-                                    addAll(currentState.conversation)
-
-                                    add(
-                                        Answer(
-                                            listOfWords.joinToString("")
-                                        )
-                                    )
-                                }.sortedBy { it.timestamp },
+                                conversation = handleApiStream(
+                                    listOfWords.joinToString(""),
+                                    currentState
+                                )
                             )
                         }
 
@@ -81,6 +90,16 @@ class MainViewModel(
                 }
             }
         }
+    }
+
+    fun jsonRequestBody(message: Question) {
+        val messages = uiState.value.conversation + message
+        val request = GptRequestStream(
+            model = "gpt-3.5-turbo",
+            messages = messages.map { it.toApiMessage() },
+            stream = true
+        )
+        fetchApiResponse(request)
     }
 }
 
