@@ -1,0 +1,2051 @@
+{
+  "name": "light_scheme",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "0p1IwgtFhV0uZSAEF6tYN3",
+    "node": "54695:24854",
+    "version": "4662662127",
+    "component-id": "8e3fe69d4ac46451a4a06f359de30d89d1c704d3"
+  },
+  "default": "Light Scheme",
+  "documentation": "deeded",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "Navigation Drawer"
+      },
+      {
+        "type": "group",
+        "id": "Building Blocks"
+      },
+      {
+        "type": "group",
+        "id": "Headline"
+      },
+      {
+        "type": "group",
+        "id": "Section header 1"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 1"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 2"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 3"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 4"
+      },
+      {
+        "type": "group",
+        "id": "Divider 1"
+      },
+      {
+        "type": "group",
+        "id": "Section header 2"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 5"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 6"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 7"
+      },
+      {
+        "type": "group",
+        "id": "Divider 2"
+      },
+      {
+        "type": "group",
+        "id": "Section header 3"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 8"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 9"
+      },
+      {
+        "type": "group",
+        "id": "Nav item 10"
+      },
+      {
+        "type": "text",
+        "id": "Title"
+      },
+      {
+        "type": "group",
+        "id": "Left"
+      },
+      {
+        "type": "text",
+        "id": "Label"
+      },
+      {
+        "type": "group",
+        "id": "state-layer"
+      },
+      {
+        "type": "group",
+        "id": "Icon"
+      },
+      {
+        "type": "text",
+        "id": "Label1"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text"
+      },
+      {
+        "type": "vector",
+        "id": "icon"
+      },
+      {
+        "type": "group",
+        "id": "state-layer1"
+      },
+      {
+        "type": "group",
+        "id": "Icon1"
+      },
+      {
+        "type": "text",
+        "id": "Label2"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text1"
+      },
+      {
+        "type": "vector",
+        "id": "icon1"
+      },
+      {
+        "type": "group",
+        "id": "state-layer2"
+      },
+      {
+        "type": "group",
+        "id": "Icon2"
+      },
+      {
+        "type": "text",
+        "id": "Label3"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text2"
+      },
+      {
+        "type": "vector",
+        "id": "icon2"
+      },
+      {
+        "type": "group",
+        "id": "state-layer3"
+      },
+      {
+        "type": "group",
+        "id": "Icon3"
+      },
+      {
+        "type": "text",
+        "id": "Label4"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text3"
+      },
+      {
+        "type": "vector",
+        "id": "icon3"
+      },
+      {
+        "type": "vector",
+        "id": "Divider"
+      },
+      {
+        "type": "group",
+        "id": "Left1"
+      },
+      {
+        "type": "text",
+        "id": "Label5"
+      },
+      {
+        "type": "group",
+        "id": "state-layer4"
+      },
+      {
+        "type": "group",
+        "id": "Icon4"
+      },
+      {
+        "type": "text",
+        "id": "Label6"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text4"
+      },
+      {
+        "type": "vector",
+        "id": "icon4"
+      },
+      {
+        "type": "group",
+        "id": "state-layer5"
+      },
+      {
+        "type": "group",
+        "id": "Icon5"
+      },
+      {
+        "type": "text",
+        "id": "Label7"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text5"
+      },
+      {
+        "type": "vector",
+        "id": "icon5"
+      },
+      {
+        "type": "group",
+        "id": "state-layer6"
+      },
+      {
+        "type": "group",
+        "id": "Icon6"
+      },
+      {
+        "type": "text",
+        "id": "Label8"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text6"
+      },
+      {
+        "type": "vector",
+        "id": "icon6"
+      },
+      {
+        "type": "vector",
+        "id": "Divider1"
+      },
+      {
+        "type": "group",
+        "id": "Left2"
+      },
+      {
+        "type": "text",
+        "id": "Label9"
+      },
+      {
+        "type": "group",
+        "id": "state-layer7"
+      },
+      {
+        "type": "group",
+        "id": "Icon7"
+      },
+      {
+        "type": "text",
+        "id": "Label10"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text7"
+      },
+      {
+        "type": "vector",
+        "id": "icon7"
+      },
+      {
+        "type": "group",
+        "id": "state-layer8"
+      },
+      {
+        "type": "group",
+        "id": "Icon8"
+      },
+      {
+        "type": "text",
+        "id": "Label11"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text8"
+      },
+      {
+        "type": "vector",
+        "id": "icon8"
+      },
+      {
+        "type": "group",
+        "id": "state-layer9"
+      },
+      {
+        "type": "group",
+        "id": "Icon9"
+      },
+      {
+        "type": "text",
+        "id": "Label12"
+      },
+      {
+        "type": "text",
+        "id": "Badge label text9"
+      },
+      {
+        "type": "vector",
+        "id": "icon9"
+      },
+      {
+        "type": "text",
+        "id": "Label13"
+      },
+      {
+        "type": "group",
+        "id": "Building Blocks / Headline"
+      },
+      {
+        "type": "group",
+        "id": "Building Blocks / Section Header"
+      },
+      {
+        "type": "text",
+        "id": "Title1"
+      },
+      {
+        "type": "group",
+        "id": "Left3"
+      },
+      {
+        "type": "text",
+        "id": "Label14"
+      }
+    ],
+    "modes": {
+      "Light Scheme": {
+        "rules": [
+          {
+            "id": "top_level",
+            "padding": "20.0",
+            "border-radius": "16.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "stroke-width": "1.0",
+            "stroke-color": {
+              "alpha": "1.0",
+              "hue": "269.99999999999994",
+              "saturation": "0.057692307692307626",
+              "value": "0.8156862745098039"
+            },
+            "main-axis-align": "start",
+            "children": [
+              "Navigation Drawer",
+              "Building Blocks"
+            ],
+            "item-spacing": "40.0",
+            "background-color": "^md.sys.color.surface",
+            "clip-content": "false"
+          },
+          {
+            "id": "Navigation Drawer",
+            "padding": "12.0",
+            "border-radius": "16.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "360.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "main-axis-align": "start",
+            "cross-axis-align": "start",
+            "children": [
+              "Headline",
+              "Section header 1",
+              "Nav item 1",
+              "Nav item 2",
+              "Nav item 3",
+              "Nav item 4",
+              "Divider 1",
+              "Section header 2",
+              "Nav item 5",
+              "Nav item 6",
+              "Nav item 7",
+              "Divider 2",
+              "Section header 3",
+              "Nav item 8",
+              "Nav item 9",
+              "Nav item 10"
+            ],
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "277.5000000000001",
+              "saturation": "0.032",
+              "value": "0.9803921568627451"
+            }
+          },
+          {
+            "id": "Building Blocks",
+            "border-radius": "5.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "children": [
+              "Label13",
+              "Building Blocks / Headline",
+              "Building Blocks / Section Header"
+            ],
+            "item-spacing": "32.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Headline",
+            "padding": {
+              "left": "16.0",
+              "top": "8.0",
+              "right": "8.0",
+              "bottom": "8.0"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "cross-axis-align": "start",
+            "children": [
+              "Title"
+            ],
+            "item-spacing": "10.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Section header 1",
+            "padding": {
+              "left": "16.0",
+              "top": "18.0",
+              "right": "16.0",
+              "bottom": "18.0"
+            },
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Left"
+            ],
+            "item-spacing": "10.0"
+          },
+          {
+            "id": "Nav item 1",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer"
+            ],
+            "item-spacing": "12.0",
+            "background-color": "^md.sys.color.secondary-container"
+          },
+          {
+            "id": "Nav item 2",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer1"
+            ],
+            "item-spacing": "12.0"
+          },
+          {
+            "id": "Nav item 3",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer2"
+            ],
+            "item-spacing": "12.0"
+          },
+          {
+            "id": "Nav item 4",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer3"
+            ],
+            "item-spacing": "12.0"
+          },
+          {
+            "id": "Divider 1",
+            "padding": {
+              "left": "16.0",
+              "right": "16.0"
+            },
+            "relative-transform": [
+              [
+                "1.0",
+                "-8.742277657347586e-8",
+                "0.0"
+              ],
+              [
+                "8.742277657347586e-8",
+                "1.0",
+                "0.0"
+              ]
+            ],
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "cross-axis-align": "start",
+            "children": [
+              "Divider"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Section header 2",
+            "padding": {
+              "left": "16.0",
+              "top": "18.0",
+              "right": "16.0",
+              "bottom": "18.0"
+            },
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Left1"
+            ],
+            "item-spacing": "10.0"
+          },
+          {
+            "id": "Nav item 5",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer4"
+            ],
+            "item-spacing": "12.0"
+          },
+          {
+            "id": "Nav item 6",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer5"
+            ],
+            "item-spacing": "12.0"
+          },
+          {
+            "id": "Nav item 7",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer6"
+            ],
+            "item-spacing": "12.0"
+          },
+          {
+            "id": "Divider 2",
+            "padding": {
+              "left": "16.0",
+              "right": "16.0"
+            },
+            "relative-transform": [
+              [
+                "1.0",
+                "-8.742277657347586e-8",
+                "0.0"
+              ],
+              [
+                "8.742277657347586e-8",
+                "1.0",
+                "0.0"
+              ]
+            ],
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "cross-axis-align": "start",
+            "children": [
+              "Divider1"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Section header 3",
+            "padding": {
+              "left": "16.0",
+              "top": "18.0",
+              "right": "16.0",
+              "bottom": "18.0"
+            },
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Left2"
+            ],
+            "item-spacing": "10.0"
+          },
+          {
+            "id": "Nav item 8",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer7"
+            ],
+            "item-spacing": "12.0"
+          },
+          {
+            "id": "Nav item 9",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer8"
+            ],
+            "item-spacing": "12.0"
+          },
+          {
+            "id": "Nav item 10",
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "state-layer9"
+            ],
+            "item-spacing": "12.0"
+          },
+          {
+            "id": "Title",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.title-small.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Title",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-align-vertical": "center",
+            "text-size": "^md.sys.typescale.title-small.size",
+            "letter-spacing": "^md.sys.typescale.title-small.tracking",
+            "line-height": "^md.sys.typescale.title-small.line-height",
+            "typeface": "^md.sys.typescale.title-small.font"
+          },
+          {
+            "id": "Left",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Label"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Label",
+            "font-weight": "^md.sys.typescale.title-small.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Section Header",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.title-small.size",
+            "letter-spacing": "^md.sys.typescale.title-small.tracking",
+            "line-height": "^md.sys.typescale.title-small.line-height",
+            "typeface": "^md.sys.typescale.title-small.font"
+          },
+          {
+            "id": "state-layer",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon",
+              "Label1",
+              "Badge label text"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "600.0",
+            "color": "^md.sys.color.on-secondary-container",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "letter-spacing": "0.10000000149011612",
+            "line-height": "1.4285714721679688"
+          },
+          {
+            "id": "Badge label text",
+            "font-weight": "600.0",
+            "color": "^md.sys.color.on-secondary-container",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "letter-spacing": "0.10000000149011612",
+            "line-height": "1.4285714721679688"
+          },
+          {
+            "id": "icon",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon.svg"
+          },
+          {
+            "id": "state-layer1",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon1",
+              "Label2",
+              "Badge label text1"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon1"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label2",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "Badge label text1",
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "icon1",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon1.svg"
+          },
+          {
+            "id": "state-layer2",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon2",
+              "Label3",
+              "Badge label text2"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon2",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon2"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label3",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "Badge label text2",
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "icon2",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon2.svg"
+          },
+          {
+            "id": "state-layer3",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon3",
+              "Label4",
+              "Badge label text3"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon3",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon3"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label4",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "Badge label text3",
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "icon3",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon3.svg"
+          },
+          {
+            "id": "Divider",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "-1.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "0.0"
+              }
+            },
+            "vector-content": "divider.svg"
+          },
+          {
+            "id": "Left1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Label5"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Label5",
+            "font-weight": "^md.sys.typescale.title-small.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Section Header",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.title-small.size",
+            "letter-spacing": "^md.sys.typescale.title-small.tracking",
+            "line-height": "^md.sys.typescale.title-small.line-height",
+            "typeface": "^md.sys.typescale.title-small.font"
+          },
+          {
+            "id": "state-layer4",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon4",
+              "Label6",
+              "Badge label text4"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon4",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon4"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label6",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "Badge label text4",
+            "presence": "false",
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "icon4",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon4.svg"
+          },
+          {
+            "id": "state-layer5",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon5",
+              "Label7",
+              "Badge label text5"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon5",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon5"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label7",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "Badge label text5",
+            "presence": "false",
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "icon5",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon5.svg"
+          },
+          {
+            "id": "state-layer6",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon6",
+              "Label8",
+              "Badge label text6"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon6",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon6"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label8",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "Badge label text6",
+            "presence": "false",
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "icon6",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon6.svg"
+          },
+          {
+            "id": "Divider1",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "-1.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "0.0"
+              }
+            },
+            "vector-content": "divider1.svg"
+          },
+          {
+            "id": "Left2",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Label9"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Label9",
+            "font-weight": "^md.sys.typescale.title-small.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Section Header",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.title-small.size",
+            "letter-spacing": "^md.sys.typescale.title-small.tracking",
+            "line-height": "^md.sys.typescale.title-small.line-height",
+            "typeface": "^md.sys.typescale.title-small.font"
+          },
+          {
+            "id": "state-layer7",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon7",
+              "Label10",
+              "Badge label text7"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon7",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon7"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label10",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "Badge label text7",
+            "presence": "false",
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "icon7",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon7.svg"
+          },
+          {
+            "id": "state-layer8",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon8",
+              "Label11",
+              "Badge label text8"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon8",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon8"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label11",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "Badge label text8",
+            "presence": "false",
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "icon8",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon8.svg"
+          },
+          {
+            "id": "state-layer9",
+            "padding": {
+              "left": "16.0",
+              "top": "16.0",
+              "right": "24.0",
+              "bottom": "16.0"
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Icon9",
+              "Label12",
+              "Badge label text9"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Icon9",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "icon9"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Label12",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Label",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "Badge label text9",
+            "presence": "false",
+            "font-weight": "^md.sys.typescale.label-large.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "100+",
+            "overflow": "visible",
+            "text-align": "right",
+            "text-size": "^md.sys.typescale.label-large.size",
+            "letter-spacing": "^md.sys.typescale.label-large.tracking",
+            "line-height": "^md.sys.typescale.label-large.line-height",
+            "typeface": "^md.sys.typescale.label-large.font"
+          },
+          {
+            "id": "icon9",
+            "margin": "6.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "icon9.svg"
+          },
+          {
+            "id": "Label13",
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Building blocks",
+            "overflow": "visible",
+            "text-size": "16.0",
+            "letter-spacing": "0.10000000149011612",
+            "line-height": "1.5"
+          },
+          {
+            "id": "Building Blocks / Headline",
+            "padding": {
+              "left": "16.0",
+              "top": "8.0",
+              "right": "8.0",
+              "bottom": "8.0"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "cross-axis-align": "start",
+            "children": [
+              "Title1"
+            ],
+            "item-spacing": "10.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Building Blocks / Section Header",
+            "padding": {
+              "left": "16.0",
+              "top": "18.0",
+              "right": "16.0",
+              "bottom": "18.0"
+            },
+            "border-radius": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Left3"
+            ],
+            "item-spacing": "10.0"
+          },
+          {
+            "id": "Title1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "font-weight": "^md.sys.typescale.title-small.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Title",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-align-vertical": "center",
+            "text-size": "^md.sys.typescale.title-small.size",
+            "letter-spacing": "^md.sys.typescale.title-small.tracking",
+            "line-height": "^md.sys.typescale.title-small.line-height",
+            "typeface": "^md.sys.typescale.title-small.font"
+          },
+          {
+            "id": "Left3",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Label14"
+            ],
+            "item-spacing": "12.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Label14",
+            "font-weight": "^md.sys.typescale.title-small.weight",
+            "color": "^md.sys.color.on-surface-variant",
+            "text-content": "Section Header",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "^md.sys.typescale.title-small.size",
+            "letter-spacing": "^md.sys.typescale.title-small.tracking",
+            "line-height": "^md.sys.typescale.title-small.line-height",
+            "typeface": "^md.sys.typescale.title-small.font"
+          }
+        ]
+      }
+    }
+  },
+  "ambients": {
+    "md.sys.color.surface": {
+      "data-type": "color",
+      "description": null
+    },
+    "md.sys.color.secondary-container": {
+      "data-type": "color",
+      "description": null
+    },
+    "md.sys.color.on-surface-variant": {
+      "data-type": "color",
+      "description": null
+    },
+    "md.sys.typescale.title-small.font": {
+      "data-type": "typeface",
+      "description": null
+    },
+    "md.sys.typescale.title-small.weight": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.title-small.size": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.title-small.tracking": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.title-small.line-height": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.color.on-secondary-container": {
+      "data-type": "color",
+      "description": null
+    },
+    "md.sys.typescale.label-large.font": {
+      "data-type": "typeface",
+      "description": null
+    },
+    "md.sys.typescale.label-large.weight": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.label-large.size": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.label-large.tracking": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.label-large.line-height": {
+      "data-type": "double",
+      "description": null
+    }
+  },
+  "previews": [
+    {
+      "design": "Light Scheme",
+      "size": {
+        "width": 480.0,
+        "height": 1090.0
+      },
+      "ambients": {
+        "md.sys.color.surface": {
+          "alpha": "1.0",
+          "hue": "292.5",
+          "saturation": "0.03137254901960784",
+          "value": "1.0"
+        },
+        "md.sys.color.secondary-container": {
+          "alpha": "1.0",
+          "hue": "263.07692307692304",
+          "saturation": "0.10483870967741933",
+          "value": "0.9725490196078431"
+        },
+        "md.sys.color.on-surface-variant": {
+          "alpha": "1.0",
+          "hue": "263.99999999999994",
+          "saturation": "0.12658227848101275",
+          "value": "0.30980392156862746"
+        },
+        "md.sys.typescale.title-small.weight": 500.0,
+        "md.sys.typescale.title-small.size": 14.0,
+        "md.sys.typescale.title-small.tracking": 0.10000000149011612,
+        "md.sys.typescale.title-small.line-height": 1.4285714721679688,
+        "md.sys.color.on-secondary-container": {
+          "alpha": "1.0",
+          "hue": "253.33333333333334",
+          "saturation": "0.4186046511627907",
+          "value": "0.16862745098039217"
+        },
+        "md.sys.typescale.label-large.weight": 500.0,
+        "md.sys.typescale.label-large.size": 14.0,
+        "md.sys.typescale.label-large.tracking": 0.10000000149011612,
+        "md.sys.typescale.label-large.line-height": 1.4285714721679688
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}
