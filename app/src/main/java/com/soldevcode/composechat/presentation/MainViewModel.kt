@@ -22,7 +22,6 @@ class MainViewModel(
     private val gptApiRepo: GptApiRepo
 ) : ViewModel() {
 
-    private val listOfWords = mutableListOf<String>()
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
 
@@ -50,12 +49,12 @@ class MainViewModel(
             }
             currentState.copy(conversation = updatedConversation)
         }
-        listOfWords.clear()
     }
 
     private fun fetchApiResponse(request: GptRequestStream) {
 
         viewModelScope.launch {
+            val listOfWords = mutableListOf<String>()
             gptApiRepo.callGptApi(request).collect { resource ->
                 _uiState.update { currentState ->
                     when (resource) {
