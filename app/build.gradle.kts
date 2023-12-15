@@ -93,6 +93,7 @@ dependencies {
     val koin_version = "3.5.0"
     implementation("io.insert-koin:koin-core:$koin_version")
     implementation ("io.insert-koin:koin-android:$koin_version")
+    implementation ("org.koin:koin-androidx-viewmodel:$koin_version")
 
     implementation("androidx.navigation:navigation-compose:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0-beta01")
