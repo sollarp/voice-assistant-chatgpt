@@ -19,7 +19,7 @@ This app uses the latest libraries and tools:
 - Clean Architecture;
 - Google Speech-Text streaming (grpc);
 - OpenAi Gpt3.5 streaming;
-- Manual Dependency Injection
+- Koin Dependency Injection for KMM
 - Text to Speech in Hungarian
 - Advanced Preview where ViewModel used.
   
