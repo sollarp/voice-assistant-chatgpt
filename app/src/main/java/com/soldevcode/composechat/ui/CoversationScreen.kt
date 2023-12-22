@@ -64,19 +64,18 @@ import com.soldevcode.composechat.ui.components.goToAppSetting
 import com.soldevcode.composechat.util.NeededPermission
 import kotlinx.coroutines.launch
 import com.soldevcode.composechat.models.Message.Question
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
+fun ConversationScreen(viewModel: MainViewModel) {
     val context = LocalContext.current
+    //val viewModel: MainViewModel = koinViewModel()
     val scope = rememberCoroutineScope()
 
 
     val permissionDialog = remember {
         mutableStateListOf<NeededPermission>()
     }
-
     val uiState = viewModel.uiState.collectAsState()
     val textFieldText = rememberSaveable { mutableStateOf("") }
     val recordingManager = rememberRecordingManager(speechToTextState = textFieldText)
@@ -146,11 +145,12 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                         )
                     },
                     navigationIcon = {
-                        IconButton(onClick = { scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
+                        IconButton(onClick = {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
                             }
-                        }
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.Menu,
@@ -159,7 +159,7 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /* do something */ }) {
+                        IconButton(onClick = { }) {
                             Icon(
                                 imageVector = Icons.Filled.Settings,
                                 contentDescription = "Localized description"
@@ -245,8 +245,9 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewConversationScreen() {
-    ConversationScreen()
-}
+    ConversationScreen(viewModel)
+}*/

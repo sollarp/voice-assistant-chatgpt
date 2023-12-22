@@ -2,6 +2,7 @@ package com.soldevcode.composechat.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.api.core.ApiService
 import com.soldevcode.composechat.data.GptApiRepo
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
 import com.soldevcode.composechat.models.Message

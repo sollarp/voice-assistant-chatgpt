@@ -3,16 +3,19 @@ package com.soldevcode.composechat
 import android.app.Application
 import com.soldevcode.composechat.di.AppContainer
 import com.soldevcode.composechat.di.DefaultAppContainer
+import com.soldevcode.composechat.di.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class MyApp : Application() {
-    /** AppContainer instance used by the rest of classes to obtain dependencies
-     * Manual Dependency Injection code source:
-     * https://github.com/philipplackner/ManualDependencyInjection/tree/manual_di */
-    companion object {
-        lateinit var container: AppContainer
-    }
     override fun onCreate() {
         super.onCreate()
-        container = DefaultAppContainer(applicationContext)
+        startKoin {
+            // other configurations if needed
+            androidLogger()
+            androidContext(this@MyApp)
+            modules(appModule)
+        }
     }
 }
