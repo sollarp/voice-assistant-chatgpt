@@ -49,9 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.R
 import com.soldevcode.composechat.models.platform.audio.rememberRecordingManager
@@ -68,10 +66,9 @@ import com.soldevcode.composechat.models.Message.Question
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
+fun ConversationScreen(viewModel: MainViewModel) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-
 
     val permissionDialog = remember {
         mutableStateListOf<NeededPermission>()
@@ -83,8 +80,6 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     var recording by recordingManager.showRecording
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-
-
 
     when {
         uiState.value.isErrorDialog -> {
@@ -245,8 +240,9 @@ fun ConversationScreen(viewModel: MainViewModel = viewModel()) {
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewConversationScreen() {
     ConversationScreen()
-}
+}*/
