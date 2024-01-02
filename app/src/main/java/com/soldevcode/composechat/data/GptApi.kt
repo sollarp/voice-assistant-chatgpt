@@ -8,7 +8,6 @@ import retrofit2.http.POST
 import retrofit2.http.Streaming
 import com.soldevcode.composechat.BuildConfig
 import okhttp3.ResponseBody
-import retrofit2.Response
 
 interface GptApi {
     @Headers("Authorization: Bearer ${BuildConfig.GPT_KEY}")

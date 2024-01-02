@@ -8,14 +8,10 @@ import com.soldevcode.composechat.ui.ConversationScreen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
-
-    private val mainViewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         setContent {
-            ConversationScreen(mainViewModel)
+            ConversationScreen()
         }
     }
 
