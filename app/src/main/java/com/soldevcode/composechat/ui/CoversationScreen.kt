@@ -50,6 +50,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.R
 import com.soldevcode.composechat.models.platform.audio.rememberRecordingManager
@@ -62,11 +63,12 @@ import com.soldevcode.composechat.ui.components.goToAppSetting
 import com.soldevcode.composechat.util.NeededPermission
 import kotlinx.coroutines.launch
 import com.soldevcode.composechat.models.Message.Question
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun ConversationScreen(viewModel: MainViewModel) {
+fun ConversationScreen(viewModel: MainViewModel = koinViewModel()) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
