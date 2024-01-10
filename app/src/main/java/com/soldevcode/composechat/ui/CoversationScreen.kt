@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,22 +12,17 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -50,25 +44,31 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.soldevcode.composechat.presentation.MainViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.soldevcode.composechat.R
+import com.soldevcode.composechat.models.Message.Question
 import com.soldevcode.composechat.models.platform.audio.rememberRecordingManager
+import com.soldevcode.composechat.presentation.MainViewModel
 import com.soldevcode.composechat.ui.components.AppDrawer
 import com.soldevcode.composechat.ui.components.ErrorDialog
 import com.soldevcode.composechat.ui.components.PermissionAlertDialog
 import com.soldevcode.composechat.ui.components.RecordingIndicator
 import com.soldevcode.composechat.ui.components.TextInput
 import com.soldevcode.composechat.ui.components.goToAppSetting
+import com.soldevcode.composechat.ui.navigation.AppScreen
 import com.soldevcode.composechat.util.NeededPermission
 import kotlinx.coroutines.launch
-import com.soldevcode.composechat.models.Message.Question
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun ConversationScreen(viewModel: MainViewModel = koinViewModel()) {
+fun ConversationScreen(
+    viewModel: MainViewModel = koinViewModel(),
+    navController: NavHostController
+)
+{
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
@@ -82,6 +82,13 @@ fun ConversationScreen(viewModel: MainViewModel = koinViewModel()) {
     var recording by recordingManager.showRecording
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+
+    // Get current back stack entry
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    // Get the name of the current screen
+    val currentScreen = AppScreen.valueOf(
+        backStackEntry?.destination?.route ?: AppScreen.Start.name
+    )
 
     when {
         uiState.value.isErrorDialog -> {
@@ -124,7 +131,7 @@ fun ConversationScreen(viewModel: MainViewModel = koinViewModel()) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-                AppDrawer()
+                AppDrawer(navController)
 
         },
     ) {
@@ -143,11 +150,12 @@ fun ConversationScreen(viewModel: MainViewModel = koinViewModel()) {
                         )
                     },
                     navigationIcon = {
-                        IconButton(onClick = { scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
+                        IconButton(onClick = {
+                            scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
                             }
-                        }
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.Menu,
@@ -156,7 +164,7 @@ fun ConversationScreen(viewModel: MainViewModel = koinViewModel()) {
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /* do something */ }) {
+                        IconButton(onClick = { navController.navigate(AppScreen.Settings.name) }) {
                             Icon(
                                 imageVector = Icons.Filled.Settings,
                                 contentDescription = "Localized description"
@@ -167,79 +175,79 @@ fun ConversationScreen(viewModel: MainViewModel = koinViewModel()) {
                 )
             },
         ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxHeight(),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
                     Box(
                         modifier = Modifier
-                            .weight(1f),
-                        contentAlignment = Alignment.TopCenter
+                            .fillMaxSize()
+                            .padding(innerPadding),
                     ) {
-                        ConversationList()
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            FloatingActionButton(
+                        Column(
+                            modifier = Modifier.fillMaxHeight(),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Box(
                                 modifier = Modifier
-                                    .padding(bottom = 10.dp, end = 10.dp)
-                                    .align(alignment = Alignment.BottomEnd),
-                                containerColor = Color.LightGray,
-                                onClick = {
-                                    recording = if (recording) {
-                                        recordingManager.stopRecording()
-                                        false
-                                    } else {
-                                        microphonePermissionLauncher.launch(
-                                            NeededPermission.RECORD_AUDIO.permission
-                                        )
-                                        recordingManager.startRecording()
-                                        true
+                                    .weight(1f),
+                                contentAlignment = Alignment.TopCenter
+                            ) {
+                                ConversationList()
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    FloatingActionButton(
+                                        modifier = Modifier
+                                            .padding(bottom = 10.dp, end = 10.dp)
+                                            .align(alignment = Alignment.BottomEnd),
+                                        containerColor = Color.LightGray,
+                                        onClick = {
+                                            recording = if (recording) {
+                                                recordingManager.stopRecording()
+                                                false
+                                            } else {
+                                                microphonePermissionLauncher.launch(
+                                                    NeededPermission.RECORD_AUDIO.permission
+                                                )
+                                                recordingManager.startRecording()
+                                                true
+                                            }
+                                        }
+                                    ) {
+                                        if (recording) {
+                                            Icon(
+                                                painter = painterResource(R.drawable.ic_stop),
+                                                contentDescription = ""
+                                            )
+                                        } else {
+                                            Icon(
+                                                painter = painterResource(R.drawable.ic_mic),
+                                                contentDescription = ""
+                                            )
+                                        }
                                     }
                                 }
-                            ) {
-                                if (recording) {
-                                    Icon(
-                                        painter = painterResource(R.drawable.ic_stop),
-                                        contentDescription = ""
-                                    )
-                                } else {
-                                    Icon(
-                                        painter = painterResource(R.drawable.ic_mic),
-                                        contentDescription = ""
-                                    )
+                            }
+                            // Pushes TextInput to the bottom
+                            Spacer(modifier = Modifier.weight(.01f))
+                            // This will be at the bottom because of the weight modifier applied to the Box above
+                            TextInput(
+                                textFieldText = textFieldText,
+                                onSendMessage = { text ->
+                                    viewModel.jsonRequestBody(Question(text))
+                                    viewModel.updateMessageUiState(Question(text))
                                 }
+                            )
+                        }
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(top = 10.dp, end = 10.dp)
+                                .size(50.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (recording) {
+                                RecordingIndicator()
                             }
                         }
                     }
-                    // Pushes TextInput to the bottom
-                    Spacer(modifier = Modifier.weight(.01f))
-                    // This will be at the bottom because of the weight modifier applied to the Box above
-                    TextInput(
-                        textFieldText = textFieldText,
-                        onSendMessage = { text ->
-                            viewModel.jsonRequestBody(Question(text))
-                            viewModel.updateMessageUiState(Question(text))
-                        }
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(top = 10.dp, end = 10.dp)
-                        .size(50.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (recording) {
-                        RecordingIndicator()
-                    }
                 }
             }
-        }
-    }
 }
 
 /*

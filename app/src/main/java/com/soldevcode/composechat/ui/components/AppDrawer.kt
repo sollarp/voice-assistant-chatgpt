@@ -3,12 +3,10 @@ package com.soldevcode.composechat.ui.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -24,12 +22,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.soldevcode.composechat.ui.navigation.AppScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppDrawer() {
+fun AppDrawer(navController: NavHostController) {
     ModalDrawerSheet {
         Column(
             modifier = Modifier
@@ -47,7 +46,7 @@ fun AppDrawer() {
 
             // Rounded new chat button
             Button(
-                onClick = { /* Handle new chat button click */ },
+                onClick = { navController.navigate(AppScreen.Settings.name) },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier.padding(vertical = 16.dp)
             ) {
@@ -100,7 +99,7 @@ fun AppDrawer() {
                         }
                     },
                     selected = false,
-                    onClick = { /* Navigate to settings screen */ }
+                    onClick = { navController.navigate(AppScreen.Settings.name)  }
                 )
             }
         }
@@ -131,9 +130,9 @@ private fun DrawerItemHeader(text: String) {
         )
     }
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewAppDrawer() {
-    AppDrawer()
-}
+    AppDrawer(navController)
+}*/
