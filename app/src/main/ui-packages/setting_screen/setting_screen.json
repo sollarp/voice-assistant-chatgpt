@@ -1,0 +1,731 @@
+{
+  "name": "setting_screen",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "roKihUYGsiEw6IxobSZ8J1",
+    "node": "1:271",
+    "version": "4938590273",
+    "component-id": "b44d7eb9429eda1a63ba3a881f25dbe43514966f"
+  },
+  "default": "SettingScreen",
+  "documentation": "try",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "vector",
+        "id": "Speech Rectangle"
+      },
+      {
+        "type": "vector",
+        "id": "speech Vector "
+      },
+      {
+        "type": "text",
+        "id": "speechlanguage"
+      },
+      {
+        "type": "vector",
+        "id": "Mic Rectangle "
+      },
+      {
+        "type": "vector",
+        "id": "Vector 5"
+      },
+      {
+        "type": "text",
+        "id": "mic"
+      },
+      {
+        "type": "vector",
+        "id": "Model Rectangle "
+      },
+      {
+        "type": "vector",
+        "id": "Vector 6"
+      },
+      {
+        "type": "text",
+        "id": "model preference"
+      },
+      {
+        "type": "group",
+        "id": "chat Group"
+      },
+      {
+        "type": "group",
+        "id": "TopAppBar group"
+      },
+      {
+        "type": "vector",
+        "id": "Chat Rectangle"
+      },
+      {
+        "type": "text",
+        "id": "chatmodel"
+      },
+      {
+        "type": "vector",
+        "id": "chat Vector"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 1"
+      },
+      {
+        "type": "text",
+        "id": "Settings"
+      },
+      {
+        "type": "group",
+        "id": "Icons/arrow_back_24px"
+      },
+      {
+        "type": "vector",
+        "id": "arrow icon"
+      }
+    ],
+    "modes": {
+      "SettingScreen": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": "false",
+            "children": [
+              "Speech Rectangle",
+              "speech Vector ",
+              "speechlanguage",
+              "Mic Rectangle ",
+              "Vector 5",
+              "mic",
+              "Model Rectangle ",
+              "Vector 6",
+              "model preference",
+              "chat Group",
+              "TopAppBar group"
+            ],
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            }
+          },
+          {
+            "id": "Speech Rectangle",
+            "border-radius": "8.000000953674316",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.000000476837158",
+              "offset-x": "0.0",
+              "offset-y": "4.000000476837158",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "13.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "151.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "385.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "57.0"
+              }
+            },
+            "vector-content": "speech_rectangle.svg"
+          },
+          {
+            "id": "speech Vector ",
+            "border-radius": "1.0000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "360.999755859375"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "171.99978637695312"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "12.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "13.0"
+              }
+            },
+            "vector-content": "speech_vector_.svg"
+          },
+          {
+            "id": "speechlanguage",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.000000476837158",
+              "offset-x": "0.0",
+              "offset-y": "4.000000476837158",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "35.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "166.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "198.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "28.0"
+              }
+            },
+            "color": "^md.sys.color.on-surface",
+            "text-content": "Speech Language",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-align-vertical": "center",
+            "text-size": "22.0",
+            "line-height": "1.2727273559570313"
+          },
+          {
+            "id": "Mic Rectangle ",
+            "border-radius": "8.000000953674316",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.000000476837158",
+              "offset-x": "0.0",
+              "offset-y": "4.000000476837158",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "13.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "221.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "385.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.0"
+              }
+            },
+            "vector-content": "mic_rectangle_.svg"
+          },
+          {
+            "id": "Vector 5",
+            "border-radius": "1.0000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "360.9998779296875"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "239.99981689453125"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "12.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "15.0"
+              }
+            },
+            "vector-content": "vector_5.svg"
+          },
+          {
+            "id": "mic",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.000000476837158",
+              "offset-x": "0.0",
+              "offset-y": "4.000000476837158",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "35.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "234.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "198.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "29.0"
+              }
+            },
+            "color": "^md.sys.color.on-surface",
+            "text-content": "Mic Language",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-align-vertical": "center",
+            "text-size": "22.0",
+            "line-height": "1.2727273559570313"
+          },
+          {
+            "id": "Model Rectangle ",
+            "border-radius": "8.000000953674316",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.000000476837158",
+              "offset-x": "0.0",
+              "offset-y": "4.000000476837158",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "13.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "290.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "385.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "57.0"
+              }
+            },
+            "vector-content": "model_rectangle_.svg"
+          },
+          {
+            "id": "Vector 6",
+            "border-radius": "1.0000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "360.9998779296875"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "309.9998321533203"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "12.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "15.0"
+              }
+            },
+            "vector-content": "vector_6.svg"
+          },
+          {
+            "id": "model preference",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.000000476837158",
+              "offset-x": "0.0",
+              "offset-y": "4.000000476837158",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "35.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "304.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "221.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "29.0"
+              }
+            },
+            "color": "^md.sys.color.on-surface",
+            "text-content": "Model Preferences",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-align-vertical": "center",
+            "text-size": "22.0",
+            "line-height": "1.2727273559570313"
+          },
+          {
+            "id": "chat Group",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "17.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "81.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "385.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.8549690246582"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Chat Rectangle",
+              "chatmodel",
+              "chat Vector"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "TopAppBar group",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "430.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "58.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Rectangle 1",
+              "Settings",
+              "Icons/arrow_back_24px"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Chat Rectangle",
+            "border-radius": "8.000000953674316",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.000000476837158",
+              "offset-x": "0.0",
+              "offset-y": "4.000000476837158",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-4.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "0.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "385.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "56.8549690246582"
+              }
+            },
+            "vector-content": "chat_rectangle.svg"
+          },
+          {
+            "id": "chatmodel",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.000000476837158",
+              "offset-x": "0.0",
+              "offset-y": "4.000000476837158",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "18.01171875"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "15.888946533203125"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "189.93905639648438"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "29.4427490234375"
+              }
+            },
+            "color": "^md.sys.color.on-surface",
+            "text-content": "Chat Model",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-align-vertical": "center",
+            "text-size": "22.0",
+            "line-height": "1.2727273559570313"
+          },
+          {
+            "id": "chat Vector",
+            "border-radius": "1.0000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "343.4736328125"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "21.335723876953125"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "11.25731086730957"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "14.21374225616455"
+              }
+            },
+            "vector-content": "chat_vector.svg"
+          },
+          {
+            "id": "Rectangle 1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "430.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "58.0"
+              }
+            },
+            "vector-content": "rectangle_1.svg"
+          },
+          {
+            "id": "Settings",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "160.0555419921875"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "16.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "96.75"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "28.0"
+              }
+            },
+            "font-weight": "^md.sys.typescale.title-large.weight",
+            "color": "^md.sys.color.on-surface",
+            "text-content": "Settings",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align-vertical": "center",
+            "text-size": "^md.sys.typescale.title-large.size",
+            "letter-spacing": "^md.sys.typescale.title-large.tracking",
+            "line-height": "^md.sys.typescale.title-large.line-height",
+            "typeface": "^md.sys.typescale.title-large.font"
+          },
+          {
+            "id": "Icons/arrow_back_24px",
+            "margin": {
+              "left": "14.3333740234375",
+              "top": "20.0",
+              "right": "386.9999599456787",
+              "bottom": "14.0"
+            },
+            "is-structured": "false",
+            "children": [
+              "arrow icon"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "arrow icon",
+            "margin": {
+              "left": "4.77783203125",
+              "top": "4.0",
+              "right": "4.77772331237793",
+              "bottom": "4.0"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "arrow_icon.svg"
+          }
+        ]
+      }
+    }
+  },
+  "ambients": {
+    "md.sys.color.on-surface": {
+      "data-type": "color",
+      "description": null
+    },
+    "md.sys.typescale.title-large.font": {
+      "data-type": "typeface",
+      "description": null
+    },
+    "md.sys.typescale.title-large.weight": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.title-large.size": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.title-large.tracking": {
+      "data-type": "double",
+      "description": null
+    },
+    "md.sys.typescale.title-large.line-height": {
+      "data-type": "double",
+      "description": null
+    }
+  },
+  "previews": [
+    {
+      "design": "SettingScreen",
+      "size": {
+        "width": 430.0,
+        "height": 932.0
+      },
+      "ambients": {
+        "md.sys.color.on-surface": {
+          "alpha": "1.0",
+          "hue": "264.0",
+          "saturation": "0.15625",
+          "value": "0.12549019607843137"
+        },
+        "md.sys.typescale.title-large.weight": 400.0,
+        "md.sys.typescale.title-large.size": 22.0,
+        "md.sys.typescale.title-large.line-height": 1.272727279663086
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

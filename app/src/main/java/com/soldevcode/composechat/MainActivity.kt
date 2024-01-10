@@ -3,15 +3,16 @@ package com.soldevcode.composechat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.soldevcode.composechat.presentation.MainViewModel
+import androidx.navigation.compose.rememberNavController
 import com.soldevcode.composechat.ui.ConversationScreen
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.soldevcode.composechat.ui.navigation.AppNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ConversationScreen()
+            val navController = rememberNavController()
+            AppNavHost(navController = navController)
         }
     }
 
