@@ -46,7 +46,7 @@ fun AppDrawer(navController: NavHostController) {
 
             // Rounded new chat button
             Button(
-                onClick = { navController.navigate(AppScreen.Settings.name) },
+                onClick = { navController.navigate(AppScreen.Language.name) },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier.padding(vertical = 16.dp)
             ) {

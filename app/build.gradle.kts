@@ -89,6 +89,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.compose.material3:material3-android:1.2.0-beta01")
     //koin
     val koin_version = "3.5.0"
     implementation("io.insert-koin:koin-android:$koin_version")
@@ -132,7 +133,6 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-graphics-android:1.5.0")
     implementation("com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0")
     testImplementation("junit:junit:4.13.2")
