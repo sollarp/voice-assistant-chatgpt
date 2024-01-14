@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.NavHostController
 import com.soldevcode.composechat.ui.ConversationScreen
+import com.soldevcode.composechat.ui.LanguageListScreen
 import com.soldevcode.composechat.ui.SettingScreen
 
 @Composable
@@ -17,6 +18,9 @@ fun AppNavHost(navController: NavHostController) {
         }
         composable(AppScreen.Settings.name) {
             SettingScreen()
+        }
+        composable(AppScreen.Language.name) {
+            LanguageListScreen()
         }
         // Define other destinations...
     }

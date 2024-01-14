@@ -164,7 +164,7 @@ fun ConversationScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { navController.navigate(AppScreen.Settings.name) }) {
+                        IconButton(onClick = { navController.navigate(AppScreen.Language.name) }) {
                             Icon(
                                 imageVector = Icons.Filled.Settings,
                                 contentDescription = "Localized description"
