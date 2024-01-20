@@ -6,14 +6,13 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.0"
     id ("com.google.relay") version "0.3.09"
-
+    id ("com.google.protobuf") version "0.9.4"
 }
 
 
 android {
     namespace = "com.soldevcode.composechat"
     compileSdk = 34
-    val key2 = "\"${System.getenv("CHATGPT_API_KEY")}\""
 
     defaultConfig {
         applicationId = "com.soldevcode.composechat"
@@ -89,7 +88,11 @@ android {
 
 dependencies {
 
-    implementation("androidx.compose.material3:material3-android:1.2.0-beta01")
+    implementation  ("androidx.datastore:datastore:1.0.0")
+    //implementation ("com.google.protobuf:protobuf-javalite:3.25.2")
+
+
+    implementation("androidx.compose.material3:material3-android:1.2.0-beta02")
     //koin
     val koin_version = "3.5.0"
     implementation("io.insert-koin:koin-android:$koin_version")
@@ -125,7 +128,6 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.7.0")
     implementation ("com.google.cloud:google-cloud-speech:1.29.1")
 
-
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")
@@ -143,3 +145,18 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:21.7"
+    }
+    // Generates the standard java Protobuf code for the Protobufs in this project.
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                java { }
+            }
+        }
+    }
+}
+

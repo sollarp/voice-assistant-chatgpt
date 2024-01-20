@@ -21,7 +21,8 @@ fun LanguageListScreen(){
                 isSelected = countries[i].languages == selectedLanguage,
                 onSelectionChanged = { isSelected ->
                     if (isSelected) selectedLanguage = countries[i].languages
-                    else if (selectedLanguage == countries[i].languages) selectedLanguage = null.toString()
+                    else if (selectedLanguage == countries[i].languages)
+                        selectedLanguage = null.toString()
                 }
             )
         }
