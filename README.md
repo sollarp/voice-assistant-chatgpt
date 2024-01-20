@@ -14,7 +14,7 @@ Advantages:
 This app uses the latest libraries and tools:
 - 100% written in Kotlin;
 - Compose;
-- LiveData.
+- StateFlow.
 - MVVM architecture;
 - Clean Architecture;
 - Google Speech-Text streaming (grpc);
