@@ -17,7 +17,7 @@ fun AppNavHost(navController: NavHostController) {
             ConversationScreen(navController = navController)
         }
         composable(AppScreen.Settings.name) {
-            SettingScreen()
+            SettingScreen(navController = navController)
         }
         composable(AppScreen.Language.name) {
             LanguageListScreen()

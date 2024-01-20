@@ -1,5 +1,6 @@
 package com.soldevcode.composechat.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,12 +22,14 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.google.relay.compose.RelayContainer
 import com.google.relay.compose.RelayContainerScope
 import com.google.relay.compose.RelayText
 import com.google.relay.compose.RelayVector
 import com.google.relay.compose.relayDropShadow
 import com.soldevcode.composechat.R
+import com.soldevcode.composechat.ui.navigation.AppScreen
 
 /**
  * try
@@ -35,7 +38,8 @@ import com.soldevcode.composechat.R
  * Generated code; do not edit directly
  */
 @Composable
-fun SettingScreen(modifier: Modifier = Modifier) {
+fun SettingScreen(modifier: Modifier = Modifier, navController: NavHostController) {
+
     TopLevel(modifier = modifier) {
         SpeechRectangle(
             modifier = Modifier.boxAlign(
@@ -56,13 +60,17 @@ fun SettingScreen(modifier: Modifier = Modifier) {
             )
         )
         Speechlanguage(
-            modifier = Modifier.boxAlign(
+            modifier = Modifier
+                .boxAlign(
                 alignment = Alignment.TopStart,
                 offset = DpOffset(
                     x = 35.0.dp,
                     y = 166.0.dp
                 )
             )
+                .clickable {
+                    navController.navigate(AppScreen.Language.name)
+                }
         )
         MicRectangle(
             modifier = Modifier.boxAlign(
@@ -173,15 +181,17 @@ fun SettingScreen(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(widthDp = 430, heightDp = 932)
+/*@Preview(widthDp = 430, heightDp = 932)
 @Composable
 private fun SettingScreenPreview() {
     MaterialTheme {
         RelayContainer {
-            SettingScreen(modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f))
+            SettingScreen(
+                modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f),
+            )
         }
     }
-}
+}*/
 
 @Composable
 fun SpeechRectangle(modifier: Modifier = Modifier) {

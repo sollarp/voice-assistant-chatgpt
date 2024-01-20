@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.soldevcode.composechat.ui.navigation.AppScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppDrawer(navController: NavHostController) {
     ModalDrawerSheet {
@@ -46,7 +45,7 @@ fun AppDrawer(navController: NavHostController) {
 
             // Rounded new chat button
             Button(
-                onClick = { navController.navigate(AppScreen.Language.name) },
+                onClick = { },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier.padding(vertical = 16.dp)
             ) {
@@ -62,15 +61,6 @@ fun AppDrawer(navController: NavHostController) {
                 selected = false,
                 onClick = { }
             )
-            // List of items with borders
-            /* LazyColumn(modifier = Modifier.fillMaxHeight()) {
-             items(items = listOf("Item 1", "Item 2", "Item 3")) { item ->
-                 ListItem(
-                     text = { Text(text = item) },
-                     modifier = Modifier.padding(top = 16.dp)
-                 )
-             }
-         }*/
             // Divider between list of items and settings section
             Divider(thickness = 1.dp)
 
@@ -90,7 +80,6 @@ fun AppDrawer(navController: NavHostController) {
                                 imageVector = Icons.Rounded.Settings,
                                 contentDescription = "Settings"
                             )
-
                             Text(
                                 text = "Settings",
                                 style = MaterialTheme.typography.bodyMedium,
