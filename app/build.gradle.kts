@@ -1,5 +1,8 @@
+import com.google.protobuf.gradle.id
 import java.util.Properties
 import java.io.FileInputStream
+
+// Kotlin DSL
 
 plugins {
     id("com.android.application")
@@ -8,7 +11,6 @@ plugins {
     id ("com.google.relay") version "0.3.09"
     id ("com.google.protobuf") version "0.9.4"
 }
-
 
 android {
     namespace = "com.soldevcode.composechat"
@@ -88,10 +90,6 @@ android {
 
 dependencies {
 
-    implementation  ("androidx.datastore:datastore:1.0.0")
-    //implementation ("com.google.protobuf:protobuf-javalite:3.25.2")
-
-
     implementation("androidx.compose.material3:material3-android:1.2.0-beta02")
     //koin
     val koin_version = "3.5.0"
@@ -144,19 +142,32 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-}
 
+    //Proto data store without java-lite
+    implementation  ("androidx.datastore:datastore:1.0.0")
+    implementation("com.google.protobuf:protobuf-java:3.17.3")
+    //implementation ("com.google.protobuf:protobuf-lite:3.0.0")
+    //implementation ("com.google.protobuf:protobuf-javalite:3.25.2")
+    /*implementation ("com.google.protobuf:protobuf-javalite:3.25.2")*//*{
+        exclude( group = "com.google.protobuf", module = "protobuf-java:3.17.2")
+    }*/
+
+
+}
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:21.7"
+        artifact = "com.google.protobuf:protoc:3.17.3" // Specify the version of protoc you want to use
     }
-    // Generates the standard java Protobuf code for the Protobufs in this project.
     generateProtoTasks {
         all().forEach { task ->
             task.builtins {
-                java { }
+                create("java") {
+                    // Optionally, configure options for the java generation here
+                }
             }
         }
     }
 }
+
+
 
