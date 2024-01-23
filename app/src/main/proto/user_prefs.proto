@@ -3,7 +3,7 @@ syntax = "proto3";
 option java_package = "com.soldevcode.composechat";
 option java_multiple_files = true;
 
-/*// Define a message for TextToSpeechCode
+// Define a message for TextToSpeechCode
 message TextToSpeechCode {
   string lower = 1;
   string upper = 2;
@@ -14,14 +14,14 @@ message Languages {
   string languages = 1;
   TextToSpeechCode textLanCode = 2;
   string recordingLanCode = 3;
-}*/
+}
 
 // Update the UserPreferences message to include Languages
 message UserPreferences {
-  // filter for showing / hiding completed tasks
-  bool show_completed = 1;
+  /*// filter for showing / hiding completed tasks
+  bool show_completed = 1;*/
 
- /* // Add a field for selected language
-  Languages selected_language = 2;*/
+  // Add a field for selected language
+  Languages selected_language = 1;
 }
 

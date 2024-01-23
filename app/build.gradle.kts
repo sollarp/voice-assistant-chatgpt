@@ -1,4 +1,3 @@
-import com.google.protobuf.gradle.id
 import java.util.Properties
 import java.io.FileInputStream
 
@@ -146,13 +145,6 @@ dependencies {
     //Proto data store without java-lite
     implementation  ("androidx.datastore:datastore:1.0.0")
     implementation("com.google.protobuf:protobuf-java:3.17.3")
-    //implementation ("com.google.protobuf:protobuf-lite:3.0.0")
-    //implementation ("com.google.protobuf:protobuf-javalite:3.25.2")
-    /*implementation ("com.google.protobuf:protobuf-javalite:3.25.2")*//*{
-        exclude( group = "com.google.protobuf", module = "protobuf-java:3.17.2")
-    }*/
-
-
 }
 protobuf {
     protoc {
