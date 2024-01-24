@@ -1,14 +1,17 @@
 package com.soldevcode.composechat.presentation
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.soldevcode.composechat.data.GptApiRepo
+import com.soldevcode.composechat.data.UserPreferencesRepo
 import com.soldevcode.composechat.data.dto.gptRequest.GptRequestStream
 import com.soldevcode.composechat.models.Message
 import com.soldevcode.composechat.models.Message.Answer
 import com.soldevcode.composechat.models.Message.Question
 import com.soldevcode.composechat.models.toApiMessage
 import com.soldevcode.composechat.util.Constants.CONNECTION_ERROR
+import com.soldevcode.composechat.util.Languages
 import com.soldevcode.composechat.util.Resource
 import com.soldevcode.composechat.util.UiState
 import com.soldevcode.composechat.util.handleApiExceptions
@@ -16,15 +19,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
 
 class MainViewModel(
-    private val gptApiRepo: GptApiRepo
-) : ViewModel() {
+    application: Application,
+    private val gptApiRepo: GptApiRepo,
+    userPreferencesRepo: UserPreferencesRepo
+) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
 
+    val currentLanguage = userPreferencesRepo.readUserPreferences(application)
     fun clearErrorDialog() =
         _uiState.update { it.copy(isErrorDialog = false) }
 
@@ -35,11 +40,23 @@ class MainViewModel(
             is Answer -> {
                 listOfAllMessages[listOfAllMessages.size - 1] = Answer(text)
             }
+
             else -> {
                 updateMessageUiState(Answer(text))
             }
         }
         return listOfAllMessages
+    }
+
+    fun updateCurrentLanguage(languages: Languages) {
+        _uiState.update { currentState ->
+            currentState.copy(languages = languages)
+        }
+    }
+    fun getCurrentLanguage() {
+        viewModelScope.launch {
+
+        }
     }
 
     fun updateMessageUiState(newState: Message) {
@@ -52,7 +69,6 @@ class MainViewModel(
     }
 
     private fun fetchApiResponse(request: GptRequestStream) {
-
         viewModelScope.launch {
             val listOfWords = mutableListOf<String>()
             gptApiRepo.callGptApi(request).collect { resource ->

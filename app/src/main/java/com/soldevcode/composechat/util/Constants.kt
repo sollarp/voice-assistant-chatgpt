@@ -12,4 +12,7 @@ object Constants {
     const val API_KEY_ERROR = "GPT API key is missing, incorrect or invalid"
     const val UNKNOWN_ERROR = "Unrecognized error API request"
     const val CONNECTION_ERROR = "Internet connection error can’t connect to the server"
+    const val USER_PREFERENCES_NAME = "user_preferences"
+    const val DATA_STORE_FILE_NAME = "user_prefs.pb"
+
 }
