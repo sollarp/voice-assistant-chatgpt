@@ -14,10 +14,11 @@ Advantages:
 This app uses the latest libraries and tools:
 - 100% written in Kotlin;
 - Compose;
-- StateFlow.
+- StateFlow;
+- Proto datastore for user preference no java-lite.
 - MVVM architecture;
 - Clean Architecture;
-- Google Speech-Text streaming (grpc);
+- Google Speech-Text streaming (gRPC);
 - OpenAi Gpt3.5 streaming;
 - Koin Dependency Injection for KMM
 - Text to Speech in Hungarian
