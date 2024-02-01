@@ -31,18 +31,15 @@ https://developer.android.com/jetpack/compose/tooling/previews#best-practices
  */
 
 @Composable
-fun ConversationList(viewModel: MainViewModel = viewModel()) {
+fun ChatConversation(viewModel: MainViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val conversation = uiState.conversation
 
-    ConversationList(conversation = conversation)
+    ChatConversation(conversation = conversation)
 }
 
 @Composable
-private fun ConversationList(
-    conversation: List<Message>,
-
-    ) {
+private fun ChatConversation(conversation: List<Message>) {
     val listState = rememberLazyListState()
     val textToSpeechManager = rememberTextToSpeechManager()
 
@@ -80,7 +77,7 @@ fun PreviewConversationList(
     )
     conversations: List<Message>
 ) {
-    ConversationList(
+    ChatConversation(
         conversation = conversations
     )
 }
