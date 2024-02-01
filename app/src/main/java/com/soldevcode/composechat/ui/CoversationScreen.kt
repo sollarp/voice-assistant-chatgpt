@@ -189,7 +189,7 @@ fun ConversationScreen(
                                     .weight(1f),
                                 contentAlignment = Alignment.TopCenter
                             ) {
-                                ConversationList()
+                                ChatConversation()
                                 Box(modifier = Modifier.fillMaxSize()) {
                                     FloatingActionButton(
                                         modifier = Modifier

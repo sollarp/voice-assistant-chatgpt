@@ -29,10 +29,9 @@ class MainViewModel(
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState
 
-    val currentLanguage = userPreferencesRepo.readUserPreferences(application)
+    private val readCurrentLanguage = userPreferencesRepo.readUserPreferences(application)
     fun clearErrorDialog() =
         _uiState.update { it.copy(isErrorDialog = false) }
-
 
     private fun handleApiStream(text: String, currentState: UiState): List<Message> {
         val listOfAllMessages = currentState.conversation.toMutableList()
@@ -47,16 +46,13 @@ class MainViewModel(
         }
         return listOfAllMessages
     }
+    fun getSelectedLanguage() = uiState.value.languages
 
-    fun updateCurrentLanguage(languages: Languages) {
-        _uiState.update { currentState ->
-            currentState.copy(languages = languages)
+    fun setSelectedLanguage(language: Languages?) {
+        _uiState.update { it.copy(languages = language)
         }
-    }
-    fun getCurrentLanguage() {
-        viewModelScope.launch {
-
-        }
+        println("talan ez az=  ${getSelectedLanguage()})")
+        //_uiState.value = _uiState.value.copy(languages = language)
     }
 
     fun updateMessageUiState(newState: Message) {
@@ -66,6 +62,7 @@ class MainViewModel(
             }
             currentState.copy(conversation = updatedConversation)
         }
+        println("talan ez nem =  ${getSelectedLanguage()}")
     }
 
     private fun fetchApiResponse(request: GptRequestStream) {
@@ -76,7 +73,6 @@ class MainViewModel(
                     when (resource) {
                         is Resource.Success -> {
                             listOfWords.add(resource.data.toString())
-
                             currentState.copy(
                                 isErrorDialog = false,
                                 conversation = handleApiStream(

@@ -20,7 +20,7 @@ fun AppNavHost(navController: NavHostController) {
             SettingScreen(navController = navController)
         }
         composable(AppScreen.Language.name) {
-            LanguageListScreen()
+            LanguageListScreen(navController = navController)
         }
         // Define other destinations...
     }
