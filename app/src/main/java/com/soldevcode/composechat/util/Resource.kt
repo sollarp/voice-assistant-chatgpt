@@ -15,8 +15,8 @@ data class UiState(
     val errorMessage: String = "",
     val postsFeed: String = "",
     val conversation: List<Message> = emptyList(),
-    val languages: Languages? =
-        Languages(
+    var languages: LanguageItems? =
+        LanguageItems(
         "United Kingdom",
         TextToSpeechCode("en", "GB"),
         "en"),
