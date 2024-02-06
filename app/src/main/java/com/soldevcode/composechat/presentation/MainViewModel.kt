@@ -17,6 +17,7 @@ import com.soldevcode.composechat.util.LanguageItems
 import com.soldevcode.composechat.util.Resource
 import com.soldevcode.composechat.util.UiState
 import com.soldevcode.composechat.util.handleApiExceptions
+import com.soldevcode.composechat.util.mapPreferencesToLanguageItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -34,31 +35,27 @@ class MainViewModel(
     val context = application
 
     private val getUserPreferences = userPreferencesRepo
-    /*init {
-        viewModelScope.launch {
-            getUserPreferences.readUserPreferences(context).collect { language ->
-                language.selectedLanguage
-                _uiState.value.languages?.languages = language.selectedLanguage.languages
-            }
-        }
-    }*/
 
-    fun updateCurrentLanguage(languages: LanguageItems) {
-        _uiState.update { currentState ->
-            currentState.copy(languages = languages)
+    init {
+        viewModelScope.launch {
+            userPreferencesRepo.readUserPreferences(context).collect { preferences ->
+                val languageItems = mapPreferencesToLanguageItems(preferences)
+                _uiState.update { currentState ->
+                    currentState.copy(languages = languageItems)
+                }
+            }
         }
     }
 
-    fun saveToPreference(language: LanguageItems?) {
-        _uiState.value.languages?.languages = language?.languages.toString()
-
-        viewModelScope.launch {
-            getUserPreferences.readUserPreferences(context).collect { language ->
-                println("ez kellene = ${language.selectedLanguage.languages}")
-            }
+    fun updateLanguageUiState(languages: LanguageItems) {
+        _uiState.update { currentState ->
+            currentState.copy(languages = languages)
         }
+        saveToPreference(_uiState.value.languages)
+    }
 
-
+    private fun saveToPreference(language: LanguageItems?) {
+        //_uiState.value.languages?.languages = language?.languages.toString()
         viewModelScope.launch {
             val lang = language?.languages
             val langCode = language?.recordingLanCode
@@ -69,11 +66,8 @@ class MainViewModel(
                 Languages.newBuilder()
                     .setLanguages(lang)
                     .setTextLanCode(
-                        TextToSpeechCode
-                            .newBuilder()
-                            .setLower(lower)
-                            .setUpper(upper)
-                            .build())
+                        TextToSpeechCode.newBuilder().setLower(lower).setUpper(upper).build()
+                    )
                     .setRecordingLanCode(langCode)
                     .build()
             )
@@ -96,27 +90,15 @@ class MainViewModel(
         }
         return listOfAllMessages
     }
-    fun getSelectedLanguage() {
-        viewModelScope.launch {
-            getUserPreferences.readUserPreferences(context).collect { language ->
-                _uiState.value.languages?.languages = language.selectedLanguage.languages
-            }
-        }
-    }
-    //= uiState.value.languages
-
-    /*fun setSelectedLanguage(language: LanguageItems?) {
-        saveToPreference(application, language = language)
-    }*/
 
     fun updateMessageUiState(newState: Message) {
         _uiState.update { currentState ->
-            val updatedConversation = currentState.conversation.toMutableList().apply {
-                add(newState)
-            }
+            val updatedConversation = currentState
+                .conversation.toMutableList().apply {
+                    add(newState)
+                }
             currentState.copy(conversation = updatedConversation)
         }
-        println("talan ez nem =  ${getSelectedLanguage()}")
     }
 
     private fun fetchApiResponse(request: GptRequestStream) {
