@@ -1,5 +1,6 @@
 package com.soldevcode.composechat.util
 
+import com.soldevcode.composechat.UserPreferences
 import com.soldevcode.composechat.models.Message
 import retrofit2.HttpException
 import java.io.IOException
@@ -18,7 +19,18 @@ data class UiState(
     var languages: LanguageItems? =
         LanguageItems(
         "United Kingdom",
-        TextToSpeechCode("en", "GB"),
+        TextToSpeechItems("en", "GB"),
         "en"),
     val selectedLanguage: String =""
 )
+
+fun mapPreferencesToLanguageItems(preferences: UserPreferences): LanguageItems {
+    return LanguageItems(
+        languages = preferences.selectedLanguage.languages,
+        textLanCode = TextToSpeechItems(
+            preferences.selectedLanguage.textLanCode.lower,
+            preferences.selectedLanguage.textLanCode.upper
+        ),
+        recordingLanCode = preferences.selectedLanguage.recordingLanCode
+    )
+}

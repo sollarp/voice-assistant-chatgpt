@@ -8,7 +8,7 @@ import com.soldevcode.composechat.Languages
 import com.soldevcode.composechat.UserPreferences
 import com.soldevcode.composechat.util.Constants.DATA_STORE_FILE_NAME
 import com.soldevcode.composechat.util.LanguageItems
-import com.soldevcode.composechat.util.TextToSpeechCode
+import com.soldevcode.composechat.util.TextToSpeechItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import java.io.IOException
@@ -44,7 +44,7 @@ class UserPreferencesRepoImpl : UserPreferencesRepo {
     ) {
         val selectedLanguage = LanguageItems(
             languages = "en", // Set the desired language here
-            textLanCode = TextToSpeechCode("en-US", "en-GB"),
+            textLanCode = TextToSpeechItems("en-US", "en-GB"),
             recordingLanCode = "en-IN"
         )
         context.userPreferencesStore.updateData { preferences ->

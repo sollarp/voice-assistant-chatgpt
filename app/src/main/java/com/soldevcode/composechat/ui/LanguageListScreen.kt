@@ -11,9 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.soldevcode.composechat.presentation.MainViewModel
@@ -43,15 +41,13 @@ fun LanguageListScreen(
                 // Your action buttons here
             }
         )
-        //var selectedLanguage by remember { mutableStateOf("") }
-
         LazyColumn {
             items(countries.size) { i ->
                 LanguageListItem(
                     countries[i].languages,
                     isSelected = countries[i].languages == selectedLanguage?.languages,
                     onSelectionChanged = { isSelected ->
-                        if (isSelected) viewModel.updateCurrentLanguage(countries[i])
+                        if (isSelected) viewModel.updateLanguageUiState(countries[i])
                         else if (selectedLanguage == countries[i]) selectedLanguage = null
                     }
                 )
