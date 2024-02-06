@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.soldevcode.composechat.presentation.MainViewModel
@@ -27,7 +29,7 @@ fun LanguageListScreen(
 ) {
     val countries = remember { getLanguages() }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    var selectedLanguage = uiState.languages?.languages
+    var selectedLanguage = uiState.languages
 
     Column {
         TopAppBar(
@@ -41,19 +43,37 @@ fun LanguageListScreen(
                 // Your action buttons here
             }
         )
+        //var selectedLanguage by remember { mutableStateOf("") }
 
         LazyColumn {
             items(countries.size) { i ->
                 LanguageListItem(
                     countries[i].languages,
-                    isSelected = countries[i].languages == selectedLanguage,
+                    isSelected = countries[i].languages == selectedLanguage?.languages,
                     onSelectionChanged = { isSelected ->
-                        if (isSelected) viewModel.setSelectedLanguage(countries[i])
-                        else if (selectedLanguage == countries[i].languages)
-                            selectedLanguage = null
+                        if (isSelected) viewModel.updateCurrentLanguage(countries[i])
+                        else if (selectedLanguage == countries[i]) selectedLanguage = null
                     }
                 )
             }
         }
+
     }
 }
+
+        /*LazyColumn {
+            items(countries.size) { i ->
+                LanguageListItem(
+                    countries[i].languages,
+                    isSelected = countries[i].languages == selectedLanguage?.languages,
+                    onSelectionChanged = { isSelected ->
+                        if (isSelected) selectedLanguage = viewModel.uiState.value.languages
+                        else if (selectedLanguage == countries[i]) selectedLanguage = null
+                    }
+                )
+            }
+        }
+
+    }
+}
+*/
